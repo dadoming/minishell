@@ -3,9 +3,10 @@
 /*
     This function gets a variable name from the envp.
         -> *envv        - is the whole string
-        -> prelimiter   - is the character that comes before the returned word
+        -> prelimiter   - is the character that comes before the 'to be returned' word
         -> delimiter    . is the character that comes after
 
+    There might be an easier way to do it!
 */
 
 static int count_size(char *envv, char delimiter)
