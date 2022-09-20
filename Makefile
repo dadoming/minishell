@@ -12,7 +12,7 @@ SRCS = srcs/main.c \
 
 CC = gcc
 
-FLAGS = -Wextra -Wall -Werror
+FLAGS = -Wextra -Wall -Werror -lreadline
 
 RM = rm -f
 
