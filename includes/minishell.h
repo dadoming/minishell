@@ -7,6 +7,12 @@
 #include <string.h>
 #include <unistd.h>
 #include <time.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+#include <readline/readline.h>
+#include <readline/history.h>
+
 #include "../includes/variables.h"
 #include "../libft/libft.h"
 #include "../gnl/get_next_line.h"
