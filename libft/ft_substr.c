@@ -12,15 +12,15 @@
 
 #include "libft.h"
 
-char	*ft_substr(char const *str, unsigned int start, size_t len)
+char	*ft_substr(char const *str, unsigned int start, int len)
 {
-	char	*sub;
-	int		i;
+	char				*sub;
+	unsigned int		i;
 
 	i = 0;
 	if (!str)
 		return (0);
-	if (start >= ft_strlen(str))
+	if (start >= (unsigned int)ft_strlen(str))
 	{
 		sub = ft_calloc(1, sizeof(char));
 		if (!sub)

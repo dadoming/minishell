@@ -6,16 +6,16 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 12:58:16 by dadoming          #+#    #+#             */
-/*   Updated: 2021/11/09 15:30:36 by dadoming         ###   ########.fr       */
+/*   Updated: 2022/09/20 15:34:01 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+int	ft_strlcat(char *dst, const char *src, int dstsize)
 {
-	size_t	i;
-	size_t	dst_len;
+	int	i;
+	int	dst_len;
 
 	if (dstsize <= ft_strlen(dst))
 		return (dstsize + ft_strlen(src));

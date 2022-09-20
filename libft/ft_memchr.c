@@ -6,7 +6,7 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 18:19:20 by dadoming          #+#    #+#             */
-/*   Updated: 2021/11/09 16:00:21 by dadoming         ###   ########.fr       */
+/*   Updated: 2022/09/20 15:33:01 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	*ft_memchr(const void *str, int c, size_t n)
 	while (n > 0)
 	{
 		if (auxstr[i] == (unsigned char)c)
-			return ((char *)&str[i]);
+			return (&auxstr[i]);
 		i++;
 		n--;
 	}
