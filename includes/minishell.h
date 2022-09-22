@@ -23,6 +23,8 @@
 
 typedef struct variables_s
 {
+    char** env_p;
+
     char *logname;
     char *session_manager_name;
     char *path;
@@ -36,8 +38,9 @@ typedef struct sh_s
 
 } sh_t;
 
+
 sh_t *mini(void);
-char *get_var_from_envp(char *envv, char prelimiter, char delimiter);
+int init(char **envp);
 
 
 
