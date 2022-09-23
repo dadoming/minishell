@@ -9,7 +9,7 @@ sh_t *mini(void)
 
 int check_input(int argc, char** argv)
 {
-    return (argc == 1 && ft_strncmp(argv[0], "./minishell", 12) == 0);
+    return (argc == 1 && string()->_compare_n(argv[0], "./minishell", 12) == 0);
 }
 
 int init(char **envp)
@@ -21,8 +21,6 @@ int init(char **envp)
     mini()->var->env_p = envp;
     return (TRUE);
 }
-
-
 
 int main(int argc, char** argv, char** envp)
 {

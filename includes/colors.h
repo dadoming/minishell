@@ -1,8 +1,6 @@
 #ifndef COLORS_H
 #define COLORS_H
 
-
-
 // Regular bold
 #define BBLK "\e[1;30m"
 #define BRED "\e[1;31m"

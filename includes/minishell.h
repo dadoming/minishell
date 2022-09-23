@@ -13,10 +13,10 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-#include "../includes/variables.h"
-#include "../libft/libft.h"
+#include "variables.h"
+#include "my_lib.h"
 #include "../gnl/get_next_line.h"
-#include "../includes/colors.h"
+#include "colors.h"
 
 # define TRUE 1
 # define FALSE 0
