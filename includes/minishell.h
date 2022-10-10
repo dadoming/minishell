@@ -15,7 +15,6 @@
 
 #include "variables.h"
 #include "my_lib.h"
-#include "../gnl/get_next_line.h"
 #include "colors.h"
 
 # define TRUE 1
@@ -26,9 +25,7 @@ typedef struct variables_s
     char** env_p;
 
     char *logname;
-    char *session_manager_name;
     char *path;
-    char *current_working_directory;
 
 } variables_t;
 

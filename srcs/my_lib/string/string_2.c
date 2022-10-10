@@ -70,11 +70,3 @@ char	*_duplicate(const char *str)
 	dup[i] = '\0';
 	return (dup);
 }
-
-int	_is_alnum(int c)
-{
-	if (string()->_is_alpha(c) || string()->_is_digit(c))
-		return (1);
-	else
-		return (0);
-}

@@ -42,23 +42,6 @@ typedef struct s_string
     void	(*_putstring_fd)(char *s, int fd);
     // Puts number in fd.
     void	(*_putnumber_fd)(int n, int fd);
-    // Checks if 'c' is alpha. 
-    // Returns 2 for uppercase. 
-    // 1 for lowercase. 
-    // 0 for not alpha.
-    int	    (*_is_alpha)(int c);
-    // Checks if 'c' is ascii. 
-    // Returns 1 for true. 0 for false.
-    int	    (*_is_ascii)(int c);
-    // Checks if 'c' is digit. 
-    // Returns 1 for true. 0 for false. 
-    int	    (*_is_digit)(int c);
-    // Checks if 32 >= 'c' =< 126. 
-    // Returns 1 for true. 0 for false. 
-    int	    (*_is_printable)(int c);
-    // Checks if is alpha or is digit. 
-    // Returns 1 for true. 0 for false.
-    int	    (*_is_alnum)(int c);
     // Returns an alloc'd string from a passed integer.
     char*   (*_itoa)(int n);
     // Erases the data in the n bytes of the memory starting at the location pointed to by s, by writing zeros (bytes containing '\0') to that area.
@@ -89,8 +72,30 @@ typedef struct s_string
 
 } t_string;
 
+typedef struct s_check
+{
+    // Checks if 'c' is alpha. 
+    // Returns 2 for uppercase. 
+    // 1 for lowercase. 
+    // 0 for not alpha.
+    int	    (*_is_alpha)(int c);
+    // Checks if 'c' is ascii. 
+    // Returns 1 for true. 0 for false.
+    int	    (*_is_ascii)(int c);
+    // Checks if 'c' is digit. 
+    // Returns 1 for true. 0 for false. 
+    int	    (*_is_digit)(int c);
+    // Checks if 32 >= 'c' =< 126. 
+    // Returns 1 for true. 0 for false. 
+    int	    (*_is_printable)(int c);
+    // Checks if is alpha or is digit. 
+    // Returns 1 for true. 0 for false.
+    int	    (*_is_alnum)(int c);
+}   t_check;
+
 // My lib function storer.
 t_string *string();
+t_check *check();
 
 char	_to_lower(char letter);
 char	_to_upper(char letter);
