@@ -20,7 +20,7 @@ static int count_size(char *envv, char delimiter)
     return (i);
 }
 
-char *get_var_from_envp(char *envv, char prelimiter, char delimiter)
+char *get_env_var(char *envv, char prelimiter, char delimiter)
 {
     char *str;
     int i;

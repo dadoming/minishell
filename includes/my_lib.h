@@ -69,28 +69,24 @@ typedef struct s_string
     // Returns a new alloc'd string having applied function f to every member of the string. 
     void	(*_iteri)(char *s, void (*f)(unsigned int, char*));
     char*	(*_trim)(char const *s1, char const *set);
-
-} t_string;
+    // Returns the number of _isspace delimited words. 
+    int     (*_arg_count)(char *str);
+}   t_string;
 
 typedef struct s_check
 {
-    // Checks if 'c' is alpha. 
-    // Returns 2 for uppercase. 
-    // 1 for lowercase. 
-    // 0 for not alpha.
+    // Checks if 'c' is alpha. 2 for uppercase. 1 for lowercase. 0 for false.
     int	    (*_is_alpha)(int c);
-    // Checks if 'c' is ascii. 
-    // Returns 1 for true. 0 for false.
+    // Checks if c is ascii. 1 for true. 0 for false.
     int	    (*_is_ascii)(int c);
-    // Checks if 'c' is digit. 
-    // Returns 1 for true. 0 for false. 
+    // Checks if c is digit. 1 for true. 0 for false. 
     int	    (*_is_digit)(int c);
-    // Checks if 32 >= 'c' =< 126. 
-    // Returns 1 for true. 0 for false. 
+    // Checks if 32 >= c =< 126. 1 for true. 0 for false. 
     int	    (*_is_printable)(int c);
-    // Checks if is alpha or is digit. 
-    // Returns 1 for true. 0 for false.
+    // Checks if c is alpha or is digit. 1 for true. 0 for false.
     int	    (*_is_alnum)(int c);
+    // Checks if c is space. 1 for true. 0 for false.
+    int     (*_is_space)(int c);
 }   t_check;
 
 // My lib function storer.
@@ -112,6 +108,7 @@ char*   _duplicate(const char *str);
 
 char**  _split(char const *s, char c);
 
+int     _arg_count(char *str);
 int		_atoi(const char *str);
 int 	_length(const char *str);
 int	    _compare(const char* s1, const char* s2);
@@ -123,6 +120,7 @@ int	    _is_ascii(int c);
 int	    _is_digit(int c);
 int	    _is_printable(int c);
 int	    _is_alnum(int c);
+int     _is_space(int c);
 int	    _mem_compare(const void *s1, const void *s2, unsigned int n);
 
 void	_putchar_fd(char c, int fd);

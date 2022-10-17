@@ -38,3 +38,25 @@ char*	_trim(char const *s1, char const *set)
 	trim[len] = '\0';
 	return (trim);
 }
+
+int _arg_count(char *str)
+{
+    int i;
+    int count;
+
+    count = 0;
+    i = 0;
+    while (check()->_is_space(str[i]))
+        i++;
+    if (check()->_is_ascii(str[i]) && str[i] != '\0')
+        count++;
+    while (str[i] != '\0')
+    {
+        if (str[i + 1] == '\0')
+            break;
+        if (check()->_is_space(str[i]) && !check()->_is_space(str[i + 1]))
+            count++;
+        i++;
+    }
+    return (count);
+}

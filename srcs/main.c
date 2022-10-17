@@ -1,5 +1,7 @@
 #include "../includes/minishell.h"
 
+// man 2 ioctl_tty
+
 sh_t *mini(void)
 {
     static sh_t mini;
@@ -14,75 +16,149 @@ int check_input(int argc, char** argv)
 
 int init(char **envp)
 {
+    //variable struct init
     if(!envp)
         return (FALSE);
-    mini()->var = malloc(sizeof(variables_t));
-    mini()->var->env_p = malloc(sizeof(envp));
-    mini()->var->env_p = envp;
+    mini()->var.env_p = envp;
+    mini()->var.cwd = getcwd(0, 512);
+    mini()->var.logname = getenv("LOGNAME");
+
+    
+    //signal init
+    mini()->signalset = FALSE;
     return (TRUE);
 }
-/*
-void execute_line(char *buff)
+
+void close_program(void)
 {
-    pid_t execution;
-
-    execution = fork();
-
-}
-*/
-
-void close_program()
-{
-    if(mini()->var->logname)
-        free(mini()->var->logname);
-    if(mini()->var->path)
-        free(mini()->var->path);
-    if(mini()->var->cwd)
-        free(mini()->var->cwd);
+    //if(mini()->var.cwd)
+      //  free(mini()->var.cwd);
+    return ;
 }
 
-static char* prompt_string(void)
+// Returns the inode number of a file descriptor
+int get_inode(int fd)
 {
-    char cwd[256];
+    struct stat buf;
+    int ret;
 
-    if (chdir("/tmp") != 0)
-        perror("chdir() error()");
-    if (getcwd(cwd, sizeof(cwd)) == NULL)
+    ret = fstat(fd, &buf);
+    if (ret < 0)
     {
-        perror("getcwd() error");
-        return ("minishell >$ ");
+        perror("fstat");
+        return (-1);
     }
-    else
-        // add color to string.
+    return (buf.st_ino);
 }
+
+// Handle ctrl
+void ignore_signal_for_shell()
+{
+	mini()->signalset = TRUE;
+	
+	// ignore "Ctrl-C" -> alterar para dar display a um novo prompt numa nova linha
+    mini()->SIGINT_handler = signal(SIGINT, SIG_IGN);
+	
+	// ignore "Ctrl-\"
+    signal(SIGQUIT, SIG_IGN);
+
+    //ignore "Ctrl-D"
+    mini()->SIGINT_handler = signal(SIGINT, SIG_IGN);
+    //signal(SIGABRT, SIG_IGN);
+}
+
+
+
+void split_args(char *buff)
+{
+    mini()->argcount = string()->_arg_count(buff);
+    mini()->argvalue = string()->_split(buff, ' ');
+}
+
+void helper_print(int i)
+{
+    printf("cwd : %s\n", mini()->var.cwd);
+    printf("argc: %d\n", mini()->argcount);
+    printf("argv: ");
+    while (mini()->argvalue[i] != 0)
+        printf("%s ", mini()->argvalue[i++]);
+    printf("\n");
+}
+
+int _is_directory(char *path)
+{
+    struct stat sb;
+
+    if(stat(path, &sb) == 0 && S_ISDIR(sb.st_mode))
+        return (1);
+    return (0);
+}
+
+// Não funciona porque é necessário criar a própria shell com as
+// suas próprias variaveis. Não é possível alterar as variáveis dentro do kernel.
+void change_d(void)
+{
+    if(mini()->argcount > 0)
+    {
+        if(string()->_compare(mini()->argvalue[0], "cd") == 0 \
+            && string()->_compare(mini()->argvalue[1], "..") == 0)
+        {
+            if(chdir(mini()->var.cwd) == -1)
+                perror("..->chdir");
+        }
+        else if(string()->_compare(mini()->argvalue[0], "cd") == 0 \
+            && _is_directory(mini()->argvalue[1]) == 1)
+        {
+            if(chdir(mini()->argvalue[1]) == -1)
+                perror("path->chdir");
+            printf("pwd : %s\n", getenv("PWD"));
+        }
+    }
+}
+
+// -> Load path at execution time and only change it when cd is executed. 
+//      path does not need to be verified each loop
 
 int main(int argc, char** argv, char** envp)
 {
+    // Checks execution
     if(check_input(argc, argv) == FALSE)
         return (printf("Wrong Input. Enter ./minishell\n"));
 
-    if(init(envp) != FALSE)
+    // Inits program information
+    if(init(envp) == FALSE)
     {
         close_program();
         return (1);
     }
 
     char *buffer = NULL;
+    ignore_signal_for_shell();
     while (1)
     {
-        buffer = readline(prompt_string());
+        print_prompt();
+        buffer = readline("\e[1;33m$\e[0m ");
         if(string()->_length(buffer) > 0)
-        {
             add_history(buffer);
-            //execute_command(buffer);
-        }
         if(string()->_compare(buffer, "exit") == 0)
         {
             free(buffer);
             break;
         }
+        // Gets argv and argc from minishell
+        split_args(buffer);
+
+        // Prints the input on screen
+        change_d();
+        helper_print(0);
+        
+
+        free(mini()->argvalue);
         free(buffer);
     }
+
+    // Frees all memory in program
+    close_program();
 
     return (0);
 }
