@@ -1,6 +1,7 @@
 # Mine
 minishell
 *.swp
+study/
 
 # Prerequisites
 *.d
