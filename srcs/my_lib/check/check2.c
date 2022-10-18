@@ -6,3 +6,12 @@ int _is_space(int c)
         return (1);
     return (0);
 }
+
+int _is_directory(char *path)
+{
+    struct stat sb;
+
+    if(stat(path, &sb) == 0 && S_ISDIR(sb.st_mode))
+        return (1);
+    return (0);
+}

@@ -71,6 +71,10 @@ typedef struct s_string
     char*	(*_trim)(char const *s1, char const *set);
     // Returns the number of _isspace delimited words. 
     int     (*_arg_count)(char *str);
+    // Returns the number of characters in the string until the reach of char n. 0 if no string or char passed.
+    int     (*_length_until_c)(char *str, char c);
+    // Returns an allocated string that is copied until n characters.
+    char*   (*_copy_until)(char *str, int n);
 }   t_string;
 
 typedef struct s_check
@@ -87,6 +91,8 @@ typedef struct s_check
     int	    (*_is_alnum)(int c);
     // Checks if c is space. 1 for true. 0 for false.
     int     (*_is_space)(int c);
+    // Checks if path is a directory. 1 for true. 0 for false.
+    int     (*_is_directory)(char *path);
 }   t_check;
 
 // My lib function storer.
@@ -105,6 +111,7 @@ char*   _itoa(int n);
 char*	_mapi(char const *s, char (*f)(unsigned int, char));
 char*	_trim(char const *s1, char const *set);
 char*   _duplicate(const char *str);
+char*   _copy_until(char *str, int n);
 
 char**  _split(char const *s, char c);
 
@@ -122,6 +129,9 @@ int	    _is_printable(int c);
 int	    _is_alnum(int c);
 int     _is_space(int c);
 int	    _mem_compare(const void *s1, const void *s2, unsigned int n);
+int     _length_until_c(char *str, char c);
+int     _is_directory(char *path);
+
 
 void	_putchar_fd(char c, int fd);
 void	_putstring_fd(char *s, int fd);

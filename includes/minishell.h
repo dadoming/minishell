@@ -23,6 +23,11 @@
 # define TRUE 1
 # define FALSE 0
 
+typedef struct built_in_s
+{
+
+} built_in_t;
+
 typedef struct variables_s
 {
     char    **env_p;
@@ -49,6 +54,11 @@ int init(char **envp);
 /* prompt.c */
 void print_prompt();
 
+/* init.c */
+int init(char **envp);
 
+void change_d(void);
+void close_program(void);
+int check_input(int argc, char** argv);
 
 #endif

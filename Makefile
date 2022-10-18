@@ -6,6 +6,7 @@ INCLUDES = includes/minishell.h \
 		includes/colors.h \
 
 SRCS = ${wildcard srcs/*.c} \
+		${wildcard srcs/built_in/*.c} \
 		${wildcard srcs/my_lib/*.c} \
 		${wildcard srcs/my_lib/string/*.c} \
 		${wildcard srcs/my_lib/check/*.c} \
