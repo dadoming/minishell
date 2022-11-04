@@ -2,7 +2,6 @@
 minishell
 *.swp
 study/
-en.subject_minishell.pdf
 
 # Prerequisites
 *.d
