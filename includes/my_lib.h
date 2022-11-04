@@ -95,9 +95,54 @@ typedef struct s_check
     int     (*_is_directory)(char *path);
 }   t_check;
 
+typedef struct s_list
+{
+    char* token;
+    struct s_list* next;
+} t_list;
+
+typedef struct s_listfunc
+{
+    // Returns a pointer to a new node. 
+    // Returns NULL if allocation fails.
+    t_list*	(*_new_node)(void *content);
+
+    // Returns the list size.
+    int	    (*_size)(t_list *lst);
+
+    // Returns a pointer to the last node of the list. 
+    // Returns 0 if lst is NULL.
+    t_list*	(*_last)(t_list *lst);
+
+    // Adds a new node to the first position of the linked list and sets the head of the list to that new node.
+    // The function returns if 'lst' is NULL.
+    void    (*_add_front)(t_list **lst, t_list *new);
+
+    // Adds a new node to the back of the linked list.
+    // Returns if no list is passed.
+    void	(*_add_back)(t_list **lst, t_list *new);
+
+    // Applies a function to every member of the list.
+    void	(*_iterator)(t_list *lst, void (*f)(void *));
+
+    // Deletes the current node and sets lst pointer to next node. 
+    // Frees removed node.
+    void	(*_del_node)(t_list **lst);
+
+    // Clears the whole list calling _del_node() to every member of the list.
+    void	(*_clear_list)(t_list **lst);
+    
+    // Deletes the last node of the list.
+    void    (*_del_last_node)(t_list **lst);
+
+} t_listfunc;
+
+
+
 // My lib function storer.
 t_string *string();
 t_check *check();
+t_listfunc *list();
 
 char	_to_lower(char letter);
 char	_to_upper(char letter);
@@ -131,7 +176,7 @@ int     _is_space(int c);
 int	    _mem_compare(const void *s1, const void *s2, unsigned int n);
 int     _length_until_c(char *str, char c);
 int     _is_directory(char *path);
-
+int	    _size(t_list *lst);
 
 void	_putchar_fd(char c, int fd);
 void	_putstring_fd(char *s, int fd);
@@ -139,11 +184,21 @@ void	_putstring_n_fd(char *s, int fd);
 void	_putnumber_fd(int n, int fd);
 void	_bzero(void *str, unsigned int n);
 void	_iteri(char *s, void (*f)(unsigned int, char*));
+void    _add_front(t_list **lst, t_list *new);
+void	_add_back(t_list **lst, t_list *new);
+void	_iterator(t_list *lst, void (*f)(void *));
+void	_del_node(t_list **lst);
+void	_clear_list(t_list **lst);
+void    _del_last_node(t_list **lst);
 
 void*   _calloc(unsigned int count, unsigned int size);
 void*   _mem_set(void *str, int to_swap, unsigned int len);
 void*	_mem_search(const void *str, int c, unsigned int n);
 void*   _mem_copy(void *dst, const void *src, unsigned int n);
 void*   _mem_move(void *dst, const void *src, unsigned int len);
+
+t_list	*_new_node(void *content);
+t_list	*_last(t_list *lst);
+
 
 #endif

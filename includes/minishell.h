@@ -39,7 +39,7 @@ typedef struct variables_s
 typedef struct sh_s
 {
     variables_t var;
-    int         argcount;
+    int         argc;
     char**      argvalue;
     
     int signalset;
@@ -60,5 +60,9 @@ int init(char **envp);
 void change_d(void);
 void close_program(void);
 int check_input(int argc, char** argv);
+
+/* input_separator.c */
+char** split_args(char *buffer);
+
 
 #endif

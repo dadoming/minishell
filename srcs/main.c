@@ -1,7 +1,5 @@
 #include "../includes/minishell.h"
 
-// man 2 ioctl_tty
-
 sh_t *mini(void)
 {
     static sh_t mini;
@@ -9,23 +7,33 @@ sh_t *mini(void)
     return (&mini);
 }
 
-void split_args(char *buff)
-{
-    mini()->argcount = string()->_arg_count(buff);
-    mini()->argvalue = string()->_split(buff, ' ');
-}
-
 void helper_print(int i)
 {
     free(mini()->var.cwd);
     mini()->var.cwd = getcwd(0,512);
     printf("cwd : %s\n", mini()->var.cwd);
-    printf("argc: %d\n", mini()->argcount);
+    printf("argc: %d\n", mini()->argc);
     printf("argv: ");
     while (mini()->argvalue[i] != 0)
         printf("%s ", mini()->argvalue[i++]);
     printf("\n");
 }
+
+
+/*
+    -> Introduzir função que separe o prompt por tokens:
+        -->> Ver quando se trata de aspas "" e ''
+        
+*/
+
+
+
+
+void separate_input(char *buffer)
+{
+    mini()->argvalue = split_args(buffer);
+}
+
 
 int main(int argc, char** argv, char** envp)
 {
@@ -49,14 +57,9 @@ int main(int argc, char** argv, char** envp)
         buffer = readline("\e[1;33m$\e[0m ");
         if(string()->_length(buffer) > 0)
             add_history(buffer);
-        if(string()->_compare(buffer, "exit") == 0)
-        {
-            free(buffer);
-            break;
-        }
         
         // Gets argv and argc from minishell
-        split_args(buffer);
+        separate_input(buffer);
 
         // Prints the input on screen
         change_d();

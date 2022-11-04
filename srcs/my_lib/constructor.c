@@ -18,3 +18,11 @@ t_check *check()
     _is_alnum, _is_space, _is_directory};
     return (&c);
 }
+
+t_listfunc *list()
+{
+    static t_listfunc l = {_new_node, _size, _last, _add_front,
+    _add_back, _iterator, _del_node, _clear_list, _del_last_node};
+    return (&l);
+}
+
