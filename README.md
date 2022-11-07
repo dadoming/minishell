@@ -1,14 +1,16 @@
 # minishell
 
+
+
 ## To-Do:
 
-[X] Ignore signals
+[ ] Ignore signals
 
-[X] Read input from user and tokenize it
+[ ] Read input from user and tokenize it
 
-[X] Parse input
+[ ] Parse input
 
-[X]
+[ ]
 
 ## Documentation
 
