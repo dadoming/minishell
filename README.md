@@ -3,8 +3,11 @@
 ## To-Do:
 
 [X] Ignore signals
+
 [X] Read input from user and tokenize it
+
 [X] Parse input
+
 [X]
 
 ## Documentation
