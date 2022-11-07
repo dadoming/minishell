@@ -4,13 +4,13 @@
 
 ## To-Do:
 
-[ ] Ignore signals
+- [ ] Ignore signals
 
-[ ] Read input from user and tokenize it
+- [ ] Read input from user and tokenize it
 
-[ ] Parse input
+- [ ] Parse input
 
-[ ]
+- [ ]
 
 ## Documentation
 
