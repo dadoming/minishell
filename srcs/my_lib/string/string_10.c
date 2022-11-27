@@ -7,6 +7,8 @@ char* _copy_until(char *str, int n)
     
     if (!str)
         return (NULL);
+    if (!n)
+        return (NULL);
     i = 0;
     dst = malloc(sizeof(int) * (n + 1));
     while (n-- > 0)

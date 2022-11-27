@@ -1,3 +1,47 @@
+Resumo da Readline library:
+
+https://tiswww.case.edu/php/chet/readline/readline.html#Programming-with-GNU-Readline
+
+Notice how C-f moves forward a character,
+while M-f moves forward a word. It is a loose 
+convention that control keystrokes operate on 
+characters while meta keystrokes operate on words.
+
+Movement commands:
+Ctrl-a : move back to start of line
+Ctrl-b : move back one character 
+Alt-b  : move back a word
+Ctrl-e : move forward to end of line
+Ctrl-f : move forward one character
+Alt-f  : move forward a word
+
+Deletion:
+Ctrl-l : clear screen and print current line at top
+Ctrl-d : erase current character 
+Ctrl-h : erase back one character
+Alt-r  : erase current line
+
+Kill and Yank:
+Ctrl-k : kill the text from the current position
+            the end of the line
+Alt-d  : kill from cursor to the end of current word,
+            or if between words, to the end of the next
+            word
+Ctrl-w : kill from the cursor to the previous whitespace
+Ctrl-y : yank the most recently killed text into cursor position
+Alt-y  : rotate kill-ring, and yank the new top. only
+            possible if previous command was Ctrl-y 
+            or Alt-y.
+
+History:
+Ctrl-p : move up through the history list
+Ctrl-n : move down through the history list
+Alt-<  : move to first line in history
+Alt->  : move to last line in history
+
+
+
+
 
 // Returns the inode number of a file descriptor
 int get_inode(int fd)

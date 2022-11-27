@@ -19,3 +19,8 @@ https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-Writing
 
 Livro: Bash Reference Manual version 5.2
 
+## Readline Functions:
+
+
+
+readline() - reads 
