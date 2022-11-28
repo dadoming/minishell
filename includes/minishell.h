@@ -46,12 +46,14 @@ typedef struct variables_s
 typedef struct sh_s
 {
     variables_t var;
+    char *prompt;
     int         arg_c;
     char**      arg_v;
     built_in_t  built_in[6];
     
     int signalset;
     void   (*SIGINT_handler)(int);
+    void   (*WINDOW_handler)(int);
 
 } sh_t;
 
@@ -72,5 +74,12 @@ int check_input(int argc, char** argv);
 /* input_separator.c */
 int parse_input(char *buffer);
 void ignore_signal_for_shell();
+
+/* start_program.c */
+void start_program(void);
+
+/* built_in/ */
+void cd();
+void pwd();
 
 #endif

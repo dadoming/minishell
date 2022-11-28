@@ -1,7 +1,7 @@
 #include "../../includes/my_lib.h"
 
 // To change
-void change_d(void)
+void cd(void)
 {
     if(mini()->arg_c > 0)
     {

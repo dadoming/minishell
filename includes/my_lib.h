@@ -27,7 +27,7 @@ typedef struct s_string
     // Return the difference if different. 0 if the same.
     int	    (*_compare)(const char* s1, const char* s2);
     // Returns a new alloc'd string appending s2 to s1.
-    char*	(*_append)(const char* s1, const char* s2);
+    char*	(*_append)(char** s1, const char* s2);
     // Returns a pointer to where it found 'char c' in string.
     char*	(*_search)(const char *str, char c);
     // Copies (dstsize - 1) characters from src to dst. 
@@ -147,7 +147,7 @@ t_listfunc *list();
 char	_to_lower(char letter);
 char	_to_upper(char letter);
 
-char*   _append(char const *s1, char const *s2);
+char*   _append(char **s1, char const *s2);
 char*   _strnstr(const char *str, const char *to_find, unsigned int len);
 char*   _rear_search(const char *str, char c);
 char*   _substr(const char *s, unsigned int start, unsigned int len);

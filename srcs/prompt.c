@@ -4,12 +4,19 @@ void print_prompt(void)
 {
     if(mini()->var.logname != NULL)
     {
-        write(STDOUT_FILENO, BMAG, 8);
-        write(STDOUT_FILENO, mini()->var.logname, string()->_length(mini()->var.logname));
-        write(STDOUT_FILENO, COLOR_RESET, 5);
-        write(STDOUT_FILENO, " > ", 3);
+        mini()->prompt = string()->_duplicate(BMAG);
+        mini()->prompt = string()->_append(&mini()->prompt, mini()->var.logname);
+        mini()->prompt = string()->_append(&mini()->prompt, COLOR_RESET);
+        mini()->prompt = string()->_append(&mini()->prompt, " > ");
+        mini()->prompt = string()->_append(&mini()->prompt, BRED);
+        mini()->prompt = string()->_append(&mini()->prompt, "minishell");
+        mini()->prompt = string()->_append(&mini()->prompt, "\e[1;33m$\e[0m ");
     }
-    write(STDOUT_FILENO, BRED, 8);
-    write(STDOUT_FILENO, "minishell", 9);
-    write(STDOUT_FILENO, COLOR_RESET, 5);
+    else
+    {
+        mini()->prompt = string()->_duplicate(BRED);
+        mini()->prompt = string()->_append(&mini()->prompt, "minishell");
+        mini()->prompt = string()->_append(&mini()->prompt, COLOR_RESET);
+        mini()->prompt = string()->_append(&mini()->prompt, "\e[1;33m$\e[0m ");
+    }
 }
