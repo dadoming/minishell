@@ -20,4 +20,4 @@ RM = rm -f
 
 all: 
 	@echo "Compiling..."
-	@${CC} ${FLAGS} -L.local/lib ${SRCS} -o ${NAME} -lreadline -I.${INCLUDES}
+	@${CC} ${FLAGS} -L.local/lib -ggdb ${SRCS} -o ${NAME} -lreadline -I.${INCLUDES}

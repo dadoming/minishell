@@ -15,9 +15,8 @@ char	*_append(char **s1, char const *s2)
 	{
 		str[i] = s1[0][i];
 	}
-	while (*s1)
-		free(*s1++);
-
+	//int k = 0;
+	free(*s1);
 	while (s2[j] != '\0')
 	{
 		str[i++] = s2[j++];

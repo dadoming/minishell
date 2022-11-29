@@ -2,71 +2,75 @@
 
 void helper_print()
 {
-    printf("%s\n", rl_line_buffer);
-    free(mini()->var.cwd);
-    mini()->var.cwd = getcwd(NULL,0);
-    printf("cwd : %s\n", mini()->var.cwd);
+    if (rl_line_buffer != NULL)
+        printf("%s\n", rl_line_buffer);
+    //free(mini()->var.cwd);
+    //mini()->var.cwd = getcwd(NULL,0);
+    //printf("cwd : %s\n", mini()->var.cwd);
     printf("argc: %d\n", mini()->arg_c);
-    printf("%s\n", ttyname(STDIN_FILENO));
-    printf("%d\n", ttyslot());
-    /*  
-    int i = 0;
-    printf("argv: ");
-    while (mini()->arg_v[i] != 0)
-        printf("%s ", mini()->arg_v[i++]);
-    printf("\n");
-    */
-}
-
-char **separate_input(char *buffer)
-{
-    return (string()->_split(buffer, ' '));
-}
-
-void get_input(char **buffer)
-{
-    *buffer = readline(mini()->prompt);
-    if(string()->_length(*buffer) > 0)
+    if(mini()->arg_v != NULL)
     {
-        add_history(*buffer);
         int i = 0;
-        mini()->arg_v = separate_input(buffer[0]);
-        mini()->arg_c = i + 1;
+        printf("argv: ");
+        while (mini()->arg_v[i] != 0)
+            printf("%s ", mini()->arg_v[i++]);
+        printf("\n");
+    }
+    //printf("%s\n", ttyname(STDIN_FILENO));
+    //printf("%d\n", ttyslot());
+    
+}
+
+
+void get_input()
+{
+    readline(mini()->prompt);
+    if(string()->_length(rl_line_buffer) > 0)
+    {
+        add_history(rl_line_buffer);
+        mini()->arg_v = string()->_split(rl_line_buffer, ' ');
+        int i = 0;
+        while (mini()->arg_v[++i] != 0)
+            continue ;
+        mini()->arg_c = i;
     }
 }
 
-void clear_looped_values(char **buffer)
+void clear_looped_values()
 {
-    free(*buffer);
-    free(mini()->prompt);
-    int i = 0;
-    while (mini()->arg_v[i])
-        free(mini()->arg_v[i++]);
+    if (mini()->prompt)
+        free(mini()->prompt);
+    if(mini()->arg_v != NULL)
+    {
+        int i = 0;
+        while (mini()->arg_v[i] != 0)
+        {
+            mini()->arg_v[i] = NULL;
+            free(mini()->arg_v[i]);
+            i++;
+        }
+        free(mini()->arg_v);
+    }
 }
 
 void start_program(void)
 {
-    char *buffer;
-
-    buffer = NULL;
     while (1)
     {
         print_prompt();
-        get_input(&buffer);
-        if (string()->_compare("exit", rl_line_buffer) == 0)
-        {
-            free(rl_line_buffer);
-            clear_looped_values(&buffer);
-            break;
-        }
+        get_input();
         if(mini()->arg_c > 0)
         {
+            if (string()->_compare_n("exit", mini()->arg_v[0], 4) == 0)
+            {
+                free(rl_line_buffer);
+                clear_looped_values();
+                break;
+            }
             cd();
             pwd();
         }
         helper_print();
-        clear_looped_values(&buffer);
-        free(rl_line_buffer);
-        printf("error\n");
+        clear_looped_values();
     }
 }
