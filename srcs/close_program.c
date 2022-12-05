@@ -2,6 +2,8 @@
 
 void close_program(void)
 {
+    
+    clear_looped_values();
     if(mini()->var.cwd)
         free(mini()->var.cwd);
     int i = 0;
@@ -14,6 +16,8 @@ void close_program(void)
         }
         free(mini()->var.env_p);
     }
-    
+    rl_erase_empty_line = 1;
+    while (history_length > 0)
+        rl_clear_history();
     return ;
 }

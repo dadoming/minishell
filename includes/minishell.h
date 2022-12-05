@@ -77,6 +77,7 @@ void ignore_signal_for_shell();
 
 /* start_program.c */
 void start_program(void);
+void clear_looped_values();
 
 /* built_in/ */
 void cd();

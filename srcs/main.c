@@ -17,8 +17,7 @@ int main(int argc, char** argv, char** envp)
         close_program();
         return (1);
     }
-    //"\C-c";
-    ignore_signal_for_shell();
+    
     start_program();
     
     close_program();
