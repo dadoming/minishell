@@ -17,7 +17,6 @@ void close_program(void)
         free(mini()->var.env_p);
     }
     rl_erase_empty_line = 1;
-    while (history_length > 0)
-        rl_clear_history();
+    rl_clear_history();
     return ;
 }

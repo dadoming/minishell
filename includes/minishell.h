@@ -23,6 +23,7 @@
 # define TRUE 1
 # define FALSE 0
 
+/*
 typedef struct built_in_s
 {
     char *command;
@@ -34,6 +35,7 @@ typedef struct built_in_s
     int (*env)(char *arg); // only executes, printing the env_p
     int (*exit)(char *arg); // exits program with or without status
 } built_in_t;
+*/
 
 typedef struct variables_s
 {
@@ -47,14 +49,13 @@ typedef struct sh_s
 {
     variables_t var;
     char *prompt;
+    char *out;
     int         arg_c;
     char**      arg_v;
-    built_in_t  built_in[6];
+    //built_in_t  built_in[6];
     
     int signalset;
     void   (*SIGINT_handler)(int);
-    void   (*WINDOW_handler)(int);
-
 } sh_t;
 
 

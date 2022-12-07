@@ -1,3 +1,9 @@
+Manual POSIX:
+https://pubs.opengroup.org/onlinepubs/9699919799/
+
+https://dev.to/oyagci/generating-a-parse-tree-from-a-shell-grammar-f1
+
+
 Resumo da Readline library:
 
 https://tiswww.case.edu/php/chet/readline/readline.html#Programming-with-GNU-Readline
@@ -57,3 +63,4 @@ int get_inode(int fd)
     }
     return (buf.st_ino);
 }
+
