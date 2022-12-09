@@ -97,8 +97,8 @@ typedef struct s_check
 
 typedef struct s_list
 {
-    char* token;
-    struct s_list* next;
+    char            *token;
+    struct s_list   *next;
 } t_list;
 
 typedef struct s_listfunc
@@ -120,7 +120,7 @@ typedef struct s_listfunc
 
     // Adds a new node to the back of the linked list.
     // Returns if no list is passed.
-    void	(*_add_back)(t_list **lst, t_list *new);
+    void	(*_add_back)(t_list **lst, void* content);
 
     // Applies a function to every member of the list.
     void	(*_iterator)(t_list *lst, void (*f)(void *));
@@ -185,7 +185,7 @@ void	_putnumber_fd(int n, int fd);
 void	_bzero(void *str, unsigned int n);
 void	_iteri(char *s, void (*f)(unsigned int, char*));
 void    _add_front(t_list **lst, t_list *new);
-void	_add_back(t_list **lst, t_list *new);
+void	_add_back(t_list **lst, void *content);
 void	_iterator(t_list *lst, void (*f)(void *));
 void	_del_node(t_list **lst);
 void	_clear_list(t_list **lst);
@@ -199,6 +199,7 @@ void*   _mem_move(void *dst, const void *src, unsigned int len);
 
 t_list	*_new_node(void *content);
 t_list	*_last(t_list *lst);
+
 
 
 #endif

@@ -46,3 +46,5 @@ void	_clear_list(t_list **lst)
 	}
 	lst = NULL;
 }
+
+

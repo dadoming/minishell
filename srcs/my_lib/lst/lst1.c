@@ -44,14 +44,14 @@ void    _add_front(t_list **lst, t_list *new)
     *lst = new;
 }
 
-void	_add_back(t_list **lst, t_list *new)
+void	_add_back(t_list **lst, void *content)
 {
     if (!lst)
 		return ;
 	if (!*lst)
 	{
-		*lst = new;
+		*lst = list()->_new_node(content);
 		return ;
 	}
-    list()->_last(*lst)->next = new;
+    list()->_last(*lst)->next = list()->_new_node(content);
 }

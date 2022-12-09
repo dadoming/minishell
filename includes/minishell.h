@@ -23,6 +23,8 @@
 # define TRUE 1
 # define FALSE 0
 
+typedef struct s_list t_list;
+
 /*
 typedef struct built_in_s
 {
@@ -37,6 +39,7 @@ typedef struct built_in_s
 } built_in_t;
 */
 
+
 typedef struct variables_s
 {
     char    **env_p;
@@ -48,10 +51,12 @@ typedef struct variables_s
 typedef struct sh_s
 {
     variables_t var;
-    char *prompt;
-    char *out;
+    char        *prompt;
+    char        *out;
+    char        **arg_v;
+    char        *trimmed;
     int         arg_c;
-    char**      arg_v;
+    t_list     *head;
     //built_in_t  built_in[6];
     
     int signalset;
@@ -79,6 +84,17 @@ void ignore_signal_for_shell();
 /* start_program.c */
 void start_program(void);
 void clear_looped_values();
+
+/* parser.c */
+void print_quote_value(int single_q, int double_q);
+void take_input(char *rl_buffer);
+void check_qs(char *rl_buffer, int *single_q, int *double_q);
+
+/* load_input */
+
+t_list *load_input(char *buffer);
+
+
 
 /* built_in/ */
 void cd();
