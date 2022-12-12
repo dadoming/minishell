@@ -1,7 +1,15 @@
 #ifndef MY_LIB_H
 # define MY_LIB_H
 
-#include "minishell.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <string.h>
+#include <unistd.h>
+#include <time.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
 
 typedef struct s_string
 {

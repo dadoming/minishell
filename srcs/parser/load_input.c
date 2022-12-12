@@ -34,12 +34,7 @@ int delimiter_found(char c)
     return (FALSE);
 }
 
-void printf_node(void *s)
-{
-    printf("%s\n", (char *) s);
-}
-
-t_list *load_input(char *buffer)
+t_list *load_input(char *buffer, t_list *arguments)
 {
     int i = 0;
     int start = 0;
@@ -48,13 +43,10 @@ t_list *load_input(char *buffer)
     {
         if(delimiter_found(buffer[i]) == TRUE || !buffer[i + 1])
         {
-            list()->_add_back(&mini()->head, string()->_substr(buffer, start, i - start + 1));
+            list()->_add_back(&arguments, string()->_substr(buffer, start, i - start + 1));
             start = i + 1;
         }
         i++;
     }
-
-    list()->_iterator(mini()->head, printf_node);
-
-    return (mini()->head);
+    return (arguments);
 }

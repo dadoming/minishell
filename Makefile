@@ -1,9 +1,8 @@
 NAME = minishell
 
 INCLUDES = includes/minishell.h \
-		includes/variables.h \
 		includes/my_lib.h \
-		includes/colors.h \
+		includes/colors.h
 
 SRCS = ${wildcard srcs/*.c} \
 		${wildcard srcs/built_in/*.c} \

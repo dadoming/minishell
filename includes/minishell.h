@@ -16,7 +16,6 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-#include "variables.h"
 #include "my_lib.h"
 #include "colors.h"
 
@@ -25,79 +24,45 @@
 
 typedef struct s_list t_list;
 
-/*
-typedef struct built_in_s
+typedef struct shell_s
 {
-    char *command;
-    int (*echo)(char *arg, int option); // has option to not output newline 
-    int (*cd)(char *path); // has to check if path exists in current folder / if it is absolute path and exists 
-    int (*pwd)(char *arg); // print current working directory
-    int (*export)(char *arg); // insert variable to env_p
-    int (*unset)(char *arg); // remove variable from env_p
-    int (*env)(char *arg); // only executes, printing the env_p
-    int (*exit)(char *arg); // exits program with or without status
-} built_in_t;
-*/
+    t_list          *arg_list;
+    char            *prompt;
+    char            *out;
+    char            **arg_v;
+    char            **trimmed;
+    int             arg_c;
+    char            **env_p;
+    char            *logname;
+    char            *cwd;
+    //built_in_t    built_in[6];
+    int             signalset;
+    void            (*SIGINT_handler)(int);
+} shell_t;
 
-
-typedef struct variables_s
-{
-    char    **env_p;
-    char    *logname;
-    char    *cwd;
-
-} variables_t;
-
-typedef struct sh_s
-{
-    variables_t var;
-    char        *prompt;
-    char        *out;
-    char        **arg_v;
-    char        *trimmed;
-    int         arg_c;
-    t_list     *head;
-    //built_in_t  built_in[6];
-    
-    int signalset;
-    void   (*SIGINT_handler)(int);
-} sh_t;
-
-
-sh_t *mini(void);
-int init(char **envp);
+/* main.c */
+shell_t *mini(void);
 
 /* prompt.c */
-void print_prompt();
+void get_input();
 
 /* init.c */
 int init(char **envp);
 
-void change_d(void);
-void close_program(void);
-int check_input(int argc, char** argv);
-
-/* input_separator.c */
-int parse_input(char *buffer);
+/* signals.c */
 void ignore_signal_for_shell();
 
-/* start_program.c */
-void start_program(void);
-void clear_looped_values();
-
-/* parser.c */
+/* helper_print.c */
 void print_quote_value(int single_q, int double_q);
-void take_input(char *rl_buffer);
+void helper_print();
+void print_node(void *s);
+
+/* parser/ */
+t_list *load_input(char *buffer, t_list *arguments);
+int delimiter_found(char c);
+void trim_string(char *str);
+t_list *take_input(char *rl_buffer);
 void check_qs(char *rl_buffer, int *single_q, int *double_q);
-
-/* load_input */
-
-t_list *load_input(char *buffer);
-
-
-
-/* built_in/ */
-void cd();
-void pwd();
+int check_for_ending_quote(char *rl_buffer, char delimiter);
 
 #endif

@@ -1,7 +1,6 @@
 #include "../../includes/minishell.h"
 
 /*
-
 c1r18s8% echo "   s'  "
    s'  
 
@@ -12,8 +11,6 @@ c1r18s8% echo '"   s $PWD  "'
 "   s $PWD  "
 
 */
-
-
 
 int check_for_ending_quote(char *rl_buffer, char delimiter)
 {
@@ -26,12 +23,6 @@ int check_for_ending_quote(char *rl_buffer, char delimiter)
         i++;
     }
     return (FALSE);
-}
-
-void print_quote_value(int single_q, int double_q)
-{
-    printf("\' \' -> %d\n", single_q);
-    printf("\" \" -> %d\n", double_q);
 }
 
 void check_qs(char *rl_buffer, int *single_q, int *double_q)
@@ -64,22 +55,19 @@ void check_qs(char *rl_buffer, int *single_q, int *double_q)
     }
 }
 
-char *trim_buffer(char *buffer)
+
+
+t_list *take_input(char *rl_buffer)
 {
-    mini()->trimmed = string()->_trim(buffer, " ");
-
-}
-
-
-void take_input(char *rl_buffer) // change to return either a list or a **
-{
+    t_list *arguments;
     int single_q = 0;
     int double_q = 0;
 
+    arguments = NULL;
     check_qs(rl_buffer, &single_q, &double_q);
     print_quote_value(single_q, double_q);
-    // Left to trim string to get desired output
-    //trim_buffer();
-    mini()->head = load_input(rl_buffer);
-    return ;
+    trim_string(rl_buffer);
+    arguments = load_input(rl_buffer, arguments);
+    return (arguments);
 }
+
