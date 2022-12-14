@@ -1,20 +1,26 @@
-Manual POSIX:
-https://pubs.opengroup.org/onlinepubs/9699919799/
+https://www.megaemoji.com/generators/tarty/
 
-https://dev.to/oyagci/generating-a-parse-tree-from-a-shell-grammar-f1
+▒█▀▄▀█ ▀█▀ ▒█▄░▒█ ▀█▀ ▒█▀▀▀█ ▒█░▒█ ▒█▀▀▀ ▒█░░░ ▒█░░░ 
+▒█▒█▒█ ▒█░ ▒█▒█▒█ ▒█░ ░▀▀▀▄▄ ▒█▀▀█ ▒█▀▀▀ ▒█░░░ ▒█░░░ 
+▒█░░▒█ ▄█▄ ▒█░░▀█ ▄█▄ ▒█▄▄▄█ ▒█░▒█ ▒█▄▄▄ ▒█▄▄█ ▒█▄▄█ 
 
-parser:
-https://vorpaljs.github.io/bash-parser-playground/
 
-||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-||                                                      ||
-||  https://www.gnu.org/software/bash/manual/bash.html  ||
-||                                                      ||
-||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Manual POSIX: < https://pubs.opengroup.org/onlinepubs/9699919799/ >
 
-Resumo da Readline library:
+Tree Guide: < https://dev.to/oyagci/generating-a-parse-tree-from-a-shell-grammar-f1 >
 
-https://tiswww.case.edu/php/chet/readline/readline.html#Programming-with-GNU-Readline
+Front-End Parser Visualizer: < https://vorpaljs.github.io/bash-parser-playground/ >
+
+Bash Manual: < https://www.gnu.org/software/bash/manual/bash.html >
+
+Readline Manual: < https://tiswww.case.edu/php/chet/readline/readline.html#Programming-with-GNU-Readline >
+
+
+▒█▀▀█ ▒█▀▀▀ ░█▀▀█ ▒█▀▀▄ ▒█░░░ ▀█▀ ▒█▄░▒█ ▒█▀▀▀ 
+▒█▄▄▀ ▒█▀▀▀ ▒█▄▄█ ▒█░▒█ ▒█░░░ ▒█░ ▒█▒█▒█ ▒█▀▀▀ 
+▒█░▒█ ▒█▄▄▄ ▒█░▒█ ▒█▄▄▀ ▒█▄▄█ ▄█▄ ▒█░░▀█ ▒█▄▄▄ 
+
+< https://tiswww.case.edu/php/chet/readline/readline.html#Programming-with-GNU-Readline >
 
 Notice how C-f moves forward a character,
 while M-f moves forward a word. It is a loose 
@@ -54,15 +60,50 @@ Alt-<  : move to first line in history
 Alt->  : move to last line in history
 
 
-|||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-||                                                     ||  
-||   ||||||| ||||||| ||||||| ||||||| ||||||| |||||||   ||
-||   ||   || ||   || ||   || |||     ||      ||   ||   ||
-||   ||||||| ||||||| |||||||   |||   |||||   |||||||   || 
-||   ||      ||   || ||  ||      ||| ||      ||  ||    ||
-||   ||      ||   || ||   || ||||||| ||||||| ||   ||   ||
-||                                                     ||
-|||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+▒█▀▀█ ░█▀▀█ ▒█▀▀▀█ ▒█░▒█ 
+▒█▀▀▄ ▒█▄▄█ ░▀▀▀▄▄ ▒█▀▀█ 
+▒█▄▄█ ▒█░▒█ ▒█▄▄▄█ ▒█░▒█ 
+
+< https://www.gnu.org/software/bash/manual/bash.html >
+
+> builtin: A command that is implemented internally by the shell itself, rather 
+            than by an executable program somewhere in the file system.
+
+> control operator: A token that performs a control function. It is a newline or 
+            one of the following: ‘||’, ‘&&’, ‘&’, ‘;’, ‘;;’, ‘;&’, ‘;;&’, ‘|’, 
+            ‘|&’, ‘(’, or ‘)’.
+
+> metacharacter: A character that, when unquoted, separates words. A metacharacter 
+            is a space, tab, newline, or one of the following characters: ‘|’, ‘&’, 
+            ‘;’, ‘(’, ‘)’, ‘<’, or ‘>’.
+
+> token: A sequence of characters considered a single unit by the shell. It is either
+            a word or an operator.
+
+> word: A sequence of characters treated as a unit by the shell. Words may not include 
+            unquoted metacharacters.
+
+
+
+
+▒█▀▀█ ░█▀▀█ ▒█▀▀█ ▒█▀▀▀█ ▒█▀▀▀ ▒█▀▀█ 
+▒█▄▄█ ▒█▄▄█ ▒█▄▄▀ ░▀▀▀▄▄ ▒█▀▀▀ ▒█▄▄▀ 
+▒█░░░ ▒█░▒█ ▒█░▒█ ▒█▄▄▄█ ▒█▄▄▄ ▒█░▒█ 
+
+Different input to be parsed:
+-> ' '		Single quotes
+-> " "		Double Quotes
+-> <		Redirect input
+-> >		Redirect output
+-> <<		Should be given a delimiter, then read the input
+		until a line containing the delimiter is seen.
+-> |		Send output of one command to another
+-> $ 		(Environment variables)
+-> $?
+
+
+A metacharacter is a space, tab, newline, or one of the following characters:
+‘|’, ‘&’, ‘;’, ‘(’, ‘)’, ‘<’, or ‘>’.
 
 
 Order in which to make the list of arguments:

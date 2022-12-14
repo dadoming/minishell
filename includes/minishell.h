@@ -19,10 +19,20 @@
 #include "my_lib.h"
 #include "colors.h"
 
-# define TRUE 1
-# define FALSE 0
-
 typedef struct s_list t_list;
+
+
+
+enum quotes_e {
+    SINGLE_QUOTE,
+    DOUBLE_QUOTE,
+    NO_QUOTE
+};
+
+enum bool_e {
+    FALSE, 
+    TRUE
+};
 
 typedef struct shell_s
 {

@@ -12,6 +12,8 @@ c1r18s8% echo '"   s $PWD  "'
 
 */
 
+
+
 int check_for_ending_quote(char *rl_buffer, char delimiter)
 {
     int i = 1;
