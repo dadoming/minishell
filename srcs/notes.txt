@@ -3,6 +3,14 @@ https://pubs.opengroup.org/onlinepubs/9699919799/
 
 https://dev.to/oyagci/generating-a-parse-tree-from-a-shell-grammar-f1
 
+parser:
+https://vorpaljs.github.io/bash-parser-playground/
+
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+||                                                      ||
+||  https://www.gnu.org/software/bash/manual/bash.html  ||
+||                                                      ||
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 Resumo da Readline library:
 
@@ -44,6 +52,40 @@ Ctrl-p : move up through the history list
 Ctrl-n : move down through the history list
 Alt-<  : move to first line in history
 Alt->  : move to last line in history
+
+
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+||                                                     ||  
+||   ||||||| ||||||| ||||||| ||||||| ||||||| |||||||   ||
+||   ||   || ||   || ||   || |||     ||      ||   ||   ||
+||   ||||||| ||||||| |||||||   |||   |||||   |||||||   || 
+||   ||      ||   || ||  ||      ||| ||      ||  ||    ||
+||   ||      ||   || ||   || ||||||| ||||||| ||   ||   ||
+||                                                     ||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+Order in which to make the list of arguments:
+
+1. Create the [loop].
+
+2. Define [start] at the position of the word found.
+
+3. Iterate through the [buffer] in order to find the end of the word.
+
+4. Once found, add a node to the back of a linked list, sending the word
+    through the [substr] function.
+
+5. Give a [type value] to the node (?), so the next executions know what they are 
+    doing.
+    Example:
+        -> When calling "$NAME" it's getting registered as that but in the function it will
+            get expanded to it's value.
+
+
+
+
+
 
 
 

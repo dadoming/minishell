@@ -30,7 +30,6 @@ typedef struct shell_s
     char            *prompt;
     char            *out;
     char            **arg_v;
-    char            **trimmed;
     int             arg_c;
     char            **env_p;
     char            *logname;
@@ -53,16 +52,16 @@ int init(char **envp);
 void ignore_signal_for_shell();
 
 /* helper_print.c */
-void print_quote_value(int single_q, int double_q);
+void print_quote_value(int single_q, int double_q, int word_amount);
 void helper_print();
 void print_node(void *s);
 
 /* parser/ */
-t_list *load_input(char *buffer, t_list *arguments);
+t_list *load_input(char **trimmed, t_list *arguments);
 int delimiter_found(char c);
-void trim_string(char *str);
+void trim_string(char *str, char ***trimmed);
 t_list *take_input(char *rl_buffer);
-void check_qs(char *rl_buffer, int *single_q, int *double_q);
+void check_qs(char *rl_buffer, int *single_q, int *double_q, int *word_amount);
 int check_for_ending_quote(char *rl_buffer, char delimiter);
 
 #endif

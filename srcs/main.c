@@ -14,7 +14,7 @@ int main(int argc, char** argv, char** envp)
         while (1)
         {
             get_input();
-            helper_print();
+            //helper_print();
             clear_looped_values();
         }
     }
