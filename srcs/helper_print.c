@@ -14,9 +14,8 @@ void print_quote_value(int single_q, int double_q, int word_amount)
 
 void helper_print()
 {
-   
-    //if(mini()->arg_list)
-      //  list()->_iterator(mini()->arg_list, print_node);
+    if(mini()->arg_list)
+        list()->_iterator(mini()->arg_list, print_node);
 
 }
 

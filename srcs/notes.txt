@@ -110,19 +110,20 @@ Order in which to make the list of arguments:
 
 1. Create the [loop].
 
-2. Define [start] at the position of the word found.
+2. Check if there are any expansions to be done. The only case in which the
+    expansions are not done is when it's between ' '.
 
-3. Iterate through the [buffer] in order to find the end of the word.
 
-4. Once found, add a node to the back of a linked list, sending the word
+3. Define [start] at the position of the word found.
+
+4. Iterate through the [buffer] in order to find the end of the word.
+
+5. Once found, add a node to the back of a linked list, sending the word
     through the [substr] function.
 
-5. Give a [type value] to the node (?), so the next executions know what they are 
-    doing.
-    Example:
-        -> When calling "$NAME" it's getting registered as that but in the function it will
-            get expanded to it's value.
 
+6. Give a [type value] to the node (?), so the next executions know what they are 
+    doing.
 
 
 

@@ -1,26 +1,13 @@
 #include "../../includes/minishell.h"
 
-/*
-c1r18s8% echo "   s'  "
-   s'  
 
-c1r18s8% echo "   s' $PWD  "
-   s' /nfs/homes/dadoming/minishell  
-
-c1r18s8% echo '"   s $PWD  "' 
-"   s $PWD  "
-
-*/
-
-
-
-int check_for_ending_quote(char *rl_buffer, char delimiter)
+int check_for_ending_delimiter(char *buffer, char delimiter)
 {
     int i = 1;
 
-    while (rl_buffer[i] != '\0')
+    while (buffer[i] != '\0')
     {
-        if (rl_buffer[i] == delimiter)
+        if (buffer[i] == delimiter)
             return (i);
         i++;
     }
@@ -36,54 +23,57 @@ void check_qs(char *rl_buffer, int *single_q, int *double_q, int *word_amount)
     {
         if(rl_buffer[i] == '\'')
         {
-            iter = check_for_ending_quote(&rl_buffer[i], '\'');
+            iter = check_for_ending_delimiter(&rl_buffer[i], '\'');
             if(iter > 0)
             {
-                i += iter;
+                list()->_add_back(&mini()->arg_list, string()->_substr(rl_buffer, i, iter + 1));
+                // inserir type para enum -> single quote
+                i += iter + 1;
                 (*single_q)++;
             }
         }
         else if(rl_buffer[i] == '\"')
         {
-            iter = check_for_ending_quote(&rl_buffer[i], '\"');
+            iter = check_for_ending_delimiter(&rl_buffer[i], '\"');
             if(iter > 0)
             {
-                i += iter;
+                list()->_add_back(&mini()->arg_list, string()->_substr(rl_buffer, i, iter + 1));
+                // inserir type para enum -> double quote
+                i += iter + 1;
                 (*double_q)++;
             }
         }
-        // incomplete
-        else if ((check()->_is_ascii(rl_buffer[i]) == TRUE && !check()->_is_space(rl_buffer[i])
-                && (check()->_is_space(rl_buffer[i + 1]) == TRUE || rl_buffer[i + 1] == '\0')))
-            (*word_amount)++;
+        // incomplete > It needs to be different from the others, error on: dadoming > minishell$  "hello "yo"
+        else if (check()->_is_ascii(rl_buffer[i]) == TRUE && !check()->_is_space(rl_buffer[i])
+                && rl_buffer[i] != '\'' && rl_buffer[i] != '\"')
+        {
+            iter = 1;
+            while (rl_buffer[iter] != ' ' && rl_buffer[iter] != '\0' && rl_buffer[i] != '\'' && rl_buffer[i] != '\"')
+                iter++;
+            if(iter > 0)
+            {
+                list()->_add_back(&mini()->arg_list, string()->_substr(rl_buffer, i, iter + 1));
+                i += iter + 1;
+                (*word_amount)++;
+            }
+        }
+        else
+        {
+            i++;
+        }
         iter = 0;
-        i++;
     }
 }
 
-t_list *take_input(char *rl_buffer)
+void parse(char *rl_buffer)
 {
-    t_list *arguments;
     int single_q = 0;
     int double_q = 0;
     int word_amount = 0;
 
-    arguments = NULL;
     check_qs(rl_buffer, &single_q, &double_q, &word_amount);
     print_quote_value(single_q, double_q, word_amount);
     
-    char **trimmed = malloc(sizeof(char *) * (single_q + double_q + word_amount) + 1);
-    trimmed[single_q + double_q + word_amount] = 0;
-    trim_string(rl_buffer, &trimmed);
     
-    int i = 0;
-    while (trimmed[i] != 0)
-    {
-        printf("%s\n", trimmed[i]);
-        i++;
-    }
-    
-    arguments = load_input(trimmed, arguments);
-    return (arguments);
 }
 
