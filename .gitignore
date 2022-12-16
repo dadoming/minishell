@@ -2,6 +2,7 @@
 minishell
 *.swp
 study/
+.vscode/
 
 # Prerequisites
 *.d
