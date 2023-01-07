@@ -148,9 +148,9 @@ typedef struct s_listfunc
 
 
 // My lib function storer.
-t_string *string();
-t_check *check();
-t_listfunc *list();
+t_string    *string();
+t_check     *check();
+t_listfunc  *list();
 
 char	_to_lower(char letter);
 char	_to_upper(char letter);

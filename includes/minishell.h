@@ -42,17 +42,11 @@ enum controller_s
     REDIRECT_OUTPUT
 };
 
-typedef struct s_command
-{
-    char *command;
-    struct s_command *next;
-} t_command;
-
 typedef struct s_token
 {
-    t_command *command;
+    char *command;
     int type;
-
+    struct t_token *next;
 } t_token;
 
 typedef struct s_core
@@ -66,9 +60,7 @@ typedef struct s_core
 typedef struct shell_s
 {
     t_core          *core;
-    
     t_list          *arg_list;
-
     int             signalset;
     void            (*SIGINT_handler)(int);
 } shell_t;
@@ -83,8 +75,11 @@ void prompt();
 /* init.c */
 int init(char **envp);
 
-/* parse.c */
+/* evaluate.c */
 int evaluate();
+
+/* expander.c */
+void expander(void);
 
 /* signals.c */
 void ignore_signal_for_shell();
@@ -94,18 +89,10 @@ void print_quote_value(int single_q, int double_q, int word_amount);
 void helper_print();
 void print_node(void *s);
 
-/* parser/ */
-t_list *load_input(char *buffer, t_list *arguments);
-int delimiter_found(char c);
-void trim_string(char *str, char ***trimmed);
-void parse(char *rl_buffer);
-void check_qs(char *rl_buffer, int *single_q, int *double_q, int *word_amount);
-int check_for_ending_delimiter(char *buffer, char delimiter);
+/* lexer.c */
+void lexer(char *rl_buffer);
 
 /* close_program.c */
 void close_program(void);
-
-
-
 
 #endif

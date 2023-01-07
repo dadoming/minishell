@@ -1,5 +1,7 @@
 https://www.megaemoji.com/generators/tarty/
 
+https://manytools.org/hacker-tools/ascii-banner/ -> ansi shadow
+
 ▒█▀▄▀█ ▀█▀ ▒█▄░▒█ ▀█▀ ▒█▀▀▀█ ▒█░▒█ ▒█▀▀▀ ▒█░░░ ▒█░░░ 
 ▒█▒█▒█ ▒█░ ▒█▒█▒█ ▒█░ ░▀▀▀▄▄ ▒█▀▀█ ▒█▀▀▀ ▒█░░░ ▒█░░░ 
 ▒█░░▒█ ▄█▄ ▒█░░▀█ ▄█▄ ▒█▄▄▄█ ▒█░▒█ ▒█▄▄▄ ▒█▄▄█ ▒█▄▄█ 
@@ -16,9 +18,17 @@ Bash Manual: < https://www.gnu.org/software/bash/manual/bash.html >
 Readline Manual: < https://tiswww.case.edu/php/chet/readline/readline.html#Programming-with-GNU-Readline >
 
 
+Tasks actuais:
+
+> Tratar do texto na expansão das variávies.
+
+
+
 ▒█▀▀█ ▒█▀▀▀ ░█▀▀█ ▒█▀▀▄ ▒█░░░ ▀█▀ ▒█▄░▒█ ▒█▀▀▀ 
 ▒█▄▄▀ ▒█▀▀▀ ▒█▄▄█ ▒█░▒█ ▒█░░░ ▒█░ ▒█▒█▒█ ▒█▀▀▀ 
 ▒█░▒█ ▒█▄▄▄ ▒█░▒█ ▒█▄▄▀ ▒█▄▄█ ▄█▄ ▒█░░▀█ ▒█▄▄▄ 
+
+(Estas são apenas algumas das mais importantes da biblioteca.)
 
 < https://tiswww.case.edu/php/chet/readline/readline.html#Programming-with-GNU-Readline >
 
@@ -86,10 +96,72 @@ Alt->  : move to last line in history
 
 
 
-▒█▀▀█ ░█▀▀█ ▒█▀▀█ ▒█▀▀▀█ ▒█▀▀▀ ▒█▀▀█ 
-▒█▄▄█ ▒█▄▄█ ▒█▄▄▀ ░▀▀▀▄▄ ▒█▀▀▀ ▒█▄▄▀ 
-▒█░░░ ▒█░▒█ ▒█░▒█ ▒█▄▄▄█ ▒█▄▄▄ ▒█░▒█ 
+!!!!! IMPORTANTE !!!!!
 
+3.1.1 Shell Operation
+The following is a brief description of the shell’s operation when it reads and 
+    executes a command. 
+
+Basically, the shell does the following:
+> Reads its input from a file (Shell Scripts), from a string supplied as an argument
+    to the -c invocation option (see Invoking Bash), or from the user’s terminal.
+
+> Breaks the input into words and operators, obeying the quoting rules described in 
+    Quoting. These tokens are separated by metacharacters. Alias expansion is performed 
+    by this step (see Aliases).
+
+> Parses the tokens into simple and compound commands (see Shell Commands).
+
+> Performs the various shell expansions (see Shell Expansions), breaking the expanded 
+    tokens into lists of filenames (see Filename Expansion) and commands and arguments.
+
+> Performs any necessary redirections (see Redirections) and removes the redirection 
+    operators and their operands from the argument list.
+
+> Executes the command (see Executing Commands).
+
+> Optionally waits for the command to complete and collects its exit status (see Exit Status).
+
+
+
+
+
+
+                                                                                                   
+██╗     ███████╗██╗  ██╗███████╗██████╗ 
+██║     ██╔════╝╚██╗██╔╝██╔════╝██╔══██╗
+██║     █████╗   ╚███╔╝ █████╗  ██████╔╝
+██║     ██╔══╝   ██╔██╗ ██╔══╝  ██╔══██╗
+███████╗███████╗██╔╝ ██╗███████╗██║  ██║
+╚══════╝╚══════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
+
+
+3.1.2.2 Single Quotes:
+    Enclosing characters in single quotes (‘'’) preserves the literal value of each 
+        character within the quotes. !A single quote may not occur between single 
+        quotes, even when preceded by a backslash.!
+
+3.1.2.3 Double Quotes
+    Enclosing characters in double quotes (‘"’) preserves the literal value of all 
+        characters within the quotes, with the exception of ‘$’, ‘`’, ‘\’, and, when 
+        history expansion is enabled, ‘!’. When the shell is in POSIX mode (see Bash 
+        POSIX Mode), the ‘!’ has no special meaning within double quotes, even when 
+        history expansion is enabled. The characters ‘$’ and ‘`’ retain their special 
+        meaning within double quotes (see Shell Expansions). The backslash retains its
+        special meaning only when followed by one of the following characters: ‘$’, ‘`’,
+        ‘"’, ‘\’, or newline. Within double quotes, backslashes that are followed by one
+        of these characters are removed. Backslashes preceding characters without a special
+        meaning are left unmodified. A double quote may be quoted within double quotes by 
+        preceding it with a backslash. If enabled, history expansion will be performed unless 
+        an ‘!’ appearing in double quotes is escaped using a backslash. The backslash 
+        preceding the ‘!’ is not removed.
+
+    The special parameters ‘*’ and ‘@’ have special meaning when in double quotes (see
+        Shell Parameter Expansion).
+
+
+                                                                                                   
+                                                                                                   
 Different input to be parsed:
 -> ' '		Single quotes
 -> " "		Double Quotes
@@ -127,12 +199,6 @@ Order in which to make the list of arguments:
 
 
 
-
-
-
-
-
-
 // Returns the inode number of a file descriptor
 int get_inode(int fd)
 {
@@ -147,4 +213,3 @@ int get_inode(int fd)
     }
     return (buf.st_ino);
 }
-

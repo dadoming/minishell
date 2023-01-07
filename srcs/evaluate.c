@@ -7,7 +7,8 @@ int evaluate()
     if (string()->_length(rl_line_buffer) > 0)
     {
         add_history(rl_line_buffer);
-        parse(rl_line_buffer);
+        lexer(rl_line_buffer);
+        expander();
         if(string()->_compare_n("exit", mini()->arg_list->token, 4) == 0)
             return (1);
     }
