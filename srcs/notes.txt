@@ -17,8 +17,9 @@ Bash Manual: < https://www.gnu.org/software/bash/manual/bash.html >
 
 Readline Manual: < https://tiswww.case.edu/php/chet/readline/readline.html#Programming-with-GNU-Readline >
 
-"Guide to write your own shell":
-https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf
+"Guide to write your own shell": < https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf >
+
+Boa documentação: < https://github.com/madebypixel02/minishell >
 
 
 Tasks actuais:
