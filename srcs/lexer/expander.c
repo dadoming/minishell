@@ -1,7 +1,8 @@
 #include "../../includes/minishell.h"
 
 static int check_quote(int *active_quote, char c);
-
+char *expand_dollar(char *content, int checkpoint);
+void expand_values(void *token);
 /*
     This function will:
     -> Treat the values inside quotes.
@@ -42,21 +43,21 @@ void expand_values(void *token)
         {
             printf("Found $ at %d\n", i);
             if (active_quote == DOUBLE_QUOTE || active_quote == NO_QUOTE)
-                expand_dollar(&content[i]);
+            {
+                content = expand_dollar(content, i);
+            }
             else
                 printf("Single Quote -> Take off quotes\n");
-            i = 0;
         }
         i++;
     }
 }
 
-// Being passed the value of the token: $LOGNAME
-void expand_dollar(char *content)
+char *expand_dollar(char *content, int checkpoint)
 {
     char *env_value = NULL;
 
-    int len = 1;
+    int len = 1 + checkpoint;
     while (content[len] != '\0' && content[len] != '$' \
         && check()->_is_space(content[len]) == FALSE)
         len++;
@@ -71,7 +72,17 @@ void expand_dollar(char *content)
         i++;
     }
     printf("%s\n", env_value);
-    //return (env_value);
+    int size;
+    size = strlen(content) + strlen(env_value) - len;
+    printf("%d\n", size);
+    /*char *strC = malloc (sizeof(char) * (size));
+    printf("%s\n", env_value);
+    strC = string()->_copy_until(content, checkpoint);
+    strC = string()->_append(&strC, env_value);
+    strC = string()->_append(&strC, &content[len]);
+
+    printf("%s\n", strC);*/
+    return (env_value);
 }
 
 static int check_quote(int *active_quote, char c)

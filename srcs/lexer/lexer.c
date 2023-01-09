@@ -3,7 +3,6 @@
 static void store_word_list(char *rl_buffer, int *single_q, int *double_q, int *word_amount);
 static void get_full_word(char *buffer, int *i, int *aux_increment, char separator);
 static int check_for_ending_word(char *buffer, char delimiter);
-static int check_for_ending_delimiter(char *buffer, char delimiter);
 
 void lexer(char *rl_buffer)
 {

@@ -9,7 +9,7 @@ int _length(const char *str)
     while (str[i] != '\0')
     {
         i++;
-    }
+	}
     return (i);
 }
 

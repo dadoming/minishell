@@ -5,7 +5,6 @@ static int only_one_quote(char *first, char second, char quote);
 void treat_quotes(void *token)
 {
     char *content;
-    int i;
     
     content = token;
     if (only_one_quote(&content[0], content[1], '\'') == TRUE)
@@ -13,28 +12,10 @@ void treat_quotes(void *token)
     if (only_one_quote(&content[0], content[1], '\"') == TRUE)
         return ;
     
-    i = 0;
-    while (content[i] != '\0')
-    {
-        if (content[i] == '$' && outside_single_quotes(content, i))
-        {
-            //hello
-        }
-        i++;
-    }
     // remove_double_quotes(&content, 0, 0);
 }
 
-
-void remove_quotes(char **aux)
-{
-    char *content;
-    int until;
-
-    content = *aux;
-    until = check_for_ending_delimiter(content, '\'');
-}
-
+// Removes all double quotes in the sentence. Needs to be tweaked to only remove the neccessary ones
 void remove_double_quotes(char **aux, int i, int end)
 {
     char *content;
