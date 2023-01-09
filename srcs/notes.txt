@@ -4,6 +4,11 @@ https://manytools.org/hacker-tools/ascii-banner/ -> ansi shadow
 
 https://linuxcommandlibrary.com/man/toilet -> nice thing
 
+
+Try 
+
+
+
 ▒█▀▄▀█ ▀█▀ ▒█▄░▒█ ▀█▀ ▒█▀▀▀█ ▒█░▒█ ▒█▀▀▀ ▒█░░░ ▒█░░░ 
 ▒█▒█▒█ ▒█░ ▒█▒█▒█ ▒█░ ░▀▀▀▄▄ ▒█▀▀█ ▒█▀▀▀ ▒█░░░ ▒█░░░ 
 ▒█░░▒█ ▄█▄ ▒█░░▀█ ▄█▄ ▒█▄▄▄█ ▒█░▒█ ▒█▄▄▄ ▒█▄▄█ ▒█▄▄█ 
