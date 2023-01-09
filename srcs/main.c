@@ -18,7 +18,7 @@ int main(int argc, char** argv, char** envp)
             clear_looped_values();
         }
     }
-    close_program();
+    //close_program();
     return (0);
 }
 

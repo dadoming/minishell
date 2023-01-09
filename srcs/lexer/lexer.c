@@ -1,4 +1,4 @@
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static void store_word_list(char *rl_buffer, int *single_q, int *double_q, int *word_amount);
 static void get_full_word(char *buffer, int *i, int *aux_increment, char separator);
@@ -61,7 +61,7 @@ static void get_full_word(char *buffer, int *i, int *aux_increment, char separat
     (*aux_increment)++;
 }
 
-static int check_for_ending_delimiter(char *buffer, char delimiter)
+int check_for_ending_delimiter(char *buffer, char delimiter)
 {
     int i = 1;
 

@@ -106,6 +106,8 @@ typedef struct s_check
 typedef struct s_list
 {
     char            *token;
+    int             type;
+    int             quote;
     struct s_list   *next;
 } t_list;
 

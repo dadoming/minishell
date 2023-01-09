@@ -34,7 +34,7 @@ enum bool_e
     TRUE
 };
 
-enum controller_s
+enum controller_e
 {
     COMMAND,
     DOLLAR,
@@ -42,13 +42,6 @@ enum controller_s
     REDIRECT_INPUT,
     REDIRECT_OUTPUT
 };
-
-typedef struct s_token
-{
-    char            *text;
-    int             type;
-    struct s_token *next;
-} t_token;
 
 typedef struct s_core
 {
@@ -60,7 +53,6 @@ typedef struct s_core
 
 typedef struct shell_s
 {
-    t_token         *command;
     t_core          *core;
     t_list          *arg_list;
     int             signalset;
@@ -93,6 +85,8 @@ void print_node(void *s);
 
 /* lexer.c */
 void lexer(char *rl_buffer);
+int check_for_ending_delimiter(char *buffer, char delimiter);
+
 
 /* close_program.c */
 void close_program(void);
