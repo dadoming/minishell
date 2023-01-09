@@ -18,7 +18,7 @@ void treat_quotes(void *token)
     {
         if (content[i] == '$' && outside_single_quotes(content, i))
         {
-
+            //hello
         }
         i++;
     }
