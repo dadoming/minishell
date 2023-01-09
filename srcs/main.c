@@ -15,7 +15,6 @@ int main(int argc, char** argv, char** envp)
             prompt();
             if (evaluate() == 1)
                 break;
-            helper_print();
             clear_looped_values();
         }
     }

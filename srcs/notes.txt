@@ -97,8 +97,6 @@ Alt->  : move to last line in history
             unquoted metacharacters.
 
 
-
-
 !!!!! IMPORTANTE !!!!!
 
 3.1.1 Shell Operation
@@ -124,11 +122,6 @@ Basically, the shell does the following:
 > Executes the command (see Executing Commands).
 
 > Optionally waits for the command to complete and collects its exit status (see Exit Status).
-
-
-
-
-
 
                                                                                                    
 ██╗     ███████╗██╗  ██╗███████╗██████╗ 
@@ -162,8 +155,7 @@ Basically, the shell does the following:
     The special parameters ‘*’ and ‘@’ have special meaning when in double quotes (see
         Shell Parameter Expansion).
 
-
-                                                                                                   
+                                                                           
                                                                                                    
 Different input to be parsed:
 -> ' '		Single quotes
@@ -181,24 +173,34 @@ A metacharacter is a space, tab, newline, or one of the following characters:
 ‘|’, ‘&’, ‘;’, ‘(’, ‘)’, ‘<’, or ‘>’.
 
 
-Order in which to make the list of arguments:
-
-1. Create the [loop].
-
-2. Check if there are any expansions to be done. The only case in which the
-    expansions are not done is when it's between ' '.
 
 
-3. Define [start] at the position of the word found.
+███████╗██╗  ██╗██████╗  █████╗ ███╗   ██╗██████╗ ███████╗██████╗ 
+██╔════╝╚██╗██╔╝██╔══██╗██╔══██╗████╗  ██║██╔══██╗██╔════╝██╔══██╗
+█████╗   ╚███╔╝ ██████╔╝███████║██╔██╗ ██║██║  ██║█████╗  ██████╔╝
+██╔══╝   ██╔██╗ ██╔═══╝ ██╔══██║██║╚██╗██║██║  ██║██╔══╝  ██╔══██╗
+███████╗██╔╝ ██╗██║     ██║  ██║██║ ╚████║██████╔╝███████╗██║  ██║
+╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝
+                                                                  
 
-4. Iterate through the [buffer] in order to find the end of the word.
-
-5. Once found, add a node to the back of a linked list, sending the word
-    through the [substr] function.
 
 
-6. Give a [type value] to the node (?), so the next executions know what they are 
-    doing.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

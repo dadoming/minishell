@@ -36,6 +36,7 @@ enum bool_e
 
 enum controller_s
 {
+    COMMAND,
     DOLLAR,
     PIPE,
     REDIRECT_INPUT,
@@ -44,9 +45,9 @@ enum controller_s
 
 typedef struct s_token
 {
-    char *command;
-    int type;
-    struct t_token *next;
+    char            *text;
+    int             type;
+    struct s_token *next;
 } t_token;
 
 typedef struct s_core
@@ -59,6 +60,7 @@ typedef struct s_core
 
 typedef struct shell_s
 {
+    t_token         *command;
     t_core          *core;
     t_list          *arg_list;
     int             signalset;

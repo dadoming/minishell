@@ -8,6 +8,9 @@ int evaluate()
     {
         add_history(rl_line_buffer);
         lexer(rl_line_buffer);
+        printf("#### 1\n");
+        helper_print();
+        printf("#### 2\n");
         expander();
         if(string()->_compare_n("exit", mini()->arg_list->token, 4) == 0)
             return (1);
