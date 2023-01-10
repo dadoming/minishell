@@ -1,8 +1,10 @@
 #include "../../includes/minishell.h"
 
-static int check_quote(int *active_quote, char c);
-char *expand_dollar(char *content, int checkpoint);
+//static int check_quote(int *active_quote, char c);
+char *expand_dollar(char **arg_pointer, int checkpoint);
 void expand_values(void *token);
+char *replace(const char *if_this_has, char *this, char *to_replace);
+
 /*
     This function will:
     -> Treat the values inside quotes.
@@ -21,12 +23,6 @@ void expand_values(void *token);
 
 */
 
-void expander(void)
-{
-    list()->_iterator(mini()->arg_list, expand_values);
-    helper_print();
-}
-
 void expand_values(void *token)
 {
     char *content;
@@ -41,48 +37,119 @@ void expand_values(void *token)
         check_quote(&active_quote, content[i]);
         if (content[i] == '$')
         {
-            printf("Found $ at %d\n", i);
             if (active_quote == DOUBLE_QUOTE || active_quote == NO_QUOTE)
             {
-                content = expand_dollar(content, i);
+                content = expand_dollar(&content, i);
+                i = 0;
+                printf("%s\n", content);
             }
             else
+            {
                 printf("Single Quote -> Take off quotes\n");
+                i++;
+            }
         }
         i++;
     }
 }
 
-char *expand_dollar(char *content, int checkpoint)
+
+
+char *expand_dollar(char **aux, int i)
+{
+    char *content = *aux;
+    
+    char env_var[9999];
+
+    int i = 0;
+    int len;
+    while (mini()->core->env_p[i])
+    {
+        env_var[0] = '$';
+        len = string()->_length_until_c(mini()->core->env_p[i], '=');
+        env_var = string()->_copy_until(&env_var[1], len);
+        
+    }
+    
+    replace(mini()->arg_list, )
+}
+
+
+/*
+char *expand_dollar(char **arg_pointer, int checkpoint)
 {
     char *env_value = NULL;
+    char *content = *arg_pointer;
 
-    int len = 1 + checkpoint;
-    while (content[len] != '\0' && content[len] != '$' \
-        && check()->_is_space(content[len]) == FALSE)
-        len++;
     int i = 0;
+    int checkpoint = string()->_length_until_c(content, '$');
+    int len = checkpoint + 1;
+    while (content[len] != '\0' && check()->_is_space(content[len]) == FALSE && \
+            check()->_is_meta_char(content[len]) == FALSE && content[len + 1] != '\'' && 
+            content[len + 1] != '\"')
+    {
+        len++;
+    }
+
     while (mini()->core->env_p[i] != 0)
     {
-        if(string()->_compare_n(mini()->core->env_p[i], &content[1], len - 1) == 0)
+        if(string()->_compare_n(mini()->core->env_p[i], &content[checkpoint + 1], len - checkpoint) == 0)
         {
-            env_value = string()->_duplicate(&mini()->core->env_p[i][len]);
+            printf("Compared well\n");
+            env_value = string()->_duplicate(&mini()->core->env_p[i][len - checkpoint + 1]);
+            printf("%d env_value = %s\n", i, env_value);
             break;
         }
         i++;
     }
-    printf("%s\n", env_value);
-    int size;
-    size = strlen(content) + strlen(env_value) - len;
-    printf("%d\n", size);
-    /*char *strC = malloc (sizeof(char) * (size));
-    printf("%s\n", env_value);
-    strC = string()->_copy_until(content, checkpoint);
-    strC = string()->_append(&strC, env_value);
-    strC = string()->_append(&strC, &content[len]);
 
-    printf("%s\n", strC);*/
-    return (env_value);
+
+
+    char* strC  = string()->_copy_until(content, checkpoint);
+    strC        = string()->_append(&strC, env_value);
+    strC        = string()->_append(&strC, &content[len + 1]);
+    free(content);
+    printf("%s\n", strC);
+
+    return (strC);
+}
+*/
+
+
+void expander(void)
+{
+    list()->_iterator(mini()->arg_list, expand_values);
+    
+    printf("%s\n", replace("abcdddef   fpr     fpr", "fpr", "1"));
+}
+
+char *replace(const char *if_this_has, char *this, char *to_replace)
+{
+    char ret[9999];
+    int  i;
+    int  j;
+    
+    int size = string()->_length(this); 
+    i = 0;
+    while (*if_this_has)
+    {
+        if(this[0] == *if_this_has && string()->_compare_n(if_this_has, this, size) == 0)
+        {
+            j = 0;
+            while (to_replace[j] != '\0')
+            {
+                ret[i++] = to_replace[j++];
+            }
+            if_this_has += size;
+        }
+        else
+        {  
+            ret[i] = *if_this_has++;
+            i++;
+        }
+    }
+    ret[i] = '\0';
+    return (string()->_duplicate(ret));
 }
 
 static int check_quote(int *active_quote, char c)
@@ -112,6 +179,3 @@ static int check_quote(int *active_quote, char c)
     }
     return (*active_quote);
 }
-
-
-

@@ -15,3 +15,30 @@ int _is_directory(char *path)
         return (1);
     return (0);
 }
+
+int _is_meta_char(char c)
+{
+    if (c == 46)// .
+        return (1);
+    if (c == 36)// $
+        return (1);
+    if (c == 42)// *
+        return (1);
+    if (c == 43)//+
+        return (1);
+    if (c == 63)// ?
+        return (1);
+    if (c == 124)// |
+        return (1);
+    if (c == 92)// "\\"
+        return (1);
+    if (c == 94)// ^
+        return (1);
+    if (c == 91)// [
+        return (1);
+    if (c == 123)//{
+        return (1);
+    if (c == 40)//(
+        return (1);
+    return (0);
+}

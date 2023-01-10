@@ -15,7 +15,7 @@ t_string *string()
 t_check *check()
 {
     static t_check c = {_is_alpha, _is_ascii, _is_digit, _is_printable,
-    _is_alnum, _is_space, _is_directory};
+    _is_alnum, _is_space, _is_directory, _is_meta_char};
     return (&c);
 }
 

@@ -87,7 +87,6 @@ void print_node(void *s);
 void lexer(char *rl_buffer);
 int check_for_ending_delimiter(char *buffer, char delimiter);
 
-
 /* close_program.c */
 void close_program(void);
 

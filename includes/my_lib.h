@@ -101,6 +101,8 @@ typedef struct s_check
     int     (*_is_space)(int c);
     // Checks if path is a directory. 1 for true. 0 for false.
     int     (*_is_directory)(char *path);
+    // Checks if char is meta_character. 1 for true. 0 for false.
+    int     (*_is_meta_char)(char c);
 }   t_check;
 
 typedef struct s_list
@@ -183,6 +185,7 @@ int	    _is_digit(int c);
 int	    _is_printable(int c);
 int	    _is_alnum(int c);
 int     _is_space(int c);
+int     _is_meta_char(char c);
 int	    _mem_compare(const void *s1, const void *s2, unsigned int n);
 int     _length_until_c(char *str, char c);
 int     _is_directory(char *path);
