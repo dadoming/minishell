@@ -1,27 +1,16 @@
 #include "../../includes/minishell.h"
 
-//static int check_quote(int *active_quote, char c);
-char *expand_dollar(char **arg_pointer, int checkpoint);
+static int check_quote(int *active_quote, char c);
+char* expand_dollars(char *content);
 void expand_values(void *token);
-char *replace(const char *if_this_has, char *this, char *to_replace);
+char *replace(char *if_this_has, char *this, char *str_to_replace, int active_quote);
+//static char* copy_until(char *str, int n);
 
-/*
-    This function will:
-    -> Treat the values inside quotes.
-      -> Assign the type of quote to the token if word.
-      -> Assign a controller to the token.
-    -> Expand the $ and substitute it.
-
-    1. Iterate through the argument.
-    2. If $ found
-        2.1. Check if $ is inside double quotes or no quotes, else just ignore
-    3. Return to the start and take of unnecessary quotes, for that just iterate
-        through the argument and once a pair of " " is found, then just take them of.
-       If there is a pair ' ', check if it is inside double quotes. If it is then just
-        leave them there.
-
-
-*/
+void expander(void)
+{
+    list()->_iterator(mini()->arg_list, expand_values);
+    helper_print();
+}
 
 void expand_values(void *token)
 {
@@ -39,13 +28,12 @@ void expand_values(void *token)
         {
             if (active_quote == DOUBLE_QUOTE || active_quote == NO_QUOTE)
             {
-                content = expand_dollar(&content, i);
-                i = 0;
-                printf("%s\n", content);
+                expand_dollars(&content);
+                break;
             }
             else
             {
-                printf("Single Quote -> Take off quotes\n");
+                printf("Else\n");
                 i++;
             }
         }
@@ -53,29 +41,94 @@ void expand_values(void *token)
     }
 }
 
-
-
-char *expand_dollar(char **aux, int i)
+char* expand_dollars(char *content)
 {
-    char *content = *aux;
     
-    char env_var[9999];
-
-    int i = 0;
-    int len;
-    while (mini()->core->env_p[i])
-    {
-        env_var[0] = '$';
-        len = string()->_length_until_c(mini()->core->env_p[i], '=');
-        env_var = string()->_copy_until(&env_var[1], len);
-        
-    }
-    
-    replace(mini()->arg_list, )
 }
 
 
 /*
+static char* copy_until(char *str, int n)
+{
+    char    *dst;
+    int     i;
+    
+    if (!str)
+        return (NULL);
+    i = 0;
+    dst = malloc(sizeof(char) * (n + 1 + 1));
+    if(!dst)
+        return (NULL);
+    dst[0] = '$';
+    while (n-- > 0)
+    {
+        dst[i + 1] = str[i];
+        i++;
+    }
+    dst[i + 1] = '\0';
+    return (dst);
+}
+*/
+
+
+/*
+char* expand_dollars(char *content)
+{
+    int i = 0;
+    char *ret = NULL;
+    int env_len = 0;
+    char *env_variable = NULL;
+    while (mini()->core->env_p[i] != 0)
+    {
+        env_len = string()->_length_until_c(mini()->core->env_p[i], '=');
+        env_variable = copy_until(mini()->core->env_p[i], env_len);
+        ret = replace(content, env_variable, &mini()->core->env_p[i][env_len + 1], NO_QUOTE);
+        free(env_variable);
+        env_variable = NULL;
+        i++;
+    }
+    printf("ret: %s\n", ret);
+    return (ret);
+}
+
+char *replace(char *if_this_has, char *this, char *str_to_replace, int active_quote)
+{
+    char ret[512];
+    int  i;
+    int  j;
+    int size;
+
+    size = string()->_length(this);
+    i = 0;
+    while (*if_this_has)
+    {
+        check_quote(&active_quote, *if_this_has);
+        if (active_quote == SINGLE_QUOTE)
+        {
+            ret[i] = *if_this_has++;
+            i++;
+            continue;
+        }
+        if(this[0] == *if_this_has && string()->_compare_n(if_this_has, this, size) == 0)
+        {
+            j = 0;
+            while (str_to_replace[j] != '\0')
+            {
+                ret[i++] = str_to_replace[j++];
+            }
+            if_this_has += size;
+        }
+        else
+        {  
+            ret[i] = *if_this_has++;
+            i++;
+        }
+    }
+    ret[i] = '\0';
+    return (string()->_duplicate(ret));
+}
+
+
 char *expand_dollar(char **arg_pointer, int checkpoint)
 {
     char *env_value = NULL;
@@ -114,43 +167,6 @@ char *expand_dollar(char **arg_pointer, int checkpoint)
     return (strC);
 }
 */
-
-
-void expander(void)
-{
-    list()->_iterator(mini()->arg_list, expand_values);
-    
-    printf("%s\n", replace("abcdddef   fpr     fpr", "fpr", "1"));
-}
-
-char *replace(const char *if_this_has, char *this, char *to_replace)
-{
-    char ret[9999];
-    int  i;
-    int  j;
-    
-    int size = string()->_length(this); 
-    i = 0;
-    while (*if_this_has)
-    {
-        if(this[0] == *if_this_has && string()->_compare_n(if_this_has, this, size) == 0)
-        {
-            j = 0;
-            while (to_replace[j] != '\0')
-            {
-                ret[i++] = to_replace[j++];
-            }
-            if_this_has += size;
-        }
-        else
-        {  
-            ret[i] = *if_this_has++;
-            i++;
-        }
-    }
-    ret[i] = '\0';
-    return (string()->_duplicate(ret));
-}
 
 static int check_quote(int *active_quote, char c)
 {

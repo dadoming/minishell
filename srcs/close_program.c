@@ -6,6 +6,7 @@ static void clear_core();
     library allocated memory reachable but with no leaks. */
 void close_program(void)
 {
+    clear_looped_values();
     clear_core();
     rl_erase_empty_line = 1;
     rl_clear_history();
@@ -14,13 +15,10 @@ void close_program(void)
 
 static void clear_core()
 {
-    free_list(&mini()->arg_list);
-    if (mini()->core->rl_returned)
-        free(mini()->core->rl_returned);
-    if (mini()->core->prompt)
-        free(mini()->core->prompt);
-    if (mini()->core->logname)
-        free(mini()->core->logname);
+    if (mini()->arg_list != NULL)
+        free_list(&mini()->arg_list);
+    //if (mini()->core->prompt != NULL)
+      //   free(mini()->core->prompt);
     int i = 0;
     if(mini()->core->env_p != NULL)
     {
@@ -31,6 +29,5 @@ static void clear_core()
         }
         free(mini()->core->env_p);
     }
-    free(mini()->arg_list);
-    //free(mini()->core);
+    free(mini()->core);
 }

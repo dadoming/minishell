@@ -62,6 +62,7 @@ typedef struct shell_s
 /* main.c */
 shell_t *mini(void);
 void	free_list(t_list **lst);
+void clear_looped_values(void);
 
 /* prompt.c */
 void prompt();
