@@ -75,6 +75,10 @@ int evaluate();
 
 /* expander.c */
 void expander(void);
+int check_quote(int *active_quote, char c);
+
+/* expand_env.c */
+char *expand_environment(char **content);
 
 /* signals.c */
 void ignore_signal_for_shell();

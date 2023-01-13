@@ -16,6 +16,5 @@ void helper_print()
 {
     if(mini()->arg_list)
         list()->_iterator(mini()->arg_list, print_node);
-
 }
 

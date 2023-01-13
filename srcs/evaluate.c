@@ -14,6 +14,7 @@ int evaluate()
         expander();
         if(string()->_compare_n("exit", mini()->arg_list->token, 4) == 0)
             return (1);
+        
     }
     return (0);
 }

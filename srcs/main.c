@@ -46,11 +46,12 @@ void	free_list(t_list **lst)
 	while (*lst)
 	{
 		temp = (*lst)-> next;
-        free((*lst)->token);
-		free(*lst);
+        if ((*lst)->token)
+            free((*lst)->token);
+		if (*lst)
+            free(*lst);
 		*lst = temp;
 	}
-	lst = NULL;
 }
 
 shell_t *mini(void)
