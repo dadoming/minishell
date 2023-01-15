@@ -1,5 +1,23 @@
 #include "../../includes/minishell.h"
 
+static char*    expand_dollars(char *content, int i);
+static char*    expand_values(char *token);
+
+/* This function will expand the values of the tokens if there is any
+    environment variable or any other value to be expanded */ 
+void expander(void)
+{
+    t_list *aux;
+
+    aux = mini()->arg_list;
+    while (aux != NULL)
+    {
+        aux->token = expand_values(aux->token);
+        aux = aux->next;
+    }
+    helper_print();
+}
+
 int check_quote(int *active_quote, char c)
 {
     if (*active_quote == NO_QUOTE)
@@ -28,17 +46,14 @@ int check_quote(int *active_quote, char c)
     return (*active_quote);
 }
 
-
-
-
-char* expand_dollars(char *content, int i)
+static char* expand_dollars(char *content, int i)
 {
     if (content[i + 1] == '?')
     {
         printf("$? is used to find the return value of the last executed command.\n");
         return (content);
     }
-    if (check()->_is_alnum(content[i + 1]) == 1)
+    if (check()->_is_meta_char(content[i + 1]) == 0)
     {
         content = expand_environment(&content);
         return (content);
@@ -50,7 +65,7 @@ char* expand_dollars(char *content, int i)
     return (string()->_duplicate("\0"));
 }
 
-char* expand_values(char *token)
+static char* expand_values(char *token)
 {
     int i;
     int active_quote;
@@ -73,15 +88,4 @@ char* expand_values(char *token)
     return (token);
 }
 
-void expander(void)
-{
-    t_list *aux;
 
-    aux = mini()->arg_list;
-    while (aux != NULL)
-    {
-        aux->token = expand_values(aux->token);
-        aux = aux->next;
-    }
-    helper_print();
-}

@@ -1,8 +1,8 @@
 #include "../includes/minishell.h"
 
 /* Checks if there is any input and if there is, add to the 
-    history and parse the values for further execution */
-int evaluate()
+    history and prepare the values for the parser */
+int evaluate(void)
 {
     if (string()->_length(rl_line_buffer) > 0)
     {
@@ -12,6 +12,7 @@ int evaluate()
         helper_print();
         printf("#### 2\n");
         expander();
+        remove_quotes();
         if(string()->_compare_n("exit", mini()->arg_list->token, 4) == 0)
             return (1);
         

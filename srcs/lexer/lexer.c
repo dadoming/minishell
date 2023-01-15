@@ -4,6 +4,8 @@ static void store_word_list(char *rl_buffer, int *single_q, int *double_q, int *
 static void get_full_word(char *buffer, int *i, int *aux_increment, char separator);
 static int check_for_ending_word(char *buffer, char delimiter);
 
+/* This function is gonna produce tokens through the input passed
+    in through the readline function taking quotes into account*/
 void lexer(char *rl_buffer)
 {
     int single_q = 0;

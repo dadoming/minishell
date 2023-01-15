@@ -62,7 +62,7 @@ typedef struct shell_s
 /* main.c */
 shell_t *mini(void);
 void	free_list(t_list **lst);
-void clear_looped_values(void);
+void    clear_looped_values(void);
 
 /* prompt.c */
 void prompt();
@@ -71,7 +71,7 @@ void prompt();
 int init(char **envp);
 
 /* evaluate.c */
-int evaluate();
+int evaluate(void);
 
 /* expander.c */
 void expander(void);
@@ -79,6 +79,9 @@ int check_quote(int *active_quote, char c);
 
 /* expand_env.c */
 char *expand_environment(char **content);
+
+/* expand_repplace.c */
+char *replace(char **if_this_has, char *this, char *str_to_replace, int active_quote);
 
 /* signals.c */
 void ignore_signal_for_shell();

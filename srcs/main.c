@@ -1,7 +1,5 @@
 #include "../includes/minishell.h"
 
-void clear_looped_values(void);
-
 int main(int argc, char** argv, char** envp)
 {
     (void)argv;
@@ -54,6 +52,7 @@ void	free_list(t_list **lst)
 	}
 }
 
+// Returns the address of mini so it can be used in other files.
 shell_t *mini(void)
 {
     static shell_t mini;
