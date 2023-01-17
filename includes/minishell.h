@@ -21,6 +21,8 @@
 
 typedef struct s_list t_list;
 
+int g_exit_status;
+
 enum quotes_e 
 {
     SINGLE_QUOTE,
@@ -82,6 +84,9 @@ char *expand_environment(char **content);
 
 /* expand_repplace.c */
 char *replace(char **if_this_has, char *this, char *str_to_replace, int active_quote);
+
+/* quotes.c */
+int treat_quotes(void);
 
 /* signals.c */
 void ignore_signal_for_shell();

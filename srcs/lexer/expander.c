@@ -15,7 +15,6 @@ void expander(void)
         aux->token = expand_values(aux->token);
         aux = aux->next;
     }
-    helper_print();
 }
 
 int check_quote(int *active_quote, char c)

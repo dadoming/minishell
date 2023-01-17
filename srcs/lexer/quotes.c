@@ -1,17 +1,24 @@
 #include "../../includes/minishell.h"
 
-static int only_one_quote(char *first, char second, char quote);
+static int only_one_quote(char *input);
 
-void treat_quotes(void *token)
+int quotes(void)
 {
-    char *content;
+    t_list *aux;
+
+    aux = mini()->arg_list;
+    while (aux != NULL)
+    {
+        if (only_one_quote(aux->token) == TRUE)
+        {
+            printf("Unclosed quotes\n");
+            return (TRUE);
+        }
+        //aux->token = 
+        aux = aux->next;
+    }
     
-    content = token;
-    if (only_one_quote(&content[0], content[1], '\'') == TRUE)
-        return ;
-    if (only_one_quote(&content[0], content[1], '\"') == TRUE)
-        return ;
-    
+    return (FALSE);
     // remove_double_quotes(&content, 0, 0);
 }
 
@@ -44,13 +51,34 @@ void remove_double_quotes(char **aux, int i, int end)
     }
 }
 
-static int only_one_quote(char *first, char second, char quote)
+static int only_one_quote(char *input)
 {
-    if (*first == quote && second == '\0')
+    int i;
+    int outer_quote;
+    int quote_amount;
+
+    outer_quote = NO_QUOTE;
+    quote_amount = 0;
+    i = 0;
+    while (input[i] != '\0')
     {
-        *first = '\0';
-        printf("Error: Only one quote not closed\"\n");
-        return (TRUE);
+        if (outer_quote == NO_QUOTE && (input[i] == '\'' || input[i] == '\"'))
+        {
+            if (input[i] == '\'')
+                outer_quote = SINGLE_QUOTE;
+            if (input[i] == '\"')
+                outer_quote = DOUBLE_QUOTE; 
+            quote_amount++;
+            i++;
+        }
+        if (outer_quote == DOUBLE_QUOTE && input[i] == '\"')
+            quote_amount++;
+        if (outer_quote == SINGLE_QUOTE && input[i] == '\'')
+            quote_amount++;
+        i++;
     }
+    printf("%d\n", quote_amount);
+    if (quote_amount % 2 != 0)
+        return (TRUE);
     return (FALSE);
 }
