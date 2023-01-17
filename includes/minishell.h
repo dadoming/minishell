@@ -86,7 +86,7 @@ char *expand_environment(char **content);
 char *replace(char **if_this_has, char *this, char *str_to_replace, int active_quote);
 
 /* quotes.c */
-int treat_quotes(void);
+int quotes(void);
 
 /* signals.c */
 void ignore_signal_for_shell();

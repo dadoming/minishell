@@ -1,6 +1,8 @@
 #include "../../includes/minishell.h"
 
 static int only_one_quote(char *input);
+char *remove_quotes(char *str, char c);
+char *treat_quotes(char *str);
 
 int quotes(void)
 {
@@ -14,7 +16,7 @@ int quotes(void)
             printf("Unclosed quotes\n");
             return (TRUE);
         }
-        //aux->token = 
+        aux->token = treat_quotes(aux->token);
         aux = aux->next;
     }
     
@@ -22,33 +24,50 @@ int quotes(void)
     // remove_double_quotes(&content, 0, 0);
 }
 
-// Removes all double quotes in the sentence. Needs to be tweaked to only remove the neccessary ones
-void remove_double_quotes(char **aux, int i, int end)
+char *treat_quotes(char *str)
 {
-    char *content;
+    int outer_quote;
+    int i;
 
-    content = *aux;
-    while (content[i] != '\0')
+    outer_quote = NO_QUOTE;
+    i = 0;
+    while (str[i] != '\0')
     {
-        if (content[i] == '\"')
+        if ((outer_quote == NO_QUOTE) && (str[i] == '\"'))
         {
-            string()->_mem_move(&content[i], &content[i + 1], string()->_length(content) - i);
-            i--;
-            end = string()->_length(content);
-            while (content[end] != '\"')
-            {
-                end--;
-                if (content[end] == '\"')
-                {
-                    string()->_mem_move(&content[end], &content[end + 1], string()->_length(content) - end);
-                    break;
-                }
-                if (end == 0)
-                    break;
-            }
+            str = remove_quotes(str, '\"');
+            outer_quote = check_quote(&outer_quote, '\"');
+        }
+        if ((outer_quote == NO_QUOTE) && (str[i] == '\''))
+        {
+            str = remove_quotes(str, '\'');
+            outer_quote = check_quote(&outer_quote, '\'');
         }
         i++;
     }
+    return (str);
+}
+
+char *remove_quotes(char *str, char c)
+{
+    int i;
+    int end;
+
+    i = 0;
+    end = 0;
+    while (str[i] != '\0')
+    {
+        if (str[i] == c)
+        {
+            string()->_mem_move(&str[i], &str[i + 1], string()->_length(str) - i);
+            if (i > 0)
+                i--;
+            end = string()->_length_until_c(str, c);
+            string()->_mem_move(&str[end], &str[end + 1], string()->_length(str) - end);
+        }
+        i++;
+    }
+    return (str);
 }
 
 static int only_one_quote(char *input)
@@ -77,7 +96,6 @@ static int only_one_quote(char *input)
             quote_amount++;
         i++;
     }
-    printf("%d\n", quote_amount);
     if (quote_amount % 2 != 0)
         return (TRUE);
     return (FALSE);

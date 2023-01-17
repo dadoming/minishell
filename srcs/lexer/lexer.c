@@ -1,42 +1,31 @@
 #include "../../includes/minishell.h"
 
-static void store_word_list(char *rl_buffer, int *single_q, int *double_q, int *word_amount);
-static void get_full_word(char *buffer, int *i, int *aux_increment, char separator);
+static void get_full_word(char *buffer, int *i, char separator);
 static int check_for_ending_word(char *buffer, char delimiter);
 
 /* This function is gonna produce tokens through the input passed
     in through the readline function taking quotes into account*/
 void lexer(char *rl_buffer)
 {
-    int single_q = 0;
-    int double_q = 0;
-    int word_amount = 0;
-
-    store_word_list(rl_buffer, &single_q, &double_q, &word_amount);
-    print_quote_value(single_q, double_q, word_amount);
-}
-
-static void store_word_list(char *rl_buffer, int *single_q, int *double_q, int *word_amount)
-{
     int i = 0;
 
     while (rl_buffer[i] != '\0')
     {
         if(rl_buffer[i] == '\'')
-            get_full_word(&rl_buffer[i], &i, single_q, '\'');
+            get_full_word(&rl_buffer[i], &i, '\'');
         else if (rl_buffer[i] == '\"')
-            get_full_word(&rl_buffer[i], &i, double_q, '\"');
+            get_full_word(&rl_buffer[i], &i, '\"');
         else if (rl_buffer[i] != '\'' && rl_buffer[i] != '\"' && \
                 (check()->_is_space(rl_buffer[i]) == FALSE))
         {
-            get_full_word(&rl_buffer[i], &i, word_amount, ' ');
+            get_full_word(&rl_buffer[i], &i, ' ');
         }
         else
             i++;
     }
 }
 
-static void get_full_word(char *buffer, int *i, int *aux_increment, char separator)
+static void get_full_word(char *buffer, int *i, char separator)
 {
     int end;
     
@@ -59,7 +48,6 @@ static void get_full_word(char *buffer, int *i, int *aux_increment, char separat
     }
     list()->_add_back(&mini()->arg_list, string()->_substr(buffer, 0, end + 1));
     (*i) += end + 1;
-    (*aux_increment)++;
 }
 
 int check_for_ending_delimiter(char *buffer, char delimiter)
