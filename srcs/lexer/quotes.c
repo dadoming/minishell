@@ -1,8 +1,8 @@
 #include "../../includes/minishell.h"
 
-static int only_one_quote(char *input);
-char *remove_quotes(char *str, char c);
-char *treat_quotes(char *str);
+static int  only_one_quote(char *input);
+static char *remove_quotes(char *str, char c);
+static char *treat_quotes(char *str);
 
 int quotes(void)
 {
@@ -24,7 +24,7 @@ int quotes(void)
     // remove_double_quotes(&content, 0, 0);
 }
 
-char *treat_quotes(char *str)
+static char *treat_quotes(char *str)
 {
     int outer_quote;
     int i;
@@ -48,7 +48,7 @@ char *treat_quotes(char *str)
     return (str);
 }
 
-char *remove_quotes(char *str, char c)
+static char *remove_quotes(char *str, char c)
 {
     int i;
     int end;

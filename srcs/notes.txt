@@ -5,10 +5,6 @@ https://manytools.org/hacker-tools/ascii-banner/ -> ansi shadow
 https://linuxcommandlibrary.com/man/toilet -> nice thing
 
 
-Try 
-
-
-
 ▒█▀▄▀█ ▀█▀ ▒█▄░▒█ ▀█▀ ▒█▀▀▀█ ▒█░▒█ ▒█▀▀▀ ▒█░░░ ▒█░░░ 
 ▒█▒█▒█ ▒█░ ▒█▒█▒█ ▒█░ ░▀▀▀▄▄ ▒█▀▀█ ▒█▀▀▀ ▒█░░░ ▒█░░░ 
 ▒█░░▒█ ▄█▄ ▒█░░▀█ ▄█▄ ▒█▄▄▄█ ▒█░▒█ ▒█▄▄▄ ▒█▄▄█ ▒█▄▄█ 
@@ -31,12 +27,12 @@ Boa documentação: < https://github.com/madebypixel02/minishell >
 
 Tasks actuais:
 
-> Tratar do texto na expansão das variávies.
+> Implementar Signals para quando o Ctrl é pressionado.
 
+> Implementar execução de processos.
 
+> Implementar os Built-Ins.
 
-
-hello
 
 ▒█▀▀█ ▒█▀▀▀ ░█▀▀█ ▒█▀▀▄ ▒█░░░ ▀█▀ ▒█▄░▒█ ▒█▀▀▀ 
 ▒█▄▄▀ ▒█▀▀▀ ▒█▄▄█ ▒█░▒█ ▒█░░░ ▒█░ ▒█▒█▒█ ▒█▀▀▀ 
