@@ -19,9 +19,7 @@ int quotes(void)
         aux->token = treat_quotes(aux->token);
         aux = aux->next;
     }
-    
-    return (FALSE);
-    // remove_double_quotes(&content, 0, 0);
+    return (0);
 }
 
 static char *treat_quotes(char *str)

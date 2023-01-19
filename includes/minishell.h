@@ -48,6 +48,7 @@ enum controller_e
 typedef struct s_core
 {
     char            **env_p;
+    char            **execution_path;
     char            *rl_returned;
     char            *prompt;
     char            *logname;
@@ -85,6 +86,9 @@ char *expand_environment(char **content);
 /* expand_repplace.c */
 char *replace(char **if_this_has, char *this, char *str_to_replace, int active_quote);
 
+/* executor.c */
+int executor(void);
+
 /* quotes.c */
 int quotes(void);
 
@@ -102,5 +106,9 @@ int check_for_ending_delimiter(char *buffer, char delimiter);
 
 /* close_program.c */
 void close_program(void);
+
+/* built_ins/ */
+int echo();
+
 
 #endif

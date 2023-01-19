@@ -1,6 +1,5 @@
 #include "../../includes/minishell.h"
 
-
 static int calculate_size(char **if_this_has, char *this, char *str_to_replace, int size, int active_quote)
 {
     int total_return_size;

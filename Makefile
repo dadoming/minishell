@@ -12,7 +12,6 @@ SRCS = ${wildcard srcs/*.c} \
 		${wildcard srcs/my_lib/lst/*.c} \
 		${wildcard srcs/lexer/*.c}
 
-
 CC = gcc
 
 FLAGS = -Wextra -Wall -Werror

@@ -2,7 +2,7 @@
 
 void print_node(void *s)
 {
-    printf("%s\n", (char *) s);
+    printf("-> %s\n", (char *) s);
 }
 
 void print_quote_value(int single_q, int double_q, int word_amount)
