@@ -11,7 +11,7 @@ int evaluate(void)
         expander();
         if (quotes() == TRUE)
             return (0);
-        helper_print();
+        //helper_print();
     }
     return (0);
 }

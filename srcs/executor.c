@@ -4,33 +4,32 @@ void find_path(char **env);
 
 int executor(void)
 {
-	//find_path(mini()->core->env_p);
+	//find_path(mini()->core->env_p); // giving mem_leak
 	if(string()->_compare_n(mini()->arg_list->token, "echo", 4) == 0)
 	{
 		echo();
-		printf("Builtin not done yet\n");
 	}
-	if(string()->_compare_n(mini()->arg_list->token, "cd", 2) == 0)
+	else if(string()->_compare_n(mini()->arg_list->token, "cd", 2) == 0)
 	{
 		printf("Builtin not done yet\n");
 	}
-	if(string()->_compare_n(mini()->arg_list->token, "pwd", 3) == 0)
+	else if(string()->_compare_n(mini()->arg_list->token, "pwd", 3) == 0)
 	{
 		printf("Builtin not done yet\n");
 	}
-	if(string()->_compare_n(mini()->arg_list->token, "export", 6) == 0)
+	else if(string()->_compare_n(mini()->arg_list->token, "export", 6) == 0)
 	{
 		printf("Builtin not done yet\n");
 	}
-	if(string()->_compare_n(mini()->arg_list->token, "unset", 5) == 0)
+	else if(string()->_compare_n(mini()->arg_list->token, "unset", 5) == 0)
 	{
 		printf("Builtin not done yet\n");
 	}
-	if(string()->_compare_n(mini()->arg_list->token, "env", 3) == 0)
+	else if(string()->_compare_n(mini()->arg_list->token, "env", 3) == 0)
 	{
 		printf("Builtin not done yet\n");
 	}
-	if(string()->_compare_n(mini()->arg_list->token, "exit", 4) == 0)
+	else if(string()->_compare_n(mini()->arg_list->token, "exit", 4) == 0)
         return (1);
 	return (0);
 }

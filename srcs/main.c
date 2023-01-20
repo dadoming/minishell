@@ -15,7 +15,7 @@ int main(int argc, char** argv, char** envp)
             prompt();
             if (evaluate() == 1)
                 break;
-            executor(); // giving mem_leak
+            executor(); 
             clear_looped_values();
         }
     }
