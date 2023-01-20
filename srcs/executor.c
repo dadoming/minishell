@@ -5,18 +5,16 @@ void find_path(char **env);
 int executor(void)
 {
 	//find_path(mini()->core->env_p); // giving mem_leak
-	if(string()->_compare_n(mini()->arg_list->token, "echo", 4) == 0)
-	{
-		echo();
-	}
+	if(string()->_compare_n(mini()->arg_list->token, "echo", 4) == 0 && \
+		string()->_length(mini()->arg_list->token) == 4)
+		echo(mini()->arg_list);
 	else if(string()->_compare_n(mini()->arg_list->token, "cd", 2) == 0)
 	{
 		printf("Builtin not done yet\n");
 	}
-	else if(string()->_compare_n(mini()->arg_list->token, "pwd", 3) == 0)
-	{
-		printf("Builtin not done yet\n");
-	}
+	else if(string()->_compare_n(mini()->arg_list->token, "pwd", 3 == 0) && \
+		string()->_length(mini()->arg_list->token) == 3)
+		pwd();
 	else if(string()->_compare_n(mini()->arg_list->token, "export", 6) == 0)
 	{
 		printf("Builtin not done yet\n");

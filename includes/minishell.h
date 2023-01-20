@@ -9,6 +9,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <time.h>
+#include <limits.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
@@ -108,7 +109,8 @@ int check_for_ending_delimiter(char *buffer, char delimiter);
 void close_program(void);
 
 /* built_ins/ */
-int echo();
+int echo(t_list *arg_list);
+int pwd(void);
 
 
 #endif
