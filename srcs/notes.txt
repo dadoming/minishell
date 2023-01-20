@@ -28,13 +28,23 @@ Readline Manual: < https://tiswww.case.edu/php/chet/readline/readline.html#Progr
 Boa documentação: < https://github.com/madebypixel02/minishell >
 
 
-Tasks actuais:
+
+
+!!!!!
+TO - DO! :
+
+> Implementar função set_env() para quando queremos alterar uma variável do env
 
 > Implementar Signals para quando o Ctrl é pressionado.
 
 > Implementar execução de processos.
 
 > Implementar os Built-Ins.
+
+
+
+
+
 
 ██████╗ ███████╗ █████╗ ██████╗ ██╗     ██╗███╗   ██╗███████╗
 ██╔══██╗██╔════╝██╔══██╗██╔══██╗██║     ██║████╗  ██║██╔════╝
