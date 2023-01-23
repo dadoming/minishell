@@ -1,10 +1,10 @@
 #include "../includes/minishell.h"
 
 void find_path(char **env);
+static int is_built_in();
 
-int executor(void)
+static int is_built_in()
 {
-	//find_path(mini()->core->env_p); // giving mem_leak
 	if(string()->_compare_n(mini()->arg_list->token, "echo", 4) == 0 && \
 		string()->_length(mini()->arg_list->token) == 4)
 		echo(mini()->arg_list);
@@ -29,6 +29,16 @@ int executor(void)
 	}
 	else if(string()->_compare_n(mini()->arg_list->token, "exit", 4) == 0)
         return (1);
+	return (0);
+}
+
+int executor(void)
+{
+	//find_path(mini()->core->env_p); // giving mem_leak
+	if (is_built_in() == 1)
+		return (1);
+
+	
 	return (0);
 }
 

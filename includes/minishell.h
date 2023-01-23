@@ -39,18 +39,27 @@ enum bool_e
 
 enum controller_e
 {
+    STRING,
     COMMAND,
-    DOLLAR,
     PIPE,
     REDIRECT_INPUT,
     REDIRECT_OUTPUT
 };
 
+/* Located in my_lib.h
+typedef struct s_list
+{
+    char            *token;
+    int             type;
+    struct s_list   *next;
+} t_list;
+*/
+
 typedef struct s_core
 {
     char            **env_p;
     char            **execution_path;
-    char            *rl_returned;
+    char            *free_line;
     char            *prompt;
     char            *logname;
 } t_core;

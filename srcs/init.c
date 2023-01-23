@@ -32,7 +32,7 @@ static void init_core(char **envp)
     mini()->core->execution_path = NULL;
     mini()->core->logname = NULL;
     mini()->core->prompt = NULL;
-    mini()->core->rl_returned = NULL;
+    mini()->core->free_line = NULL;
 }
 
 static int init_structs()

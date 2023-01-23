@@ -15,7 +15,12 @@ int main(int argc, char** argv, char** envp)
             prompt();
             if (evaluate() == 1)
                 break;
-            executor(); 
+            
+            //if (parser() == 1)
+              //  break;
+
+            if (executor() == 1)
+                break;
             clear_looped_values();
         }
     }
@@ -27,8 +32,8 @@ int main(int argc, char** argv, char** envp)
 void clear_looped_values(void)
 {
     int i = 0;
-    if (mini()->core->rl_returned != NULL)
-        free(mini()->core->rl_returned);
+    if (mini()->core->free_line != NULL)
+        free(mini()->core->free_line);
     if (mini()->core->prompt != NULL)
         free(mini()->core->prompt);
     if (mini()->arg_list != NULL)

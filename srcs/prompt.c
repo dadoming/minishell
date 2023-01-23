@@ -6,7 +6,7 @@ static void print_prompt(void);
 void prompt()
 {
     print_prompt();
-    mini()->core->rl_returned = readline(mini()->core->prompt);
+    mini()->core->free_line = readline(mini()->core->prompt);
 }
 
 static void print_prompt(void)

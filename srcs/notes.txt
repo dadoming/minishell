@@ -228,32 +228,37 @@ The first word generally specifies a command to be executed,
 
 
 
+██████╗ ███████╗██████╗ ██╗██████╗ ███████╗ ██████╗████████╗██╗ ██████╗ ███╗   ██╗███████╗
+██╔══██╗██╔════╝██╔══██╗██║██╔══██╗██╔════╝██╔════╝╚══██╔══╝██║██╔═══██╗████╗  ██║██╔════╝
+██████╔╝█████╗  ██║  ██║██║██████╔╝█████╗  ██║        ██║   ██║██║   ██║██╔██╗ ██║███████╗
+██╔══██╗██╔══╝  ██║  ██║██║██╔══██╗██╔══╝  ██║        ██║   ██║██║   ██║██║╚██╗██║╚════██║
+██║  ██║███████╗██████╔╝██║██║  ██║███████╗╚██████╗   ██║   ██║╚██████╔╝██║ ╚████║███████║
+╚═╝  ╚═╝╚══════╝╚═════╝ ╚═╝╚═╝  ╚═╝╚══════╝ ╚═════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝
 
+Before a command is executed, its input and output may be redirected using 
+    a special notation interpreted by the shell.
 
+The shell provides a mechanism for redirecting the standard input and output 
+    of a command to a file. 
+This is done by using the special characters ‘<’ and ‘>’ to redirect the 
+    standard input and output, respectively. 
+    
+->  ‘<’ character redirects the standard input of a command to a file. 
+->  ‘>’ character redirects the standard output of a command to a file.
+->  ‘>>’ character appends the standard output of a command to a file.
+->  ‘<<’ character redirects the standard input of a command to a file 
+      until a line containing the delimiter is seen. (here_document)
+->  ‘|’ character is used to send the output of one command to another.
 
+For < and >, the file name immediately follows the character. 
+    For <<, the delimiter immediately follows the characters. 
+    For |, the command immediately follows the character.
 
+For > truncate and create the file if it doesn't exist.
+For >> append and create to the file if it doesn't exist.
 
+They need to be separated maybe inserting a token at x position where
+    they are and then the parser will take care of it.
 
-
-
-
-
-
-
-
-
-
-// Returns the inode number of a file descriptor
-int get_inode(int fd)
-{
-    struct stat buf;
-    int ret;
-
-    ret = fstat(fd, &buf);
-    if (ret < 0)
-    {
-        perror("fstat");
-        return (-1);
-    }
-    return (buf.st_ino);
-}
+To remove just check if they are the first or last character of a token
+    and then remove it and insert in new node.
