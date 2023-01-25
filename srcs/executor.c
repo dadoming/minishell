@@ -15,9 +15,10 @@ static int is_built_in()
 	else if(string()->_compare_n(mini()->arg_list->token, "pwd", 3 == 0) && \
 		string()->_length(mini()->arg_list->token) == 3)
 		pwd();
-	else if(string()->_compare_n(mini()->arg_list->token, "export", 6) == 0)
+	else if(string()->_compare_n(mini()->arg_list->token, "export", 6) == 0 && \
+		string()->_length(mini()->arg_list->token) == 6)
 	{
-		printf("Builtin not done yet\n");
+		mini()->core->env_p = export(mini()->arg_list, mini()->core->env_p);
 	}
 	else if(string()->_compare_n(mini()->arg_list->token, "unset", 5) == 0)
 	{
@@ -37,7 +38,7 @@ int executor(void)
 	//find_path(mini()->core->env_p); // giving mem_leak
 	if (is_built_in() == 1)
 		return (1);
-
+	
 	
 	return (0);
 }

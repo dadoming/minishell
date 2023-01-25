@@ -24,6 +24,8 @@ typedef struct s_list t_list;
 
 //int g_exit_status;
 
+#define REDIRECT "|<>"
+
 enum quotes_e 
 {
     SINGLE_QUOTE,
@@ -35,15 +37,6 @@ enum bool_e
 {
     FALSE, 
     TRUE
-};
-
-enum controller_e
-{
-    STRING,
-    COMMAND,
-    PIPE,
-    REDIRECT_INPUT,
-    REDIRECT_OUTPUT
 };
 
 /* Located in my_lib.h
@@ -96,6 +89,10 @@ char *expand_environment(char **content);
 /* expand_repplace.c */
 char *replace(char **if_this_has, char *this, char *str_to_replace, int active_quote);
 
+/* env_utils.c */
+char **add_to_end_of_env(char **env, char *var_name, char *var_value);
+void substitute_env_var(char **env, char *var_name, char *var_value);
+
 /* executor.c */
 int executor(void);
 
@@ -120,6 +117,7 @@ void close_program(void);
 /* built_ins/ */
 int echo(t_list *arg_list);
 int pwd(void);
+char ** export(t_list *lst, char **env);
 
 
 #endif
