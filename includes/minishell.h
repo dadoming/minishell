@@ -118,6 +118,6 @@ void close_program(void);
 int echo(t_list *arg_list);
 int pwd(void);
 char ** export(t_list *lst, char **env);
-
+char **unset(t_list *lst, char **env);
 
 #endif

@@ -17,3 +17,13 @@ char* _copy_until(char *str, int n)
     dst[i] = '\0';
     return (dst);
 }
+
+int _array_length(char **array)
+{
+    int i;
+    
+    i = 0;
+    while (array[i])
+        i++;
+    return (i);
+}

@@ -17,12 +17,11 @@ static int is_built_in()
 		pwd();
 	else if(string()->_compare_n(mini()->arg_list->token, "export", 6) == 0 && \
 		string()->_length(mini()->arg_list->token) == 6)
-	{
 		mini()->core->env_p = export(mini()->arg_list, mini()->core->env_p);
-	}
-	else if(string()->_compare_n(mini()->arg_list->token, "unset", 5) == 0)
+	else if(string()->_compare_n(mini()->arg_list->token, "unset", 5) == 0 && \
+		string()->_length(mini()->arg_list->token) == 5)
 	{
-		printf("Builtin not done yet\n");
+		mini()->core->env_p = unset(mini()->arg_list, mini()->core->env_p);
 	}
 	else if(string()->_compare_n(mini()->arg_list->token, "env", 3) == 0)
 	{
