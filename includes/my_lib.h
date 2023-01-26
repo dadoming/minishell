@@ -69,7 +69,7 @@ typedef struct s_string
     void*   (*_mem_copy)(void *dst, const void *src, unsigned int n);
     // Copies from src to dst but uses a temporary array to do it.
     void*   (*_mem_move)(void *dst, const void *src, unsigned int len);
-    // Puts string with '\n' in fd.
+    // Puts string with new line in fd.
     void	(*_putstring_n_fd)(char *s, int fd);
     // Returns a splitted string.
     char**  (*_split)(char const *str, char c);

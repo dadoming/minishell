@@ -4,11 +4,11 @@ static int  only_one_quote(char *input);
 static char *remove_quotes(char *str, char c);
 static char *treat_quotes(char *str);
 
-int quotes(void)
+int quotes(shell_t *mini)
 {
     t_list *aux;
 
-    aux = mini()->arg_list;
+    aux = mini->arg_list;
     while (aux != NULL)
     {
         if (only_one_quote(aux->token) == TRUE)

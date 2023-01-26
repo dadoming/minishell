@@ -1,12 +1,18 @@
 #include "../../includes/minishell.h"
 
-int pwd(void)
+void pwd(void)
 {
-    char c[PATH_MAX];
+    char *buffer;
 
-    getcwd(c, sizeof(c));
-    if (c == NULL)
-        return (1);
-    printf("%s\n", c);
-    return (0);
+    buffer = getcwd(NULL, 0);
+    if (buffer)
+    {
+        printf("%s\n", buffer);
+    }
+    else
+    {
+        string()->_putstring_n_fd("minishell: pwd: ", 2);
+        string()->_putstring_n_fd(strerror(errno), 2);
+    }
+    free(buffer);
 }

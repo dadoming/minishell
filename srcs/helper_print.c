@@ -12,9 +12,9 @@ void print_quote_value(int single_q, int double_q, int word_amount)
     printf("words -> %d\n", word_amount);
 }
 
-void helper_print()
+void helper_print(shell_t *mini)
 {
-    if(mini()->arg_list)
-        list()->_iterator(mini()->arg_list, print_node);
+    if(mini->arg_list)
+        list()->_iterator(mini->arg_list, print_node);
 }
 

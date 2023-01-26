@@ -2,7 +2,7 @@
 
 static char *copy_until(char *str, int n);
 
-char *expand_environment(char **content)
+char *expand_environment(char **content, shell_t *mini)
 {
     int i;
     int env_len;
@@ -13,11 +13,11 @@ char *expand_environment(char **content)
     env_variable = NULL;
     env_len = 0;
     i = 0;
-    while (mini()->core->env_p[i] != 0)
+    while (mini->core->env_p[i] != 0)
     {
-        env_len = string()->_length_until_c(mini()->core->env_p[i], '=');
-        env_variable = copy_until(mini()->core->env_p[i], env_len);
-        *content = replace(content, env_variable, &mini()->core->env_p[i][env_len + 1], NO_QUOTE);
+        env_len = string()->_length_until_c(mini->core->env_p[i], '=');
+        env_variable = copy_until(mini->core->env_p[i], env_len);
+        *content = replace(content, env_variable, &mini->core->env_p[i][env_len + 1], NO_QUOTE);
         free(env_variable);
         i++;
     }

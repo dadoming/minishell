@@ -66,59 +66,58 @@ typedef struct shell_s
 } shell_t;
 
 /* main.c */
-shell_t *mini(void);
 void	free_list(t_list **lst);
-void    clear_looped_values(void);
+void    clear_looped_values(shell_t *mini);
 
 /* prompt.c */
-void prompt();
+void    prompt(shell_t *mini);
 
 /* init.c */
-int init(char **envp);
+int     init(shell_t **mini, char **envp);
 
 /* evaluate.c */
-int evaluate(void);
+int     evaluate(shell_t *mini);
 
 /* expander.c */
-void expander(void);
-int check_quote(int *active_quote, char c);
+void    expander(shell_t *mini);
+int     check_quote(int *active_quote, char c);
 
 /* expand_env.c */
-char *expand_environment(char **content);
+char    *expand_environment(char **content, shell_t *mini);
 
 /* expand_repplace.c */
-char *replace(char **if_this_has, char *this, char *str_to_replace, int active_quote);
+char    *replace(char **if_this_has, char *this, char *str_to_replace, int active_quote);
 
 /* env_utils.c */
-char **add_to_end_of_env(char **env, char *var_name, char *var_value);
-void substitute_env_var(char **env, char *var_name, char *var_value);
+char    *get_env(char **env, char *var_name);
 
 /* executor.c */
-int executor(void);
+int     executor(shell_t *mini);
 
 /* quotes.c */
-int quotes(void);
+int     quotes(shell_t *mini);
 
 /* signals.c */
-void ignore_signal_for_shell();
+void    ignore_signal_for_shell();
 
 /* helper_print.c */
-void print_quote_value(int single_q, int double_q, int word_amount);
-void helper_print();
-void print_node(void *s);
+void    print_quote_value(int single_q, int double_q, int word_amount);
+void    helper_print(shell_t *mini);
+void    print_node(void *s);
 
 /* lexer.c */
-void lexer(char *rl_buffer);
-int check_for_ending_delimiter(char *buffer, char delimiter);
+void    lexer(char *rl_buffer, shell_t *mini);
+int     check_for_ending_delimiter(char *buffer, char delimiter);
 
 /* close_program.c */
-void close_program(void);
+void    close_program(shell_t *mini);
 
 /* built_ins/ */
-int echo(t_list *arg_list);
-int pwd(void);
-char ** export(t_list *lst, char **env_p);
-char **unset(t_list *lst, char **env);
-void env(char **env_p, int option);
+int     echo(t_list *arg_list);
+void    pwd(void);
+char    **export(t_list *lst, char **env_p);
+char    **unset(t_list *lst, char **env);
+void    env(char **env_p, int option);
+void    cd(t_list *lst, char **env);
 
 #endif
