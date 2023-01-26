@@ -117,7 +117,8 @@ void close_program(void);
 /* built_ins/ */
 int echo(t_list *arg_list);
 int pwd(void);
-char ** export(t_list *lst, char **env);
+char ** export(t_list *lst, char **env_p);
 char **unset(t_list *lst, char **env);
+void env(char **env_p, int option);
 
 #endif

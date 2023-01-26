@@ -37,6 +37,10 @@ TO - DO! :
 
 > Implementar execução de processos.
 
+> missing commands: cd, env, exit.
+env -> printa todas as variáveis de ambiente (com value? talvez
+seja so fazer o strchr(=) e se retornar null nao printar).
+
 
 
 ██████╗ ███████╗ █████╗ ██████╗ ██╗     ██╗███╗   ██╗███████╗

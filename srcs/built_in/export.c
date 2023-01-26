@@ -1,18 +1,16 @@
 #include "../../includes/minishell.h"
 
-
 /*
    var_name    =      var_value          
    (token1) (token2) (token3)
     subsitute(char **env, char *var_name, char *var_value)
 */
 
-char            **add_to_end_of_env(char **env, char *var_name, char *var_value);
-void            substitute_env_var(char **env, char *var_name, char *var_value);
-void            printenv(char **env);
-static char     **set_var(char **env, char *var_name, char *var_value);
+char            **add_to_end_of_env(char **env_p, char *var_name, char *var_value);
+void            substitute_env_var(char **env_p, char *var_name, char *var_value);
+static char     **set_var(char **env_p, char *var_name, char *var_value);
 
-char** export(t_list *lst, char **env)
+char** export(t_list *lst, char **env_p)
 {
     char *var_name;
     char *var_value;
@@ -25,57 +23,36 @@ char** export(t_list *lst, char **env)
     }
     if (!var_name)
     {
-        printenv(env);
-        return (env);
+        env(env_p, 1);
+        return (env_p);
     }
     if (var_name)
-        env = set_var(env, var_name, var_value);
+        env_p = set_var(env_p, var_name, var_value);
     free(var_name);
-    return (env);
+    return (env_p);
 }
 
-void printenv(char **env)
-{
-    char *var_name;
-    char *var_value;
-
-    int i = 0;
-    while (env[i] != 0)
-    {
-        var_name = string()->_copy_until(env[i], string()->_length_until_c(env[i], '='));;
-        var_value = string()->_search(env[i], '=');
-        printf("declare -x %s", var_name);
-        if (var_value)
-            printf("=\"%s\"\n", var_value + 1);
-        else
-            printf("\n");
-        free(var_name);
-        i++;
-    }
-    return ;
-}
-
-static char **set_var(char **env, char *var_name, char *var_value)
+static char **set_var(char **env_p, char *var_name, char *var_value)
 {
     int i = 0;
-    while (env[i])
+    while (env_p[i])
     {
-        if (string()->_compare_n(env[i], var_name, string()->_length(var_name)) == 0 && \
-            string()->_length_until_c(env[i], '=') == string()->_length(var_name))
+        if (string()->_compare_n(env_p[i], var_name, string()->_length(var_name)) == 0 && \
+            string()->_length_until_c(env_p[i], '=') == string()->_length(var_name))
         {
             if (var_value)
-                substitute_env_var(&env[i], var_name, var_value);
-            return (env);
+                substitute_env_var(&env_p[i], var_name, var_value);
+            return (env_p);
         }
         i++;
     }
     if (!var_value)
         var_value = "";
-    env = add_to_end_of_env(env, var_name, var_value);
-    return (env);
+    env_p = add_to_end_of_env(env_p, var_name, var_value);
+    return (env_p);
 }
 
-void substitute_env_var(char **env, char *var_name, char *var_value)
+void substitute_env_var(char **env_p, char *var_name, char *var_value)
 {
     int i = 0;
     int j = 0;
@@ -94,25 +71,25 @@ void substitute_env_var(char **env, char *var_name, char *var_value)
         i++;
     }
     new_env[j] = '\0';
-    free(*env);
-    *env = new_env;
+    free(*env_p);
+    *env_p = new_env;
 }
 
-char **add_to_end_of_env(char **env, char *var_name, char *var_value)
+char **add_to_end_of_env(char **env_p, char *var_name, char *var_value)
 {
     int i = 0;
     int j = 0;
     int k = 0;
     char **new_env;
 
-    while (env[i])
+    while (env_p[i])
         i++;
     new_env = malloc(sizeof(char *) * (i + 2));
     i = 0;
-    while (env[i])
+    while (env_p[i])
     {
-        new_env[i] = string()->_duplicate(env[i]);
-        free(env[i]);
+        new_env[i] = string()->_duplicate(env_p[i]);
+        free(env_p[i]);
         i++;
     }
     new_env[i] = malloc(sizeof(char) * (string()->_length(var_name) + string()->_length(var_value) + 1));
@@ -129,6 +106,6 @@ char **add_to_end_of_env(char **env, char *var_name, char *var_value)
     }
     new_env[i][j] = '\0';
     new_env[i + 1] = NULL;
-    free(env);
+    free(env_p);
     return (new_env);
 }

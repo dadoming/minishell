@@ -20,13 +20,10 @@ static int is_built_in()
 		mini()->core->env_p = export(mini()->arg_list, mini()->core->env_p);
 	else if(string()->_compare_n(mini()->arg_list->token, "unset", 5) == 0 && \
 		string()->_length(mini()->arg_list->token) == 5)
-	{
 		mini()->core->env_p = unset(mini()->arg_list, mini()->core->env_p);
-	}
-	else if(string()->_compare_n(mini()->arg_list->token, "env", 3) == 0)
-	{
-		printf("Builtin not done yet\n");
-	}
+	else if(string()->_compare_n(mini()->arg_list->token, "env", 3) == 0 && \
+		string()->_length(mini()->arg_list->token) == 3)
+		env(mini()->core->env_p, 2);
 	else if(string()->_compare_n(mini()->arg_list->token, "exit", 4) == 0)
         return (1);
 	return (0);
