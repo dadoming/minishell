@@ -31,9 +31,10 @@ void env(char **env_p, int option)
         var_value = string()->_search(env_p[i], '=');
         if (option == 1)
             print_export(var_name, var_value);
-        if (option == 2)
+        else if (option == 2)
             print_env(var_name, var_value);
-        free(var_name);
+        if (var_name)
+            free(var_name);
         i++;
     }
     return ;

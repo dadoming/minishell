@@ -17,9 +17,6 @@ int main(int argc, char** argv, char** envp)
             prompt(mini);
             if (evaluate(mini) == 1)
                 break;
-            
-            //if (parser() == 1)
-              //  break;
             clear_looped_values(mini);
         }
     }

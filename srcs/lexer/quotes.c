@@ -1,8 +1,8 @@
 #include "../../includes/minishell.h"
 
 static int  only_one_quote(char *input);
-static char *remove_quotes(char *str, char c);
 static char *treat_quotes(char *str);
+static void assign_outer_quote(char c, int *outer_quote, int *quote_amount);
 
 int quotes(shell_t *mini)
 {
@@ -25,34 +25,23 @@ int quotes(shell_t *mini)
 static char *treat_quotes(char *str)
 {
     int outer_quote;
+    int location;
     int i;
 
+    location = 0;
     outer_quote = NO_QUOTE;
     i = 0;
     while (str[i] != '\0')
     {
-        if ((outer_quote == NO_QUOTE) && (str[i] == '\"'))
-        {
-            str = remove_quotes(str, '\"');
-            outer_quote = check_quote(&outer_quote, '\"');
-        }
-        if ((outer_quote == NO_QUOTE) && (str[i] == '\''))
-        {
-            str = remove_quotes(str, '\'');
-            outer_quote = check_quote(&outer_quote, '\'');
-        }
+        no_quote_quote_found(&outer_quote, str[i], &location, &i);
+        remove_quote_if_quote_found(&outer_quote, str, &location, &i);
         i++;
     }
     return (str);
 }
 
-static char *remove_quotes(char *str, char c)
+char *remove_quotes(char *str, char c, int i)
 {
-    int i;
-    int end;
-
-    i = 0;
-    end = 0;
     while (str[i] != '\0')
     {
         if (str[i] == c)
@@ -60,12 +49,23 @@ static char *remove_quotes(char *str, char c)
             string()->_mem_move(&str[i], &str[i + 1], string()->_length(str) - i);
             if (i > 0)
                 i--;
-            end = string()->_length_until_c(str, c);
-            string()->_mem_move(&str[end], &str[end + 1], string()->_length(str) - end);
+            while (str[i] != c && str[i] != '\0')
+                i++;
+            string()->_mem_move(&str[i], &str[i + 1], string()->_length(str) - i);
+            break;
         }
         i++;
     }
     return (str);
+}
+
+static void assign_outer_quote(char c, int *outer_quote, int *quote_amount)
+{
+    if (c == '\'')
+        *outer_quote = SINGLE_QUOTE;
+    if (c == '\"')
+        *outer_quote = DOUBLE_QUOTE; 
+    (*quote_amount)++;
 }
 
 static int only_one_quote(char *input)
@@ -80,18 +80,13 @@ static int only_one_quote(char *input)
     while (input[i] != '\0')
     {
         if (outer_quote == NO_QUOTE && (input[i] == '\'' || input[i] == '\"'))
+            assign_outer_quote(input[i], &outer_quote, &quote_amount);
+        else if ((outer_quote == DOUBLE_QUOTE && input[i] == '\"') \
+            || (outer_quote == SINGLE_QUOTE && input[i] == '\''))
         {
-            if (input[i] == '\'')
-                outer_quote = SINGLE_QUOTE;
-            if (input[i] == '\"')
-                outer_quote = DOUBLE_QUOTE; 
+            outer_quote = NO_QUOTE;
             quote_amount++;
-            i++;
         }
-        if (outer_quote == DOUBLE_QUOTE && input[i] == '\"')
-            quote_amount++;
-        if (outer_quote == SINGLE_QUOTE && input[i] == '\'')
-            quote_amount++;
         i++;
     }
     if (quote_amount % 2 != 0)

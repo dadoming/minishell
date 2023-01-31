@@ -13,7 +13,6 @@ int evaluate(shell_t *mini)
             return (0);
         if (executor(mini) == 1)
             return (1);
-        //helper_print();
     }
     return (0);
 }

@@ -11,10 +11,17 @@ char* _copy_until(char *str, int n)
     dst = malloc(sizeof(char) * (n + 1));
     while (n-- > 0)
     {
+        if (str[i] == '\0')
+            break;
         dst[i] = str[i];
         i++;
     }
     dst[i] = '\0';
+    if (i == 0)
+    {
+        free(dst);
+        return (NULL);
+    }
     return (dst);
 }
 

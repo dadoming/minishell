@@ -3,6 +3,16 @@
 void find_path(char **env, shell_t *mini);
 static int is_built_in(shell_t *mini);
 
+int executor(shell_t *mini)
+{
+	//find_path(mini()->core->env_p); // giving mem_leak
+	if (is_built_in(mini) == 1)
+		return (1);
+	
+	
+	return (0);
+}
+
 static int is_built_in(shell_t *mini)
 {
 	if(string()->_compare_n(mini->arg_list->token, "echo", 4) == 0 && \
@@ -23,18 +33,9 @@ static int is_built_in(shell_t *mini)
 	else if(string()->_compare_n(mini->arg_list->token, "env", 3) == 0 && \
 		string()->_length(mini->arg_list->token) == 3)
 		env(mini->core->env_p, 2);
-	else if(string()->_compare_n(mini->arg_list->token, "exit", 4) == 0)
+	else if(string()->_compare_n(mini->arg_list->token, "exit", 4) == 0 && \
+		string()->_length(mini->arg_list->token) == 4)
         return (1);
-	return (0);
-}
-
-int executor(shell_t *mini)
-{
-	//find_path(mini()->core->env_p); // giving mem_leak
-	if (is_built_in(mini) == 1)
-		return (1);
-	
-	
 	return (0);
 }
 

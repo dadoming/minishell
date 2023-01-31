@@ -3,8 +3,6 @@
 static char* expand_dollars(char *content, int i, shell_t *mini);
 static char* expand_values(char *token, shell_t *mini);
 
-/* This function will expand the values of the tokens if there is any
-    environment variable or any other value to be expanded */ 
 void expander(shell_t *mini)
 {
     t_list *aux;
@@ -86,5 +84,3 @@ static char* expand_values(char *token, shell_t *mini)
     }
     return (token);
 }
-
-

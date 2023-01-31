@@ -64,9 +64,10 @@ int _arg_count(char *str)
 int _length_until_c(char *str, char c)
 {
     int i;
+
+    i = 0;
     if(!str)
         return (0);
-    i = 0;
     while (str[i] != '\0' && str[i] != c)
     {
         i++;

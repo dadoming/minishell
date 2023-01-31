@@ -65,37 +65,120 @@ typedef struct shell_s
     void            (*SIGINT_handler)(int);
 } shell_t;
 
-/* main.c */
+/* 
+    main.c 
+*/
 void	free_list(t_list **lst);
 void    clear_looped_values(shell_t *mini);
 
-/* prompt.c */
+/* 
+    prompt.c
+
+    Prints a prompt and reads input from user. 
+*/
 void    prompt(shell_t *mini);
 
-/* init.c */
+/* 
+    init.c
+    
+    Initializes minishell's initial values
+*/
 int     init(shell_t **mini, char **envp);
 
-/* evaluate.c */
+/* 
+   evaluate.c 
+
+   This is the core of how the program treats the input. 
+   1. add_history(): Add input to history if any was passed.
+   2. lexer(): It will get all the words passed and store them in a linked list.
+   3. expander(): Will expand all $ values outside single quotes.
+   4. quotes(): Will remove all quotes to be removed.
+*/
 int     evaluate(shell_t *mini);
 
-/* expander.c */
+/* 
+    lexer.c
+
+    Produce tokens accordingly with the quotes and spaces provided in the input. 
+*/
+void    lexer(char *rl_buffer, shell_t *mini);
+int     check_for_ending_delimiter(char *buffer, char delimiter);
+
+
+/* 
+    expander.c
+
+    Iterate through the linked list and expand all $ values outside single quotes. 
+*/
 void    expander(shell_t *mini);
 int     check_quote(int *active_quote, char c);
 
-/* expand_env.c */
+/* 
+    expand_env.c
+    
+    This is the function that will make all the expansions.
+    It checks if the variable exists in the environment and if it does, it will replace and return it.
+*/
 char    *expand_environment(char **content, shell_t *mini);
 
-/* expand_repplace.c */
-char    *replace(char **if_this_has, char *this, char *str_to_replace, int active_quote);
+/* 
+    expand_replace.c
 
-/* env_utils.c */
+    Replace function. Returns the new string with the replaced value dynamically allocated.
+*/
+char    *replace(char **if_this_has, char *this, char *str_to_replace, int active_quote, int i);
+
+/* 
+    env_utils.c 
+    
+    If env has value then return value else return NULL. 
+    Example: get_env(env, "PATH")
+*/
 char    *get_env(char **env, char *var_name);
 
-/* executor.c */
+/*
+    quotes.c
+
+    Removes all quotes that are to be removed the same way bash does.
+*/
+int     quotes(shell_t *mini);
+void remove_quote_if_quote_found(int *outer_quote, char *str, int *location, int *i);
+void no_quote_quote_found(int *outer_quote, char quote, int *location, int *i);
+char *remove_quotes(char *str, char c, int i);
+
+/* 
+    executor.c 
+
+    Executes the command.
+*/
 int     executor(shell_t *mini);
 
-/* quotes.c */
-int     quotes(shell_t *mini);
+
+/* 
+    built_ins/
+
+    All the built in functions.
+*/
+int     echo(t_list *arg_list);
+void    pwd(void);
+char    **export(t_list *lst, char **env_p);
+char    **unset(t_list *lst, char **env);
+void    env(char **env_p, int option);
+void    cd(t_list *lst, char **env);
+
+/*
+    close_program.c
+
+    Frees all the memory and closes the program.
+*/
+void    close_program(shell_t *mini);
+
+/* 
+    print_error.c
+
+    Prints a minishell error message. (maybe needs some tweaking)
+*/
+void print_error(char *command);
 
 /* signals.c */
 void    ignore_signal_for_shell();
@@ -105,19 +188,6 @@ void    print_quote_value(int single_q, int double_q, int word_amount);
 void    helper_print(shell_t *mini);
 void    print_node(void *s);
 
-/* lexer.c */
-void    lexer(char *rl_buffer, shell_t *mini);
-int     check_for_ending_delimiter(char *buffer, char delimiter);
 
-/* close_program.c */
-void    close_program(shell_t *mini);
-
-/* built_ins/ */
-int     echo(t_list *arg_list);
-void    pwd(void);
-char    **export(t_list *lst, char **env_p);
-char    **unset(t_list *lst, char **env);
-void    env(char **env_p, int option);
-void    cd(t_list *lst, char **env);
 
 #endif

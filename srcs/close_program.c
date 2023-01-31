@@ -10,6 +10,7 @@ void close_program(shell_t *mini)
     clear_core(mini);
     rl_erase_empty_line = 1;
     rl_clear_history();
+    free(mini);
     return ;
 }
 

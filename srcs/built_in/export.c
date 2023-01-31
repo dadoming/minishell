@@ -47,7 +47,7 @@ static char **set_var(char **env_p, char *var_name, char *var_value)
         i++;
     }
     if (!var_value)
-        var_value = "";
+        var_value = "\0";
     env_p = add_to_end_of_env(env_p, var_name, var_value);
     return (env_p);
 }
@@ -92,7 +92,8 @@ char **add_to_end_of_env(char **env_p, char *var_name, char *var_value)
         free(env_p[i]);
         i++;
     }
-    new_env[i] = malloc(sizeof(char) * (string()->_length(var_name) + string()->_length(var_value) + 1));
+    new_env[i] = malloc(sizeof(char) * \
+        (string()->_length(var_name) + string()->_length(var_value) + 2));
     while (var_name[j])
     {
         new_env[i][j] = var_name[j];
