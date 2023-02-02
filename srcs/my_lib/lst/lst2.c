@@ -47,22 +47,3 @@ void	_clear_list(t_list **lst)
 	lst = NULL;
 }
 
-
-t_list *_insert_node_here(t_list **lst, char *content)
-{
-	t_list *new;
-
-	new = malloc(sizeof(t_list));
-	new->token = content;
-	if (!*lst)
-	{
-		*lst = new;
-	}
-	if ((*lst)->next == NULL)
-	{
-		new->next = NULL;
-		return new;
-	}
-	new->next = (*lst)->next;
-	return (new);
-}
