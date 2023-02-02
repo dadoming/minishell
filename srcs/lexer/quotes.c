@@ -2,8 +2,9 @@
 
 static int  only_one_quote(char *input);
 static char *treat_quotes(char *str);
-static void assign_outer_quote(char c, int *outer_quote, int *quote_amount);
 
+// Reescrever tudo com um ficheiro ao lado igual e fazer
+//  linha por linha
 int quotes(shell_t *mini)
 {
     t_list *aux;
@@ -59,7 +60,7 @@ char *remove_quotes(char *str, char c, int i)
     return (str);
 }
 
-static void assign_outer_quote(char c, int *outer_quote, int *quote_amount)
+void assign_outer_quote(char c, int *outer_quote, int *quote_amount)
 {
     if (c == '\'')
         *outer_quote = SINGLE_QUOTE;

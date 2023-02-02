@@ -257,3 +257,23 @@ They need to be separated maybe inserting a token at x position where
 
 To remove just check if they are the first or last character of a token
     and then remove it and insert in new node.
+
+
+INPUT REDIRECTION: <
+
+Redirection of input causes the file whose name results from the 
+    expansion of word to be opened for reading on file descriptor n,
+    or the standard input (file descriptor 0) if n is not specified.
+
+The general format for redirecting input is:
+
+[n]<word
+
+In this case:
+    n is the file descriptor number.
+    word is the name of the file to be opened for reading.
+    It will always be the last filename, for instance:
+        $ wc -l < main.c helper_print.c 
+          20 helper_print.c
+        $
+    if !n then output no file descriptor provided.

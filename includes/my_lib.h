@@ -110,7 +110,6 @@ typedef struct s_check
 typedef struct s_list
 {
     char            *token;
-    int             type;
     struct s_list   *next;
 } t_list;
 
@@ -147,7 +146,6 @@ typedef struct s_listfunc
     
     // Deletes the last node of the list.
     void    (*_del_last_node)(t_list **lst);
-
 } t_listfunc;
 
 
@@ -214,7 +212,5 @@ void*   _mem_move(void *dst, const void *src, unsigned int len);
 
 t_list	*_new_node(void *content);
 t_list	*_last(t_list *lst);
-
-
 
 #endif

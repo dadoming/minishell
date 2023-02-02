@@ -9,11 +9,15 @@ int evaluate(shell_t *mini)
         add_history(rl_line_buffer);
         lexer(rl_line_buffer, mini);
         expander(mini);
+        //if (parser(mini) == TRUE)
+          //  return (0);
         if (quotes(mini) == TRUE)
             return (0);
+        //helper_print(mini->arg_list);
         if (executor(mini) == 1)
             return (1);
     }
     return (0);
 }
+
 

@@ -23,7 +23,10 @@ void lexer(char *rl_buffer, shell_t *mini)
         else
             i++;
     }
+    has_pipe(mini);
 }
+
+
 
 static void get_full_word(char *buffer, int *i, char separator, shell_t *mini)
 {

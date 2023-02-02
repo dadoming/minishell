@@ -26,7 +26,7 @@ typedef struct s_list t_list;
 
 #define REDIRECT "|<>"
 
-enum quotes_e 
+enum quotes_e
 {
     SINGLE_QUOTE,
     DOUBLE_QUOTE,
@@ -39,14 +39,15 @@ enum bool_e
     TRUE
 };
 
-/* Located in my_lib.h
-typedef struct s_list
+enum redirection_e 
 {
-    char            *token;
-    int             type;
-    struct s_list   *next;
-} t_list;
-*/
+    RED_INPUT,
+    RED_OUTPUT,
+    PIPE,
+    APPEND_OUTPUT,
+    HERE_DOC,
+    NO_REDIRECTION
+};
 
 typedef struct s_core
 {
@@ -57,8 +58,16 @@ typedef struct s_core
     char            *logname;
 } t_core;
 
+typedef struct s_cmdline
+{
+    struct s_list       *argument;
+    int                 type;
+    struct s_cmdline    *next;
+} t_cmdline;
+
 typedef struct shell_s
 {
+    t_cmdline       *cmdline;
     t_core          *core;
     t_list          *arg_list;
     int             signalset;
@@ -103,7 +112,7 @@ int     evaluate(shell_t *mini);
 */
 void    lexer(char *rl_buffer, shell_t *mini);
 int     check_for_ending_delimiter(char *buffer, char delimiter);
-
+void    has_pipe(shell_t *mini);
 
 /* 
     expander.c
@@ -145,6 +154,7 @@ int     quotes(shell_t *mini);
 void remove_quote_if_quote_found(int *outer_quote, char *str, int *location, int *i);
 void no_quote_quote_found(int *outer_quote, char quote, int *location, int *i);
 char *remove_quotes(char *str, char c, int i);
+void assign_outer_quote(char c, int *outer_quote, int *quote_amount);
 
 /* 
     executor.c 
@@ -152,7 +162,6 @@ char *remove_quotes(char *str, char c, int i);
     Executes the command.
 */
 int     executor(shell_t *mini);
-
 
 /* 
     built_ins/
@@ -185,7 +194,7 @@ void    ignore_signal_for_shell();
 
 /* helper_print.c */
 void    print_quote_value(int single_q, int double_q, int word_amount);
-void    helper_print(shell_t *mini);
+void    helper_print(t_list *lst);
 void    print_node(void *s);
 
 
