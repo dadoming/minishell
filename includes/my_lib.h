@@ -85,6 +85,8 @@ typedef struct s_string
     char*   (*_copy_until)(char *str, int n);
     // Returns the size of an array.
     int     (*_array_length)(char **array);
+    // Checks if the word is the same as the string passed.
+    int     (*_same_word)(char *w1, char *w2, int size);
 }   t_string;
 
 typedef struct s_check
@@ -190,6 +192,7 @@ int     _length_until_c(char *str, char c);
 int     _is_directory(char *path);
 int	    _size(t_list *lst);
 int     _array_length(char **array);
+int     _same_word(char *w1, char *w2, int size);
 
 void	_putchar_fd(char c, int fd);
 void	_putstring_fd(char *s, int fd);
