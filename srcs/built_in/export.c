@@ -10,6 +10,18 @@ char            **add_to_end_of_env(char **env_p, char *var_name, char *var_valu
 void            substitute_env_var(char **env_p, char *var_name, char *var_value);
 static char     **set_var(char **env_p, char *var_name, char *var_value);
 
+/*
+
+Fix these:
+
+davz@davz-rog:~/git_repos/minishell$ export ?hello
+bash: export: `?hello': not a valid identifier
+
+davz@davz-rog:~/git_repos/minishell$ export ola='$this'
+declare -x ola="\$this"
+
+*/
+
 char** export(t_list *lst, char **env_p)
 {
     char *var_name;

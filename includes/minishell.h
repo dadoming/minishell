@@ -22,8 +22,6 @@
 
 typedef struct s_list t_list;
 
-//int g_exit_status;
-
 #define REDIRECT "|<>"
 
 enum quotes_e
@@ -119,7 +117,7 @@ void    has_pipe(shell_t *mini);
 
     Iterate through the linked list and expand all $ values outside single quotes. 
 */
-void    expander(shell_t *mini);
+int     expander(shell_t *mini);
 int     check_quote(int *active_quote, char c);
 
 /* 
@@ -128,7 +126,7 @@ int     check_quote(int *active_quote, char c);
     This is the function that will make all the expansions.
     It checks if the variable exists in the environment and if it does, it will replace and return it.
 */
-char    *expand_environment(char **content, shell_t *mini);
+int expand_environment(char **content, shell_t *mini, int *active_quote, char *variable, int curr_pos);
 
 /* 
     expand_replace.c

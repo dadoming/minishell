@@ -87,6 +87,8 @@ typedef struct s_string
     int     (*_array_length)(char **array);
     // Checks if the word is the same as the string passed.
     int     (*_same_word)(char *w1, char *w2, int size);
+    // Copies src to dst
+    char*   (*_copy)(char *dst, char *src);
 }   t_string;
 
 typedef struct s_check
@@ -170,6 +172,7 @@ char*	_mapi(char const *s, char (*f)(unsigned int, char));
 char*	_trim(char const *s1, char const *set);
 char*   _duplicate(const char *str);
 char*   _copy_until(char *str, int n);
+char*   _copy(char *dst, char *src);
 
 char**  _split(char const *s, char c);
 

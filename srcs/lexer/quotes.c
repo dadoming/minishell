@@ -3,12 +3,52 @@
 static int  only_one_quote(char *input);
 static char *treat_quotes(char *str);
 
-// Reescrever tudo com um ficheiro ao lado igual e fazer
-//  linha por linha
+void separate_token(t_list *aux, int i, char *token2)
+{
+    char *token;
+    t_list *new;
+
+    if (!aux->token || !token2 || !*token2)
+        return ;
+    token = string()->_copy_until(aux->token, i);
+    token2 = string()->_duplicate(token2);
+    free(aux->token);
+    aux->token = token;
+    new = list()->_new_node(token2);
+    new->next = aux->next;
+    aux->next = new;
+}
+
+void fix_expanded_values(shell_t *mini, int quote)
+{
+    t_list *aux;
+    int i;
+
+    aux = mini->arg_list;
+    i = 0;
+    while (aux != NULL)
+    {
+        while (aux->token[i])
+        {
+            check_quote(&quote, aux->token[i]);
+            if (check()->_is_space(aux->token[i]) == 1 && quote == NO_QUOTE)
+            {
+                separate_token(aux, i, aux->token + 1 + i);
+                break;
+            }
+            i++;
+        }
+        quote = NO_QUOTE;
+        aux = aux->next;
+        i = 0;
+    }
+}
+
 int quotes(shell_t *mini)
 {
     t_list *aux;
 
+    fix_expanded_values(mini, NO_QUOTE);
     aux = mini->arg_list;
     while (aux != NULL)
     {

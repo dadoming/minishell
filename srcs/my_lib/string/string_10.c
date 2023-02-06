@@ -41,3 +41,17 @@ int _same_word(char *w1, char *w2, int size)
 		return (1);
 	return (0);
 }
+
+char *_copy(char *dst, char *src)
+{
+    int i;
+
+    i = 0;
+    while (src[i] != '\0')
+    {
+        dst[i] = src[i];
+        i++;
+    }
+    dst[i] = '\0';
+    return (dst);
+}

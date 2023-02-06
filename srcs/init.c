@@ -1,10 +1,12 @@
 #include "../includes/minishell.h"
+#include "../includes/global_var.h"
 
 static void init_core(shell_t *mini, char **envp);
 
 /* Initializes minishell terminal values */
 int init(shell_t **mini, char **envp)
 {
+    g_exit_status = 0;
     if(!envp)
         return (FALSE);
     *mini = malloc(sizeof(shell_t));

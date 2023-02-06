@@ -21,3 +21,7 @@ RM = rm -f
 all: 
 	@echo "Compiling..."
 	@${CC} ${FLAGS} -L.local/lib -g ${SRCS} -o ${NAME} -lreadline -I.${INCLUDES}
+
+# This makes the program and directly runs it
+m:
+	make all && ./minishell
