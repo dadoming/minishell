@@ -58,8 +58,8 @@ typedef struct s_core
 
 typedef struct s_cmdline
 {
-    struct s_list       *argument;
-    int                 type;
+    char                *command;
+    struct s_list       *arg;
     struct s_cmdline    *next;
 } t_cmdline;
 
@@ -108,10 +108,13 @@ int     evaluate(shell_t *mini);
 
     Produce tokens accordingly with the quotes and spaces provided in the input. 
 */
-void    lexer(char *rl_buffer, shell_t *mini);
+int    lexer(char *rl_buffer, shell_t *mini);
 int     check_for_ending_delimiter(char *buffer, char delimiter);
-void    has_pipe(shell_t *mini);
-
+int    has_redir(shell_t *mini);
+int     do_in_out_sep(t_list **lst, char *str, t_list *aux, int i, char redir_sign);
+int next_node_is_redirect(char *next_node_str);
+void redirect_at_beggining(char *str, int i, t_list **lst, t_list *aux);
+void redirect_at_middle_or_end(char *str, int i, t_list **lst, t_list *aux);
 /* 
     expander.c
 
@@ -185,7 +188,7 @@ void    close_program(shell_t *mini);
 
     Prints a minishell error message. (maybe needs some tweaking)
 */
-void print_error(char *command);
+void print_error(char *command, char c);
 
 /* signals.c */
 void    ignore_signal_for_shell();

@@ -5,7 +5,7 @@ static int check_for_ending_word(char *buffer, char delimiter);
 
 /* This function is gonna produce tokens through the input passed
     in through the readline function taking quotes into account*/
-void lexer(char *rl_buffer, shell_t *mini)
+int lexer(char *rl_buffer, shell_t *mini)
 {
     int i = 0;
 
@@ -23,7 +23,9 @@ void lexer(char *rl_buffer, shell_t *mini)
         else
             i++;
     }
-    has_pipe(mini);
+    if (has_redir(mini) == 1)
+        return (1);
+    return (0);
 }
 
 

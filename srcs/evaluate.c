@@ -27,7 +27,8 @@ int evaluate(shell_t *mini)
     if (string()->_length(rl_line_buffer) > 0)
     {
         add_history(rl_line_buffer);
-        lexer(rl_line_buffer, mini);
+        if (lexer(rl_line_buffer, mini) == 1)
+            return (0);
         if (expander(mini) == 1)
             return (0);
         //if (parser(mini) == TRUE)

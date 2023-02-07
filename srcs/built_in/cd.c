@@ -25,7 +25,7 @@ char *my_getenv(const char *name, char **env)
 void    relabspath(char *path)
 {
     if (chdir(path) != 0)
-        print_error("cd");
+        print_error("cd", 0);
 }
 
 char *my_strrchr( char *str, char c)
@@ -50,7 +50,7 @@ void cd(t_list *lst, char **env)
 
     home = my_getenv("HOME", env);
     if (!lst->next && !home)
-        print_error("cd");
+        print_error("cd", 0);
     else if (!lst->next && home)
         chdir(home);
     else if(string()->_same_word(lst->next->token, "..", 2))
