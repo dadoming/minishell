@@ -23,6 +23,11 @@ int lexer(char *rl_buffer, shell_t *mini)
         else
             i++;
     }
+    if (mini->arg_list->token[0] == '|')
+    {
+        print_error(NULL, '|');
+        return (1);
+    }
     if (has_redir(mini) == 1)
         return (1);
     return (0);
