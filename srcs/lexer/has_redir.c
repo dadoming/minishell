@@ -19,15 +19,13 @@ static void assign_outer(char c, int *outer_quote)
         *outer_quote = DOUBLE_QUOTE; 
 }
 
-int has_redir(shell_t *mini)
+int has_redir(shell_t *mini, int quote, int i, t_list *aux)
 {
-    t_list *aux;
-    int quote;
-    int i;
-
-    aux = mini->arg_list;
-    quote = NO_QUOTE;
-    i = 0;
+    if (mini->arg_list->token[0] == '|')
+    {
+        print_error(NULL, '|');
+        return (1);
+    }
     while (aux)
     {
         while (aux->token[i] != '\0')
@@ -37,7 +35,7 @@ int has_redir(shell_t *mini)
             else if ((quote == SINGLE_QUOTE && aux->token[i] == '\'') \
                 || (quote == DOUBLE_QUOTE && aux->token[i] == '\"'))
                 quote = NO_QUOTE;
-            if (quote == NO_QUOTE && string()->_search(REDIRECT, aux->token[i]) != NULL)
+            if (quote == NO_QUOTE && string()->_search("|<>", aux->token[i]) != NULL)
             {
                 if (redir_found(&aux, aux->token, i, aux->token[i]) == 1)
                     return (1);

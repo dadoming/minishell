@@ -25,7 +25,7 @@ int expand_environment(char **content, shell_t *mini, int *active_quote, char *v
         free(env_value);
         return (next_dollar_position(*content, active_quote, curr_pos));
     }
-    if (string()->_compare(variable, "$$") == 0)
+    if (string()->_compare_n(variable, "$$", 2) == 0)
     {
         *content = replace(content, variable, "$", NO_QUOTE, 0);
         return (next_dollar_position(*content, active_quote, curr_pos + 1));

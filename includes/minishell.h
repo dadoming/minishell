@@ -22,8 +22,6 @@
 
 typedef struct s_list t_list;
 
-#define REDIRECT "|<>"
-
 enum quotes_e
 {
     SINGLE_QUOTE,
@@ -39,12 +37,16 @@ enum bool_e
 
 enum redirection_e 
 {
-    RED_INPUT,
-    RED_OUTPUT,
-    PIPE,
-    APPEND_OUTPUT,
-    HERE_DOC,
-    NO_REDIRECTION
+    WORD,           // command or argument
+    RED_INPUT,      // < sign
+    HERE_DOC,       // << sign
+    RED_OUTPUT,     // > sign
+    APPEND_OUTPUT,  // >> sign
+    INFILE,         // after <
+    OUTFILE,        // after >
+    DELIMITOR,      // after << aka EOF
+    OUTFILE_APND,   // after >> 
+    PIPE            // | sign
 };
 
 typedef struct s_core
@@ -110,11 +112,12 @@ int     evaluate(shell_t *mini);
 */
 int    lexer(char *rl_buffer, shell_t *mini);
 int     check_for_ending_delimiter(char *buffer, char delimiter);
-int    has_redir(shell_t *mini);
+int has_redir(shell_t *mini, int quote, int i, t_list *aux);
 int     do_in_out_sep(t_list **lst, char *str, t_list *aux, int i, char redir_sign);
 int next_node_is_redirect(char *next_node_str);
 void redirect_at_beggining(char *str, int i, t_list **lst, t_list *aux);
 void redirect_at_middle_or_end(char *str, int i, t_list **lst, t_list *aux);
+
 /* 
     expander.c
 
@@ -122,6 +125,13 @@ void redirect_at_middle_or_end(char *str, int i, t_list **lst, t_list *aux);
 */
 int     expander(shell_t *mini);
 int     check_quote(int *active_quote, char c);
+
+/*
+    define_type.c
+
+    Defines the type of the command.
+*/
+void define_type(shell_t *mini);
 
 /* 
     expand_env.c
@@ -163,6 +173,7 @@ void assign_outer_quote(char c, int *outer_quote, int *quote_amount);
     Executes the command.
 */
 int     executor(shell_t *mini);
+
 
 /* 
     built_ins/

@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-static void     expand_dollars(char **content, shell_t *mini);
+static void expand_dollars(char **content, shell_t *mini, int type);
 void            remove_node(t_list **arg_list, t_list *node);
 static char     *get_variable_name(char *str, int start);
 
@@ -12,7 +12,7 @@ int expander(shell_t *mini)
     aux = mini->arg_list;
     while (aux != NULL)
     {
-        expand_dollars(&aux->token, mini);
+        expand_dollars(&aux->token, mini, aux->type);
         if (string()->_length(aux->token) == 0)
         {
             remove_node(&mini->arg_list, aux);
@@ -28,7 +28,7 @@ int expander(shell_t *mini)
     return (0);
 }
 
-static void expand_dollars(char **content, shell_t *mini)
+static void expand_dollars(char **content, shell_t *mini, int type)
 {
     int i;
     int active_quote;
@@ -37,6 +37,8 @@ static void expand_dollars(char **content, shell_t *mini)
     str = *content;
     active_quote = NO_QUOTE;
     i = 0;
+    if (type == DELIMITOR)
+        return ;
     while (str[i] != '\0')
     {
         check_quote(&active_quote, str[i]);
@@ -52,7 +54,6 @@ static void expand_dollars(char **content, shell_t *mini)
         }
         i++;
     }
-
 }
 
 static char *get_variable_name(char *str, int start)
