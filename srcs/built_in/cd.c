@@ -1,71 +1,119 @@
 #include "../../includes/minishell.h"
 
 /*
-    if no HOME found and no path/args given then print error:
-        bash: cd: HOME not set
-    if HOME found and no path/args given then change to HOME
-    if path/args given then change to path/args
+	if no HOME found and no path/args given then print error:
+		bash: cd: HOME not set
+	if HOME found and no path/args given then change to HOME
+	if path/args given then change to path/args
 */
 
-char *my_getenv(const char *name, char **env)
+char	*my_getenv(const char *name, char **env)
 {
-    int len;
-    int i = 0;
+	int	len;
+	int	i;
 
-    len = string()->_length(name);
-    while (env[i] != NULL)
-    {
-        if (string()->_compare_n(env[i], name, len) == 0 && env[i][len] == '=')
-            return &env[i][len + 1];
-        i++;
-    }
-    return NULL;
+	i = 0;
+	len = string()->_length(name);
+	while (env[i] != NULL)
+	{
+		if (string()->_compare_n(env[i], name, len) == 0 && env[i][len] == '=')
+			return (&env[i][len + 1]);
+		i++;
+	}
+	return (NULL);
 }
 
-void    relabspath(char *path)
+char	*my_string_join(char *s1, char *s2)
 {
-    if (chdir(path) != 0)
-        print_error("cd", 0);
+	char	*res;
+	int		i;
+	int		j;
+
+	j = 0;
+	i = 0;
+	res = malloc(sizeof(char) * (string()->_length(s1) +\
+	string()->_length(s2) + 1));
+	while (s1[i])
+	{
+		res[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		res[i] = s2[j];
+		i++;
+		j++;
+	}
+	res[i] = '\0';
+	return (res);
 }
 
-char *my_strrchr( char *str, char c)
+char	**update_env_var(char **env, char *var_name, char *var_value)
 {
-    char *res;
+	char	*new_var;
+	int		i;
 
-    res = NULL;
-    while (*str != '\0')
-    {
-        if (*str == c)
-            res = str;
-        str++;
-    }
-    return res;
+	i = 0;
+	while (env[i])
+	{
+		if (string()->_compare_n(env[i], var_name,\
+		string()->_length(var_name)) == 0 && \
+		(string()->_length_until_c(env[i], '=') + 1) \
+		== string()->_length(var_name))
+		{
+			new_var = my_string_join(var_name, var_value);
+			free(env[i]);
+			env[i] = new_var;
+			return (env);
+		}
+		i++;
+	}
+	return (env);
 }
 
-void cd(t_list *lst, char **env)
+char	*get_curent_dir()
 {
-    char *home;
-    char *dirname;
-    char *last_slash;
+	char	*tmp;
 
-    home = my_getenv("HOME", env);
-    if (!lst->next && !home)
-        print_error("cd", 0);
-    else if (!lst->next && home)
-        chdir(home);
-    else if(string()->_same_word(lst->next->token, "..", 2))
-    {
-        dirname = my_getenv("PWD", env);
-        last_slash = my_strrchr(dirname, '/');
-        if (last_slash != NULL)
-        {
-            *last_slash = '\0';
-            chdir(my_getenv("PWD", env));
-        }
-    }
-    else if(string()->_same_word(lst->next->token, ".", 1))
-        chdir(my_getenv("PWD", env));
-    else
-        relabspath(lst->next->token);
-    return;
+	tmp = getcwd(NULL, 0);
+	return (tmp);
+}
+
+void    cd(t_list *lst, char **env)
+{
+	char	*homedir;
+	char	*dir_to_go;
+	char	*now_dir;
+
+	homedir = my_getenv("HOME", env);
+	now_dir = my_getenv("PWD", env);
+	
+	if (!lst->next && !homedir)
+	{
+		 print_error("cd", 0);
+		 return;
+	}
+	env = update_env_var(env, "OLDPWD=", now_dir);
+	if (!lst->next && homedir)
+		dir_to_go = homedir;
+	else if (lst->next->token[0] == '/')
+		dir_to_go = lst->next->token;
+	else if (string()->_compare(lst->next->token, "..") == 0)
+		dir_to_go = "..";
+	else if(string()->_compare(lst->next->token, ".") == 0)
+		dir_to_go = now_dir;
+	else
+		dir_to_go = lst->next->token;
+	char *tmp;
+	tmp = get_curent_dir();
+	env = update_env_var(env, "OLDPWD=", tmp);
+	free(tmp);
+	if (chdir(dir_to_go) < 0)
+	{
+		print_error("cd", 0); //Err: path;
+		return;
+	}
+	tmp = get_curent_dir();
+	env = update_env_var(env, "PWD=", tmp);
+	free(tmp);
 }
