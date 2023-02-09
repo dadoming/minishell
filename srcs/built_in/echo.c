@@ -39,6 +39,8 @@ int echo(t_list *arg_list)
     if (arg_list->next->token[0] == '-')    
         n = validate_option(arg_list->next->token);
     arg_list = arg_list->next;
+    if (n == 1)
+        arg_list = arg_list->next;
     perform_echo(option, n, arg_list);
     return (0);
 }

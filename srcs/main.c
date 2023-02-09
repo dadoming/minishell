@@ -1,6 +1,7 @@
 #include "../includes/minishell.h"
 
 char	**find_path(char **env);
+void	free_tree(t_cmdline **cmdline);
 
 int main(int argc, char** argv, char** envp)
 {
@@ -16,6 +17,8 @@ int main(int argc, char** argv, char** envp)
         {
             prompt(mini);
             if (evaluate(mini) == 1)
+                break;
+            if (executor(mini) == 1)
                 break;
             clear_looped_values(mini);
         }
@@ -43,6 +46,38 @@ void clear_looped_values(shell_t *mini)
         }
         free(mini->core->execution_path);
     }
+    if (mini->cmdline != NULL)
+        free_tree(&mini->cmdline);
+}
+
+/* Clears tree if exists */
+void	free_tree(t_cmdline **cmdline)
+{
+    t_cmdline	*temp;
+    int i = 0;
+
+    if (cmdline == NULL || *cmdline == NULL)
+    {
+        printf("No tree to free.\n");
+        return ;
+    }
+    while (*cmdline)
+    {
+        temp = (*cmdline)-> next;
+        if ((*cmdline)->cmd != NULL)
+            free((*cmdline)->cmd);
+        (*cmdline)->cmd = NULL;
+        while ((*cmdline)->arg[i])
+        {
+            free((*cmdline)->arg[i]);
+            i++;
+        }
+        free((*cmdline)->arg);
+        (*cmdline)->arg = NULL;
+        if (*cmdline)
+            free(*cmdline);
+        *cmdline = temp;
+    }
 }
 
 /* Clears list if existent. */
@@ -60,6 +95,7 @@ void	free_list(t_list **lst)
 		temp = (*lst)-> next;
         if ((*lst)->token)
             free((*lst)->token);
+        (*lst)->token = NULL;
 		if (*lst)
             free(*lst);
 		*lst = temp;

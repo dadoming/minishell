@@ -17,6 +17,7 @@ int init(shell_t **mini, char **envp)
         return (FALSE);
     init_core(*mini, envp);
     (*mini)->signalset = FALSE;
+    (*mini)->cmdline = NULL;
     return (TRUE);
 }
 

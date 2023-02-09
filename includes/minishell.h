@@ -60,8 +60,9 @@ typedef struct s_core
 
 typedef struct s_cmdline
 {
-    char                *command;
-    struct s_list       *arg;
+    char                *cmd;
+    int                 cmd_type;
+    char                **arg;
     struct s_cmdline    *next;
 } t_cmdline;
 
