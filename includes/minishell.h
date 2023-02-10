@@ -60,19 +60,19 @@ typedef struct s_core
 
 typedef struct s_cmdline
 {
-    char                *cmd;
     int                 cmd_type;
+    char                *cmd;
     char                **arg;
     struct s_cmdline    *next;
 } t_cmdline;
 
 typedef struct shell_s
 {
-    t_cmdline       *cmdline;
-    t_core          *core;
-    t_list          *arg_list;
-    int             signalset;
     void            (*SIGINT_handler)(int);
+    int             signalset;
+    t_list          *arg_list;
+    t_core          *core;
+    t_cmdline       *cmdline;
 } shell_t;
 
 /* 

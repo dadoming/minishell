@@ -52,14 +52,13 @@ char	**update_env_var(char **env, char *var_name, char *var_value)
 {
 	char	*new_var;
 	int		i;
+	int 	var_len = string()->_length(var_name);
 
 	i = 0;
 	while (env[i])
 	{
-		if (string()->_compare_n(env[i], var_name,\
-		string()->_length(var_name)) == 0 && \
-		(string()->_length_until_c(env[i], '=') + 1) \
-		== string()->_length(var_name))
+		if (string()->_compare_n(env[i], var_name, var_len) == 0 && \
+		(string()->_length_until_c(env[i], '=') + 1) == var_len)
 		{
 			new_var = my_string_join(var_name, var_value);
 			free(env[i]);

@@ -1,7 +1,7 @@
 #include "../../includes/minishell.h"
 
 static void expand_dollars(char **content, shell_t *mini, int type);
-void            remove_node(t_list **arg_list, t_list *node);
+t_list *remove_node(t_list **arg_list, t_list *node);
 static char     *get_variable_name(char *str, int start);
 
 
@@ -13,13 +13,15 @@ int expander(shell_t *mini)
     while (aux != NULL)
     {
         expand_dollars(&aux->token, mini, aux->type);
+        printf("%d\n", string()->_length(aux->token));
         if (string()->_length(aux->token) == 0)
         {
-            remove_node(&mini->arg_list, aux);
-            if (list()->_size(mini->arg_list) == 0)
+            aux = remove_node(&mini->arg_list, aux);
+            if (aux == NULL)
             {
-                printf("empty command\n");
-                return (1);
+                if (list()->_size(mini->arg_list) == 0)
+                    return (1);
+                return (0);
             }
             continue;
         }
@@ -27,6 +29,36 @@ int expander(shell_t *mini)
     }
     return (0);
 }
+
+t_list *remove_node(t_list **arg_list, t_list *node)
+{
+    t_list *aux;
+
+    aux = *arg_list;
+    if (*arg_list == NULL || node == NULL)
+        return (NULL);
+    if (*arg_list == node)
+    {
+        *arg_list = node->next;
+        free(node->token);
+        node->token = NULL;
+        free(node);
+        node = NULL;
+        return (*arg_list);
+    }
+    else
+    {
+        while (aux->next != node)
+            aux = aux->next;
+        aux->next = node->next;
+        free(node->token);
+        node->token = NULL;
+        free(node);
+        node = NULL;
+    }
+    return (aux);
+}
+
 
 static void expand_dollars(char **content, shell_t *mini, int type)
 {
@@ -38,6 +70,8 @@ static void expand_dollars(char **content, shell_t *mini, int type)
     active_quote = NO_QUOTE;
     i = 0;
     if (type == DELIMITOR)
+        return ;
+    if (!str)
         return ;
     while (str[i] != '\0')
     {
@@ -78,28 +112,3 @@ static char *get_variable_name(char *str, int start)
     return (string()->_duplicate(variable));
 }
 
-void remove_node(t_list **arg_list, t_list *node)
-{
-    t_list *aux;
-
-    aux = *arg_list;
-    if (*arg_list == NULL || node == NULL)
-        return ;
-    
-    if (*arg_list == node)
-    {
-        *arg_list = node->next;
-        if (node->token != NULL)
-            free(node->token);
-        free(node);
-    }
-    else
-    {
-        while (aux->next != node)
-            aux = aux->next;
-        aux->next = node->next;
-        if (node->token != NULL)
-            free(node->token);
-        free(node);
-    }
-}

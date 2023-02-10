@@ -17,7 +17,10 @@ int main(int argc, char** argv, char** envp)
         {
             prompt(mini);
             if (evaluate(mini) == 1)
-                break;
+            {
+                clear_looped_values(mini);
+                continue;
+            }
             if (executor(mini) == 1)
                 break;
             clear_looped_values(mini);
