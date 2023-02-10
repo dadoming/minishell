@@ -67,12 +67,16 @@ void	free_tree(t_cmdline **cmdline)
         if ((*cmdline)->cmd != NULL)
             free((*cmdline)->cmd);
         (*cmdline)->cmd = NULL;
-        while ((*cmdline)->arg[i])
+        if ((*cmdline)->arg != NULL)
         {
-            free((*cmdline)->arg[i]);
-            i++;
+            while ((*cmdline)->arg[i])
+            {
+                free((*cmdline)->arg[i]);
+                i++;
+            }
+            i = 0;
+            free((*cmdline)->arg);
         }
-        free((*cmdline)->arg);
         (*cmdline)->arg = NULL;
         if (*cmdline)
             free(*cmdline);

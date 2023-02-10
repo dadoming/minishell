@@ -168,6 +168,14 @@ void no_quote_quote_found(int *outer_quote, char quote, int *location, int *i);
 char *remove_quotes(char *str, char c, int i);
 void assign_outer_quote(char c, int *outer_quote, int *quote_amount);
 
+/*
+    build_ast.c
+
+
+*/
+void build_ast(t_list *lst, shell_t *mini);
+void print_tree(t_cmdline *cmdline);
+
 /* 
     executor.c 
 

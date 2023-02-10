@@ -1,31 +1,5 @@
 #include "../includes/minishell.h"
 
-void print_tree(t_cmdline *cmdline)
-{
-    t_cmdline *tmp;
-    int i = 0;
-
-    tmp = cmdline;
-    printf("Printing tree:\n");
-    while (tmp)
-    {
-        printf("cmd: %s\n", tmp->cmd);
-        printf("cmd_type: %d\n", tmp->cmd_type);
-        if (tmp->arg != NULL)
-        {
-            printf("arg: ");
-            while (tmp->arg[i])
-            {
-                printf("%s ", tmp->arg[i]);
-                i++;
-            }
-            printf("\n");
-        }
-        i = 0;
-        tmp = tmp->next;
-    }
-}
-
 int get_args_size(t_list *arg_list)
 {
     int i;
@@ -56,7 +30,10 @@ char **get_args(t_list **arg_list)
     arg = malloc(sizeof(char*) * (size + 1));
     arg[size] = 0;
     if (!(*arg_list))
+    {
+        free(arg);
         return (NULL);
+    }
     while (*arg_list)
     {
         if ((*arg_list)->type == PIPE || (*arg_list)->type == RED_OUTPUT || \
@@ -92,4 +69,30 @@ void build_ast(t_list *lst, shell_t *mini)
         }
     }
     cmd_line->next = NULL;
+}
+
+void print_tree(t_cmdline *cmdline)
+{
+    t_cmdline *tmp;
+    int i = 0;
+
+    tmp = cmdline;
+    printf("Printing tree:\n");
+    while (tmp)
+    {
+        printf("cmd: %s\n", tmp->cmd);
+        printf("cmd_type: %d\n", tmp->cmd_type);
+        if (tmp->arg != NULL)
+        {
+            printf("arg: ");
+            while (tmp->arg[i])
+            {
+                printf("%s ", tmp->arg[i]);
+                i++;
+            }
+            printf("\n");
+        }
+        i = 0;
+        tmp = tmp->next;
+    }
 }

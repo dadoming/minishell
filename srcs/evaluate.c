@@ -14,8 +14,8 @@ int evaluate(shell_t *mini)
         if (quotes(mini) == TRUE)
             return (0);
         helper_print(mini->arg_list);
-        //build_ast(mini->arg_list, mini);
-        //print_tree(mini->cmdline);
+        build_ast(mini->arg_list, mini);
+        print_tree(mini->cmdline);
     }
     return (0);
 }
