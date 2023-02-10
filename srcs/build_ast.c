@@ -28,12 +28,7 @@ char **get_args(t_list **arg_list)
     i = 0;
     size = get_args_size(*arg_list);
     arg = malloc(sizeof(char*) * (size + 1));
-    arg[size] = 0;
-    if (!(*arg_list))
-    {
-        free(arg);
-        return (NULL);
-    }
+    arg[size] = NULL;
     while (*arg_list)
     {
         if ((*arg_list)->type == PIPE || (*arg_list)->type == RED_OUTPUT || \
@@ -59,7 +54,6 @@ void build_ast(t_list *lst, shell_t *mini)
     {
         cmd_line->cmd = string()->_duplicate(aux->token);
         cmd_line->cmd_type = aux->type;
-        aux = aux->next;
         cmd_line->arg = get_args(&aux);
         if (aux)
         {
@@ -77,17 +71,16 @@ void print_tree(t_cmdline *cmdline)
     int i = 0;
 
     tmp = cmdline;
-    printf("Printing tree:\n");
     while (tmp)
     {
-        printf("cmd: %s\n", tmp->cmd);
-        printf("cmd_type: %d\n", tmp->cmd_type);
+        printf("cmd:\t%s\n", tmp->cmd);
+        printf("cmd_type:\t%d\n", tmp->cmd_type);
         if (tmp->arg != NULL)
         {
             printf("arg: ");
             while (tmp->arg[i])
             {
-                printf("%s ", tmp->arg[i]);
+                printf("%s\t", tmp->arg[i]);
                 i++;
             }
             printf("\n");

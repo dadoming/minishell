@@ -4,7 +4,6 @@ static void expand_dollars(char **content, shell_t *mini, int type);
 t_list *remove_node(t_list **arg_list, t_list *node);
 static char     *get_variable_name(char *str, int start);
 
-
 int expander(shell_t *mini)
 {
     t_list *aux;
@@ -13,7 +12,6 @@ int expander(shell_t *mini)
     while (aux != NULL)
     {
         expand_dollars(&aux->token, mini, aux->type);
-        printf("%d\n", string()->_length(aux->token));
         if (string()->_length(aux->token) == 0)
         {
             aux = remove_node(&mini->arg_list, aux);
@@ -58,7 +56,6 @@ t_list *remove_node(t_list **arg_list, t_list *node)
     }
     return (aux);
 }
-
 
 static void expand_dollars(char **content, shell_t *mini, int type)
 {

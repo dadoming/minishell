@@ -1,38 +1,4 @@
 #include "../../includes/minishell.h"
-/*
-    If type: HERE_DOC then don't expand word following
-
-    Example: 
-    
-    $ cat << $HOME
-    _______________________________________________________
-
-    If type: OUTFILE and INFILE then expand
-    
-    Example:
-
-    $ export t="ha ha"
-    $ echo baguette > $t
-    $ ls
-        'ha ha'
-    $ cat < $t
-        baguette
-    _______________________________________________________
-    
-    If type: word then expand word
-    _______________________________________________________
-    !!!
-    If word starts with "" or '' then set type to WORD
-    
-    if 
-        echo "hello" | wc
-            1       1       6
-    if 
-        echo "hello" '|' wc
-            hello | wc
-    _______________________________________________________
-    
-*/
 
 void define_type(shell_t *mini)
 {

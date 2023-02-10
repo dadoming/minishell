@@ -37,7 +37,6 @@ static void init_core(shell_t *mini, char **envp)
     }
     mini->arg_list = NULL;
     mini->core->env_p[i] = 0;
-    mini->core->execution_path = NULL;
     mini->core->logname = NULL;
     mini->core->prompt = NULL;
     mini->core->free_line = NULL;

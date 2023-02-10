@@ -38,8 +38,7 @@ int _array_length(char **array)
 int _same_word(char *w1, char *w2, int size)
 {
 	if (string()->_compare_n(w1, w2, size) == 0 && \
-        string()->_length(w2) == size && \
-        string()->_length(w1) == size)
+        string()->_length(w2) == size && string()->_length(w1) == size)
 		return (1);
 	return (0);
 }

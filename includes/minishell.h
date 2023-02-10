@@ -52,7 +52,6 @@ enum redirection_e
 typedef struct s_core
 {
     char            **env_p;
-    char            **execution_path;
     char            *free_line;
     char            *prompt;
     char            *logname;
