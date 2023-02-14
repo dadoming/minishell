@@ -32,7 +32,10 @@ void define_type(shell_t *mini)
             tmp->type = OUTFILE;
         }
         else if (string()->_compare_n(tmp->token, "|", 1) == 0)
+        {
             tmp->type = PIPE;
+            mini->num_of_pipes++;
+        }
         else
             tmp->type = WORD;
         tmp = tmp->next;

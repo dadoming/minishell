@@ -10,7 +10,8 @@ SRCS = ${wildcard srcs/*.c} \
 		${wildcard srcs/my_lib/string/*.c} \
 		${wildcard srcs/my_lib/check/*.c} \
 		${wildcard srcs/my_lib/lst/*.c} \
-		${wildcard srcs/lexer/*.c}
+		${wildcard srcs/lexer/*.c} \
+		${wildcard srcs/executor/*.c}
 
 CC = gcc
 

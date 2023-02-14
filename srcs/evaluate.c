@@ -13,12 +13,13 @@ int evaluate(shell_t *mini)
             return (1);
         if (quotes(mini) == TRUE)
             return (1);
-        helper_print(mini->arg_list);
+        //helper_print(mini->arg_list);
         if (list()->_size(mini->arg_list) > 0)
         {
             build_ast(mini->arg_list, mini);
             print_tree(mini->cmdline);
         }
+        return (0);
     }
-    return (0);
+    return (1);
 }

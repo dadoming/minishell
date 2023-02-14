@@ -69,6 +69,8 @@ typedef struct shell_s
 {
     void            (*SIGINT_handler)(int);
     int             signalset;
+    int             num_of_pipes;
+    pid_t           pid;
     t_list          *arg_list;
     t_core          *core;
     t_cmdline       *cmdline;
@@ -181,6 +183,10 @@ void print_tree(t_cmdline *cmdline);
     Executes the command.
 */
 int     executor(shell_t *mini);
+int     execute_process(shell_t *mini);
+char    **find_path(char **env);
+void    free_path(char **path);
+char	*get_command(char *command, char **path);
 
 
 /* 

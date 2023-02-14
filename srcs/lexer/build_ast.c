@@ -1,4 +1,4 @@
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int get_args_size(t_list *arg_list)
 {
@@ -11,11 +11,12 @@ int get_args_size(t_list *arg_list)
     i = 0;
     while (tmp)
     {
-        if (tmp->type != WORD)
+        if (tmp->type == PIPE)
             break;
         tmp = tmp->next;
         i++;
     }
+    printf("%d\n", i);
     return (i);
 }
 
@@ -31,9 +32,7 @@ char **get_args(t_list **arg_list)
     arg[size] = NULL;
     while (*arg_list)
     {
-        if ((*arg_list)->type == PIPE || (*arg_list)->type == RED_OUTPUT || \
-            (*arg_list)->type == RED_INPUT || (*arg_list)->type == APPEND_OUTPUT || \
-            (*arg_list)->type == HERE_DOC)
+        if ((*arg_list)->type == PIPE)
             break;
         arg[i] = string()->_duplicate((*arg_list)->token);
         *arg_list = (*arg_list)->next;

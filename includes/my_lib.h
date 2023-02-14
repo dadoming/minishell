@@ -89,6 +89,8 @@ typedef struct s_string
     int     (*_same_word)(char *w1, char *w2, int size);
     // Copies src to dst
     char*   (*_copy)(char *dst, char *src);
+    // Joins s2 to s1. Allocates memory.
+    char*	(*_join)(char const *s1, char const *s2);
 }   t_string;
 
 typedef struct s_check
@@ -174,6 +176,7 @@ char*	_trim(char const *s1, char const *set);
 char*   _duplicate(const char *str);
 char*   _copy_until(char *str, int n);
 char*   _copy(char *dst, char *src);
+char*   _join(char const *s1, char const *s2);
 
 char**  _split(char const *s, char c);
 

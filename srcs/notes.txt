@@ -259,6 +259,41 @@ To remove just check if they are the first or last character of a token
     and then remove it and insert in new node.
 
 
+Bash information:
+
+In the following descriptions, if the file descriptor number is omitted, 
+    and the first character of the redirection operator is ‘<’, the 
+    redirection refers to the standard input (file descriptor 0). 
+    If the first character of the redirection operator is ‘>’, the 
+    redirection refers to the standard output (file descriptor 1).
+
+Bash handles several filenames specially when they are used in redirections,
+    as described in the following table. If the operating system on which
+    Bash is running provides these special files, bash will use them;
+    otherwise it will emulate them internally with the behavior described
+    below.
+
+            /dev/fd/fd
+                If fd is a valid integer, file descriptor fd is duplicated.
+
+            /dev/stdin
+                File descriptor 0 is duplicated.
+
+            /dev/stdout
+                File descriptor 1 is duplicated.
+
+            /dev/stderr
+                File descriptor 2 is duplicated.
+
+A failure to open or create a file causes the redirection to fail. !!
+Redirections using file descriptors greater than 9 should be used with care, 
+    as they may conflict with file descriptors the shell uses internally.
+
+
+
+
+
+
 INPUT REDIRECTION: <
 
 Redirection of input causes the file whose name results from the 

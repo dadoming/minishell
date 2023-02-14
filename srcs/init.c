@@ -40,4 +40,5 @@ static void init_core(shell_t *mini, char **envp)
     mini->core->logname = NULL;
     mini->core->prompt = NULL;
     mini->core->free_line = NULL;
+    mini->num_of_pipes = 0;
 }
