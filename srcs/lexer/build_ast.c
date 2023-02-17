@@ -16,7 +16,6 @@ int get_args_size(t_list *arg_list)
         tmp = tmp->next;
         i++;
     }
-    printf("%d\n", i);
     return (i);
 }
 

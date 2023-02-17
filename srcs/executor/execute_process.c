@@ -7,47 +7,64 @@ void prepare_command(t_cmdline *aux, char **command, char **path)
 		print_error(aux->cmd, 0);
 }
 
-void execute_command(shell_t *mini, char *command, t_cmdline *aux)
+void execute_command(shell_t *mini, char *command, char **arg, int child_num)
 {
 	mini->pid = fork();
 	if (mini->pid == 0)
 	{
-		execve(command, aux->arg, mini->core->env_p);
+		if (mini->num_of_cmds > 1)
+		{
+			if (child_num == 0)
+			{
+				dup2(mini->fd[STDOUT_FILENO], STDOUT_FILENO);
+				close(mini->fd[STDIN_FILENO]);
+				close(mini->fd[STDOUT_FILENO]);
+			}
+			else if (child_num == (mini->num_of_cmds - 1))
+			{
+				dup2(mini->fd[(2 * child_num) - 2], STDIN_FILENO);
+				close(mini->fd[(2 * child_num) - 1]);
+				close(mini->fd[(2 * child_num) - 2]);
+			}
+			else
+			{
+				dup2(mini->fd[2 * child_num - 2], STDIN_FILENO);
+				dup2(mini->fd[2 * child_num + 1], STDOUT_FILENO);
+			}
+		}
+		execve(command, arg, mini->core->env_p);
 	}
-	else
+	else if (mini->pid == -1)
 	{
-		waitpid(mini->pid, NULL, 0);
+		perror("fork");
+		exit(1);
 	}
 }
 
-void set_pipes()
+int execute_process(shell_t *mini, t_cmdline *cmdline, int child_num)
 {
-
-}
-
-int execute_process(shell_t *mini)
-{
-	int 		child_num;
 	char 		*command;
 	char 		**path;
-	t_cmdline	*aux;
 
-	aux = mini->cmdline;
 	path = find_path(mini->core->env_p);
 	command = NULL;
-	child_num = 0;
-	while (aux)
+	prepare_command(cmdline, &command, path);
+	if (command)
 	{
-		set_pipes(child_num, aux);
-		prepare_command(aux, &command, path);
-		if (command)
+		execute_command(mini, command, cmdline->arg, child_num);
+		free(command);
+		if (mini->num_of_cmds > 1)
 		{
-			execute_command(mini, command, aux);
-			free(command);
+			// Close appropriate file descriptors
+			if (child_num > 0) {
+				close(mini->fd[(child_num-1)*2]); // Close write end of previous pipe
+			}
+			if (child_num < mini->num_of_cmds-1) {
+				close(mini->fd[child_num*2+1]); // Close read end of current pipe
+			}
 		}
-		child_num++;
-		aux = aux->next;
 	}
+	waitpid(-1, NULL, 0);
 	free_path(path);
 	return (0);
 }

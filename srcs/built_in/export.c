@@ -22,16 +22,16 @@ declare -x ola="\$this"
 
 */
 
-char** export(t_list *lst, char **env_p)
+char** export(char **arg, char **env_p)
 {
     char *var_name;
     char *var_value;
 
     var_name = NULL;
-    if (lst->next != NULL)
+    if (arg[1] != NULL)
     {
-        var_name = string()->_copy_until(lst->next->token, string()->_length_until_c(lst->next->token, '='));
-        var_value = string()->_search(lst->next->token, '=');
+        var_name = string()->_copy_until(arg[1], string()->_length_until_c(arg[1], '='));
+        var_value = string()->_search(arg[1], '=');
     }
     if (!var_name)
     {

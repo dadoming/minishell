@@ -3,6 +3,7 @@
 
 //#include <dirent.h>
 #include <errno.h>
+#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -69,8 +70,12 @@ typedef struct shell_s
 {
     void            (*SIGINT_handler)(int);
     int             signalset;
+
+    int             num_of_cmds;
     int             num_of_pipes;
-    pid_t           pid;
+    int             *fd;
+    pid_t             pid;
+
     t_list          *arg_list;
     t_core          *core;
     t_cmdline       *cmdline;
@@ -171,8 +176,6 @@ void assign_outer_quote(char c, int *outer_quote, int *quote_amount);
 
 /*
     build_ast.c
-
-
 */
 void build_ast(t_list *lst, shell_t *mini);
 void print_tree(t_cmdline *cmdline);
@@ -183,21 +186,21 @@ void print_tree(t_cmdline *cmdline);
     Executes the command.
 */
 int     executor(shell_t *mini);
-int     execute_process(shell_t *mini);
+int execute_process(shell_t *mini, t_cmdline *cmdline, int child_num);
 char    **find_path(char **env);
 void    free_path(char **path);
 char	*get_command(char *command, char **path);
-
+void	close_pipes(shell_t *mini);
 
 /* 
     built_ins/
 
     All the built in functions.
 */
-int     echo(t_list *arg_list);
+int     echo(char **args);
 void    pwd(void);
-char    **export(t_list *lst, char **env_p);
-char    **unset(t_list *lst, char **env);
+char    **export(char **arg, char **env_p);
+char **unset(char **arg, char **env);
 void    env(char **env_p, int option);
 void    cd(t_list *lst, char **env);
 
