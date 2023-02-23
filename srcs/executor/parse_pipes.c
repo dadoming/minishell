@@ -2,7 +2,7 @@
 
 void parse_pipes(t_cmdline *tree_node, t_redirection *red)
 {
-    if (tree_node->next != NULL && tree_node->outfile != 0)
+    if (tree_node->next != NULL && tree_node->outfile == 0)
     {
         pipe(red->pipe_fd);
         red->fd_out = red->pipe_fd[1];
