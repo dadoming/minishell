@@ -6,6 +6,7 @@ void prepare_command(t_cmdline *aux, char **command, char **path)
 	if (*command == NULL)
 		print_error(aux->cmd, 0);
 }
+/*
 
 void execute_command(shell_t *mini, char *command, char **arg, int child_num)
 {
@@ -68,3 +69,4 @@ int execute_process(shell_t *mini, t_cmdline *cmdline, int child_num)
 	free_path(path);
 	return (0);
 }
+*/ 

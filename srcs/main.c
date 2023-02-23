@@ -21,7 +21,7 @@ int main(int argc, char** argv, char** envp)
                 clear_looped_values(mini);
                 continue;
             }
-            if (executor(mini) == 1)
+            if (executor(mini, mini->cmdline) == 1)
                 break;
             clear_looped_values(mini);
         }
@@ -92,6 +92,28 @@ void	free_tree(t_cmdline **cmdline)
             free((*cmdline)->arg);
         }
         (*cmdline)->arg = NULL;
+        if ((*cmdline)->infile != NULL)
+        {
+            while ((*cmdline)->infile[i])
+            {
+                free((*cmdline)->infile[i]);
+                i++;
+            }
+            i = 0;
+            free((*cmdline)->infile);
+        }
+        (*cmdline)->infile = NULL;
+        if ((*cmdline)->outfile != NULL)
+        {
+            while ((*cmdline)->outfile[i])
+            {
+                free((*cmdline)->outfile[i]);
+                i++;
+            }
+            i = 0;
+            free((*cmdline)->outfile);
+        }
+        (*cmdline)->outfile = NULL;
         if (*cmdline)
             free(*cmdline);
         *cmdline = temp;

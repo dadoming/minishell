@@ -5,13 +5,13 @@ INCLUDES = includes/minishell.h \
 		includes/colors.h
 
 SRCS = ${wildcard srcs/*.c} \
-		${wildcard srcs/built_in/*.c} \
+		${wildcard srcs/executor/built_in/*.c} \
+		${wildcard srcs/executor/*.c} \
 		${wildcard srcs/my_lib/*.c} \
 		${wildcard srcs/my_lib/string/*.c} \
 		${wildcard srcs/my_lib/check/*.c} \
 		${wildcard srcs/my_lib/lst/*.c} \
-		${wildcard srcs/lexer/*.c} \
-		${wildcard srcs/executor/*.c}
+		${wildcard srcs/lexer/*.c}
 
 CC = gcc
 

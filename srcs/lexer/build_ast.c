@@ -1,6 +1,34 @@
 #include "../../includes/minishell.h"
 
-int get_args_size(t_list *arg_list)
+static int get_args_size(t_list *arg_list);
+static char **get_args(t_list **arg_list);
+
+void build_ast(t_list *lst, shell_t *mini)
+{
+    t_cmdline *cmd_line;
+    t_list *aux;
+
+    aux = lst;
+    cmd_line = malloc(sizeof(t_cmdline));
+    mini->cmdline = cmd_line;
+    while (aux)
+    {
+        cmd_line->cmd = string()->_duplicate(aux->token);
+        cmd_line->infile = 0;
+        cmd_line->outfile = 0;
+        cmd_line = get_redir(aux, cmd_line);
+        cmd_line->arg = get_args(&aux);
+        if (aux)
+        {
+            aux = aux->next;
+            cmd_line->next = malloc(sizeof(t_cmdline));
+            cmd_line = cmd_line->next;
+        }
+    }
+    cmd_line->next = NULL;
+}
+
+static int get_args_size(t_list *arg_list)
 {
     int i;
     t_list *tmp;
@@ -13,13 +41,14 @@ int get_args_size(t_list *arg_list)
     {
         if (tmp->type == PIPE)
             break;
+        if (tmp->type == WORD)
+            i++;
         tmp = tmp->next;
-        i++;
     }
     return (i);
 }
 
-char **get_args(t_list **arg_list)
+static char **get_args(t_list **arg_list)
 {
     char **arg;
     int i;
@@ -33,34 +62,14 @@ char **get_args(t_list **arg_list)
     {
         if ((*arg_list)->type == PIPE)
             break;
-        arg[i] = string()->_duplicate((*arg_list)->token);
+        if ((*arg_list)->type == WORD)
+        {
+            arg[i] = string()->_duplicate((*arg_list)->token);
+            i++;
+        }
         *arg_list = (*arg_list)->next;
-        i++;
     }
     return (arg);
-}
-
-void build_ast(t_list *lst, shell_t *mini)
-{
-    t_cmdline *cmd_line;
-    t_list *aux;
-
-    aux = lst;
-    cmd_line = malloc(sizeof(t_cmdline));
-    mini->cmdline = cmd_line;
-    while (aux)
-    {
-        cmd_line->cmd = string()->_duplicate(aux->token);
-        cmd_line->cmd_type = aux->type;
-        cmd_line->arg = get_args(&aux);
-        if (aux)
-        {
-            aux = aux->next;
-            cmd_line->next = malloc(sizeof(t_cmdline));
-            cmd_line = cmd_line->next;
-        }
-    }
-    cmd_line->next = NULL;
 }
 
 void print_tree(t_cmdline *cmdline)
@@ -71,15 +80,36 @@ void print_tree(t_cmdline *cmdline)
     tmp = cmdline;
     while (tmp)
     {
-        printf("cmd:\t%s\n", tmp->cmd);
-        printf("cmd_type:\t%d\n", tmp->cmd_type);
         if (tmp->arg != NULL)
         {
-            printf("arg: ");
+            printf("\ncmds\t:\t");
             while (tmp->arg[i])
             {
                 printf("%s\t", tmp->arg[i]);
                 i++;
+            }
+            printf("\n");
+            if (tmp->infile != NULL)
+            {
+                printf("infile\t:\t");
+                i = 0;
+                while (tmp->infile[i])
+                {
+                    printf("%s\t", tmp->infile[i]);
+                    i++;
+                }
+                printf("\n");
+            }
+            if (tmp->outfile != NULL)
+            {
+                printf("outfile\t:\t");
+                i = 0;
+                while (tmp->outfile[i])
+                {
+                    printf("%s\t", tmp->outfile[i]);
+                    i++;
+                }
+                printf("\n");
             }
             printf("\n");
         }

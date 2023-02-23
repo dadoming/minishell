@@ -1,6 +1,5 @@
 #include "../includes/minishell.h"
 
-
 int evaluate(shell_t *mini)
 {
     if (string()->_length(rl_line_buffer) > 0)
@@ -17,7 +16,7 @@ int evaluate(shell_t *mini)
         if (list()->_size(mini->arg_list) > 0)
         {
             build_ast(mini->arg_list, mini);
-            //print_tree(mini->cmdline);
+            print_tree(mini->cmdline);
         }
         return (0);
     }
