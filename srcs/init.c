@@ -36,6 +36,7 @@ static void init_core(shell_t *mini, char **envp)
         i++;
     }
     mini->arg_list = NULL;
+    mini->child_num = 0;
     mini->core->env_p[i] = 0;
     mini->core->logname = NULL;
     mini->core->prompt = NULL;

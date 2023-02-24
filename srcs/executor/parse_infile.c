@@ -43,7 +43,7 @@ static int treat_infile(t_cmdline *cmdtree, t_redirection *red, shell_t *mini)
 				close(red->tmp_in);
 				close(red->tmp_out);
 				print_normal_error(cmdtree->infile[i + 1]);
-				break;
+				break ;
 			}
 		}
 		else if (cmdtree->infile[i][0] == '<' && cmdtree->infile[i][1] == '<' \

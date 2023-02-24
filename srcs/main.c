@@ -46,6 +46,7 @@ void clear_looped_values(shell_t *mini)
         //unlink(".heredoc_storer");
         mini->here_doc = 0;
     }
+    mini->child_num = 0;
 }
 
 /* Clears tree if exists */

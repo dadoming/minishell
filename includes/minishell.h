@@ -83,7 +83,8 @@ typedef struct shell_s
     int             signalset;
 
     int             here_doc;
-    pid_t           pid;
+    pid_t           *pid;
+    int             child_num;
 
     t_list          *arg_list;
     t_core          *core;
@@ -141,7 +142,7 @@ void parse_outfile(t_cmdline *tree_node, t_redirection *red);
 int parse_infile(shell_t *mini, t_cmdline *cmdtree, t_redirection *red);
 t_cmdline *get_redir(t_list *arg_list, t_cmdline *tree_node);
 void parse_pipes(t_cmdline *tree_node, t_redirection *red);
-void execute_command(shell_t *mini, t_cmdline *aux, t_redirection *red);
+void execute_command(shell_t *mini, t_cmdline *aux, t_redirection *red, int i);
 void finish_execution(shell_t *mini, t_redirection *red);
 int	heredoc(char *eof, shell_t *mini);
 
