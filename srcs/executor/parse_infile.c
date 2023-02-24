@@ -12,7 +12,9 @@ int parse_infile(shell_t *mini, t_cmdline *cmdtree, t_redirection *red)
         {
             cmdtree = cmdtree->next;
             if (cmdtree != NULL)
-           		executor(mini, cmdtree);
+           	{
+				executor(mini, cmdtree);
+			}
             return (-1);
         }
     }
@@ -43,7 +45,6 @@ static int treat_infile(t_cmdline *cmdtree, t_redirection *red, shell_t *mini)
 				close(red->tmp_in);
 				close(red->tmp_out);
 				print_normal_error(cmdtree->infile[i + 1]);
-				break ;
 			}
 		}
 		else if (cmdtree->infile[i][0] == '<' && cmdtree->infile[i][1] == '<' \
@@ -53,7 +54,7 @@ static int treat_infile(t_cmdline *cmdtree, t_redirection *red, shell_t *mini)
 				close(fd);
 			if(heredoc(cmdtree->infile[i + 1], mini) == 0)
 			{
-				fd = open(".heredoc_storer", O_RDONLY);
+				fd = open(".heredoc_storer", O_RDONLY | O_ASYNC);
 				if (fd == -1)
 				{
 					dup2(red->tmp_in, 0);
@@ -61,10 +62,8 @@ static int treat_infile(t_cmdline *cmdtree, t_redirection *red, shell_t *mini)
 					close(red->tmp_in);
 					close(red->tmp_out);
 					print_normal_error("heredoc");
-					break;
 				}
 			}
-			
 		}
 		i++;
 	}

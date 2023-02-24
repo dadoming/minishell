@@ -29,19 +29,13 @@ static void execution(shell_t *mini, t_cmdline *aux, char *command, t_redirectio
     mini->pid[i] = fork();
     if (mini->pid[i] == 0)
     {
-        if (string()->_same_word(aux->cmd, "echo", 4) || string()->_same_word(aux->cmd, "pwd", 3))
-            echo_pwd(aux);
-        else
-        {
             //close(red->pipe_fd[0]);
             //close(red->pipe_fd[1]);
             execve(command, aux->arg, mini->core->env_p);
             print_normal_error(aux->cmd);
             exit(127);
-        }
-        exit(0);
+        
     }
-
 }
 
 int echo_pwd(t_cmdline *cmdline)

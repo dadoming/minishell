@@ -13,7 +13,9 @@ int executor(shell_t *mini, t_cmdline *aux)
 	{
 		parse_outfile(aux, &red);
 		if (parse_infile(mini, aux, &red) == -1)
+		{
 			return (0);
+		}
 		if (red.fd_out == -1)
 			break;
 		parse_pipes(aux, &red);

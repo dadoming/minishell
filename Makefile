@@ -26,3 +26,6 @@ all:
 # This makes the program and directly runs it
 m:
 	make all && ./minishell
+
+v:
+	make all && valgrind ./minishell

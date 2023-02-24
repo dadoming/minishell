@@ -2,7 +2,17 @@
 
 int is_built_in(t_cmdline *cmdline, shell_t *mini)
 {
-	if(string()->_same_word(mini->arg_list->token, "cd", 2))
+	if (string()->_same_word(cmdline->cmd, "echo", 4))
+    {
+        echo(cmdline->arg);
+		return (2);
+    }
+	else if (string()->_same_word(cmdline->cmd, "pwd", 3))
+	{
+		pwd();
+		return (2);
+	}
+	else if(string()->_same_word(mini->arg_list->token, "cd", 2))
 	{
 		cd(mini->arg_list, mini->core->env_p);
 		return (2);

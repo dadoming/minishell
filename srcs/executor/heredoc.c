@@ -5,7 +5,7 @@ int	heredoc(char *eof, shell_t *mini)
 	int		file;
 	char	*buffer;
 
-	file = open(".heredoc_storer", O_CREAT | O_WRONLY | O_TRUNC, 0000644);
+	file = open(".heredoc_storer", O_CREAT | O_WRONLY | O_ASYNC | O_TRUNC, 0000644); // O_TRUNC?
 	if (file < 0)
 	{
 		print_normal_error("heredoc");
