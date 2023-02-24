@@ -11,7 +11,7 @@ void pwd(void)
     }
     else
     {
-        print_error("pwd", 0);
+        print_normal_error("pwd");
     }
     free(buffer);
 }

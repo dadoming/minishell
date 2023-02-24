@@ -29,7 +29,7 @@ int echo(char **args)
     n = 0;
     if (args[1] == NULL)
     {
-        printf("\n");
+        string()->_putchar_fd('\n', STDOUT_FILENO);
         return (0);
     }
     if (args[1][0] == '-')

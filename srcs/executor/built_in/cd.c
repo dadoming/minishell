@@ -89,7 +89,7 @@ void    cd(t_list *lst, char **env)
 	
 	if (!lst->next && !homedir)
 	{
-		 print_error("cd", 0);
+		 print_normal_error("cd");
 		 return;
 	}
 	env = update_env_var(env, "OLDPWD=", now_dir);
@@ -109,7 +109,7 @@ void    cd(t_list *lst, char **env)
 	free(tmp);
 	if (chdir(dir_to_go) < 0)
 	{
-		print_error("cd", 0); //Err: path;
+		print_normal_error("cd"); //Err: path;
 		return;
 	}
 	tmp = get_curent_dir();

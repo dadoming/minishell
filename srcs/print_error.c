@@ -1,14 +1,18 @@
 #include "../includes/minishell.h"
 
-void print_error(char *command, char c)
+void print_normal_error(char *error)
 {
-    if (command)
+    if (error)
     {
         string()->_putstring_fd("minishell: ", 2);
-        string()->_putstring_fd(command, 2);
+        string()->_putstring_fd(error, 2);
         string()->_putstring_fd(": ", 2);
         string()->_putstring_n_fd(strerror(errno), 2);
     }
+}
+
+void print_syntax_error(char c)
+{
     if (c == '\n')
     {
         string()->_putstring_fd("minishell: syntax error near unexpected token `", 2);

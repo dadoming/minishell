@@ -29,6 +29,44 @@ Boa documentação: < https://github.com/madebypixel02/minishell >
 
 
 
+Known BUGS:
+_____________________________________________________
+
+davz > minishell$ sfdgsfdgsdfg
+minishell: sfdgsfdgsdfg: No such file or directory
+
+davz@davz-rog:$ gsdfgsfgs
+gsdfgsfgs: command not found
+_____________________________________________________
+
+davz > minishell$ unset PATH
+davz > minishell$ env | grep PATH
+minishell: grep: Success
+
+davz@davz-rog:~/git_repos/minishell$ env | grep PATH
+bash: env: No such file or directory
+bash: grep: No such file or directory
+_____________________________________________________
+
+davz > minishell$ cat < lol << EOF
+minishell: lol: No such file or directory
+
+davz@davz-rog:~/git_repos/minishell$ cat < lol << EOF
+> lol
+> EOF
+bash: lol: No such file or directory
+_____________________________________________________
+
+If cat | ls works, redirections won't work.
+
+If cat < outfile.txt works, cat | ls won't work.
+_____________________________________________________
+
+
+
+
+
+
 
 !!!!!
 TO - DO! :
@@ -312,3 +350,4 @@ In this case:
           20 helper_print.c
         $
     if !n then output no file descriptor provided.
+    

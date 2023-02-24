@@ -20,7 +20,7 @@ int executor(shell_t *mini, t_cmdline *aux)
 			aux = aux->next;
 			continue;
 		}
-		execute_command(mini, aux);
+		execute_command(mini, aux, &red);
 		aux = aux->next;
 	}
 	finish_execution(mini, &red);

@@ -54,7 +54,7 @@ int quotes(shell_t *mini)
     {
         if (only_one_quote(aux->token) == TRUE)
         {
-            printf("Unclosed quotes\n");
+            string()->_putstring_n_fd("Unclosed quotes", 2);
             return (TRUE);
         }
         aux->token = treat_quotes(aux->token);

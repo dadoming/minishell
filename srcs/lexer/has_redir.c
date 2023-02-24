@@ -23,7 +23,7 @@ int has_redir(shell_t *mini, int quote, int i, t_list *aux)
 {
     if (mini->arg_list->token[0] == '|')
     {
-        print_error(NULL, '|');
+        print_syntax_error('|');
         return (1);
     }
     while (aux)
@@ -96,7 +96,7 @@ static int check_error_input(char *str, int i, char redir_sign)
             string()->_putstring_n_fd(\
             "I was not programmed to do that redirection because it was not asked!", 2);
         else 
-            print_error(NULL, str[j - 1]);
+            print_syntax_error(str[j - 1]);
         return (1);
     }
 }

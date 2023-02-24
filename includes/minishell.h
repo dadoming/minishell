@@ -82,17 +82,13 @@ typedef struct shell_s
     void            (*SIGINT_handler)(int);
     int             signalset;
 
-    int             num_of_cmds;
-    int             num_of_pipes;
-    int             *fd;
+    int             here_doc;
     pid_t           pid;
 
     t_list          *arg_list;
     t_core          *core;
     t_cmdline       *cmdline;
 } shell_t;
-
-
 
 void	free_list(t_list **lst);
 void    clear_looped_values(shell_t *mini);
@@ -145,9 +141,9 @@ void parse_outfile(t_cmdline *tree_node, t_redirection *red);
 int parse_infile(shell_t *mini, t_cmdline *cmdtree, t_redirection *red);
 t_cmdline *get_redir(t_list *arg_list, t_cmdline *tree_node);
 void parse_pipes(t_cmdline *tree_node, t_redirection *red);
-void execute_command(shell_t *mini, t_cmdline *aux);
+void execute_command(shell_t *mini, t_cmdline *aux, t_redirection *red);
 void finish_execution(shell_t *mini, t_redirection *red);
-
+int	heredoc(char *eof, shell_t *mini);
 
 int is_built_in(t_cmdline *cmdline, shell_t *mini);
 int     echo(char **args);
@@ -161,7 +157,9 @@ void    cd(t_list *lst, char **env);
 void    close_program(shell_t *mini);
 
 
-void print_error(char *command, char c);
+void print_normal_error(char *error);
+void print_syntax_error(char c);
+
 
 void    ignore_signal_for_shell();
 

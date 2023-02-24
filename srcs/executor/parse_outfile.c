@@ -11,7 +11,7 @@ void parse_outfile(t_cmdline *tree_node, t_redirection *red)
         red->fd_out = dup(red->tmp_out);
     if (red->fd_out == -1)
     {
-        perror("minishell: open outfile");
+        print_normal_error("outfile");
         // exit_status?
     }
 }

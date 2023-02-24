@@ -13,12 +13,12 @@ int next_node_is_redirect(char *next_node_str)
 {
     if (next_node_str == NULL)
     {
-        print_error(NULL, '\n');
+        print_syntax_error('\n');
         return (1);
     }
     if (is_redir(next_node_str, 0) == 1)
     {
-        print_error(NULL, next_node_str[0]);
+        print_syntax_error(next_node_str[0]);
         return (1);
     }
     return (0);

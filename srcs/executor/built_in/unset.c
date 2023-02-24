@@ -17,7 +17,6 @@ char **unset(char **arg, char **env)
         if (string()->_compare_n(env[i], arg[1], len) == 0 && \
             string()->_length_until_c(env[i], '=') == len)
         {
-            printf("env[i]: %s\n", env[i]);
             free(env[i]);
             env[i] = NULL;
             i++;

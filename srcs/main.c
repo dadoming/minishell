@@ -41,26 +41,10 @@ void clear_looped_values(shell_t *mini)
         free_list(&mini->arg_list);
     if (mini->cmdline != NULL)
         free_tree(&mini->cmdline);
-    close_pipes(mini);
-    if (mini->fd != NULL)
-        free(mini->fd);
-    mini->fd = NULL;
-    mini->num_of_pipes = 0;
-    mini->num_of_cmds = 1;
-}
-
-void	close_pipes(shell_t *mini)
-{
-	int	i;
-
-	i = 0;
-    if (mini->num_of_pipes > 1)
+    if (mini->here_doc)
     {
-        while (i < (mini->num_of_pipes))
-	    {
-		    close(mini->fd[i]);
-    	    i++;
-	    }
+        //unlink(".heredoc_storer");
+        mini->here_doc = 0;
     }
 }
 
@@ -71,10 +55,7 @@ void	free_tree(t_cmdline **cmdline)
     int i = 0;
 
     if (cmdline == NULL || *cmdline == NULL)
-    {
-        printf("No tree to free.\n");
         return ;
-    }
     while (*cmdline)
     {
         temp = (*cmdline)-> next;
@@ -126,10 +107,7 @@ void	free_list(t_list **lst)
 	t_list	*temp;
 
 	if (lst == NULL || *lst == NULL)
-	{
-        printf("No list to free.\n");
         return ;
-    }
 	while (*lst)
 	{
 		temp = (*lst)-> next;

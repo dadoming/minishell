@@ -1,5 +1,5 @@
 #include "../includes/minishell.h"
-#include "../includes/global_var.h"
+#include "../includes/g_var.h"
 
 static void init_core(shell_t *mini, char **envp);
 
@@ -40,7 +40,5 @@ static void init_core(shell_t *mini, char **envp)
     mini->core->logname = NULL;
     mini->core->prompt = NULL;
     mini->core->free_line = NULL;
-    mini->num_of_pipes = 0;
-    mini->num_of_cmds = 1;
-    mini->fd = NULL;
+    mini->here_doc = 0;
 }

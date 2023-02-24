@@ -1,9 +1,9 @@
 #include "../../includes/minishell.h"
 
-static void execution(shell_t *mini, t_cmdline *aux, char *command);
+static void execution(shell_t *mini, t_cmdline *aux, char *command, t_redirection *red);
 int echo_pwd(t_cmdline *cmdline);
 
-void execute_command(shell_t *mini, t_cmdline *aux)
+void execute_command(shell_t *mini, t_cmdline *aux, t_redirection *red)
 {
     char **path;
     char *command;
@@ -11,17 +11,18 @@ void execute_command(shell_t *mini, t_cmdline *aux)
     path = find_path(mini->core->env_p);
     command = get_command(aux->cmd, path);
     if (command == NULL)
-        print_error(aux->cmd, 0);
+        print_normal_error(aux->cmd);
     else
     {
-        execution(mini, aux, command);
+        execution(mini, aux, command, red);
         free_path(path);
         free(command);
     }
 }
 
-static void execution(shell_t *mini, t_cmdline *aux, char *command)
+static void execution(shell_t *mini, t_cmdline *aux, char *command, t_redirection *red)
 {
+    (void)red;
     mini->pid = fork();
     if (mini->pid == 0)
     {
@@ -29,8 +30,10 @@ static void execution(shell_t *mini, t_cmdline *aux, char *command)
             echo_pwd(aux);
         else
         {
+            //close(red->pipe_fd[0]);
+            //close(red->pipe_fd[1]);
             execve(command, aux->arg, mini->core->env_p);
-            printf("minishell: %s: %s\n", aux->cmd, strerror(errno));
+            print_normal_error(aux->cmd);
             exit(127);
         }
         exit(0);
