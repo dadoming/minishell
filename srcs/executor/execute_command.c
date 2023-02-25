@@ -29,12 +29,11 @@ static void execution(shell_t *mini, t_cmdline *aux, char *command, t_redirectio
     mini->pid[i] = fork();
     if (mini->pid[i] == 0)
     {
-            //close(red->pipe_fd[0]);
-            //close(red->pipe_fd[1]);
-            execve(command, aux->arg, mini->core->env_p);
-            print_normal_error(aux->cmd);
-            exit(127);
-        
+        //close(red->pipe_fd[0]);
+        //close(red->pipe_fd[1]);
+        execve(command, aux->arg, mini->core->env_p);
+        print_normal_error(aux->cmd);
+        exit(127);
     }
 }
 

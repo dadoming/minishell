@@ -55,7 +55,9 @@ If cat | ls works, redirections won't work.
 If cat < outfile.txt works, cat | ls won't work.
 _____________________________________________________
 
+Experimentar:
 
+/bin/ls
 
 
 

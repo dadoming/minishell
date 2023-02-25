@@ -145,6 +145,7 @@ void parse_pipes(t_cmdline *tree_node, t_redirection *red);
 void execute_command(shell_t *mini, t_cmdline *aux, t_redirection *red, int i);
 void finish_execution(shell_t *mini, t_redirection *red);
 int	heredoc(char *eof, shell_t *mini);
+void fun_exit(char **arg);
 
 int is_built_in(t_cmdline *cmdline, shell_t *mini);
 int     echo(char **args);

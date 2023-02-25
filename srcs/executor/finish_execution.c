@@ -16,12 +16,11 @@ void finish_execution(shell_t *mini, t_redirection *red)
     {
         while (i < mini->child_num + 1)
         {
-            if (i >= 0 && i < mini->child_num && mini->pid[i] > 0)
+            if (i >= 0 && i < mini->child_num + 1 && mini->pid[i] > 0)
             {
                 waitpid(mini->pid[i], &status, 0);
             }
             i++;
-            
         }
         free(mini->pid);
     }
