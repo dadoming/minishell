@@ -9,7 +9,6 @@ static char* executable_in_folder(char *cmd)
     char *command;
     char *path;
 
-    command = NULL;
     path = getcwd(NULL, 0);
     command = string()->_append(&path, "/");
     command = string()->_append(&command, cmd);
@@ -27,7 +26,22 @@ static char* executable_in_folder(char *cmd)
             return (NULL);
         }
     }
-    return (NULL);
+    free(command);
+    command = string()->_duplicate(cmd);
+    return (command);
+}
+
+int cmd_is_directory(char *cmd)
+{
+    if (check()->_is_directory(cmd) == 1)
+    {
+        string()->_putstring_fd("minishell: ", STDERR_FILENO);
+        string()->_putstring_fd(cmd, STDERR_FILENO);
+        string()->_putstring_n_fd(": is a directory", STDERR_FILENO);
+        g_exit_status = 126;
+        return (1);
+    }
+    return (0);
 }
 
 void execute_command(shell_t *mini, t_cmdline *aux, t_redirection *red, int i)
@@ -35,11 +49,14 @@ void execute_command(shell_t *mini, t_cmdline *aux, t_redirection *red, int i)
     char **path;
     char *command;
 
+    if (cmd_is_directory(aux->cmd) == 1)
+        return ;
     path = find_path(mini->core->env_p);
     command = get_command(aux->cmd, path);
-    if (command == NULL)
+    if (command == NULL || access(command, F_OK) != 0)
         command = executable_in_folder(aux->cmd);
-    execution(mini, aux, command, red, i);
+    if (command != NULL)
+        execution(mini, aux, command, red, i);
     if (path)
         free_path(path);
     if (command)
@@ -60,8 +77,7 @@ static void execution(shell_t *mini, t_cmdline *aux, char *command, t_redirectio
             exit(127);
         }
         execve(command, aux->arg, mini->core->env_p);
-        string()->_putstring_fd(aux->cmd, 2);
-        string()->_putstring_n_fd(": command not found", 2);
+        print_normal_error(command);
         exit(127);
     }
 }

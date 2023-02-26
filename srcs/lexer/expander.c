@@ -66,9 +66,7 @@ static void expand_dollars(char **content, shell_t *mini, int type)
     str = *content;
     active_quote = NO_QUOTE;
     i = 0;
-    if (type == DELIMITOR)
-        return ;
-    if (!str)
+    if ((type == DELIMITOR) || (!str))
         return ;
     while (str[i] != '\0')
     {
@@ -97,9 +95,9 @@ static char *get_variable_name(char *str, int start)
     j = 0;
     i = start + 1;
     if (str[i] == '?')
-        return (string()->_duplicate("$?"));
+        return ("$?");
     if (str[i] == '$')
-        return (string()->_duplicate("$$"));
+        return ("$$");
     variable[j++] = '$';
     while (str[i] != '\0' && str[i] != '$' && (check()->_is_alnum(str[i]) == 1 || str[i] == '_') \
         && str[i] != '\'' && str[i] != '\"' && (check()->_is_space(str[i]) == 0))
