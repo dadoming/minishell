@@ -75,7 +75,8 @@ static void expand_dollars(char **content, shell_t *mini, int type)
         check_quote(&active_quote, str[i]);
         if (str[i] == '$')
         {
-            if (active_quote == DOUBLE_QUOTE || active_quote == NO_QUOTE)
+            if ((active_quote == DOUBLE_QUOTE || active_quote == NO_QUOTE) && \
+                (str[i + 1] != ' ' && str[i + 1] != '\0'))
             {
                 i = expand_environment(content, mini, &active_quote, \
                     get_variable_name(*content, i), i);

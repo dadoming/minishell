@@ -30,12 +30,9 @@ Boa documentação: < https://github.com/madebypixel02/minishell >
 
 
 Known BUGS:
-
-echo "$    a" should output $    a
 _____________________________________________________
 
 It's not getting the path in correct way.
-
 _____________________________________________________
 
 
@@ -48,9 +45,7 @@ TO - DO! :
 
 > Implementar Signals para quando o Ctrl é pressionado.
 
-> Implementar execução de processos.
-
-> missing commands: cd, exit.
+> missing commands: cd.
 
 
 
