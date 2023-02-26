@@ -80,7 +80,7 @@ char *remove_unexistent(char *str, int quote, int end, int start)
         if (str[start] == '$' && (quote == NO_QUOTE || quote == DOUBLE_QUOTE))
         {
             end = start + 1;
-            while (str[end] != ' ' && str[end] != '\0' && \
+            while (check()->_is_space(str[end]) == 0 && str[end] != '\0' && \
                 (check()->_is_alnum(str[end]) == 1 || str[end] == '_'))
                 end++;
             remove_word(str, start, end);

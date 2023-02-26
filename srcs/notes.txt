@@ -29,13 +29,16 @@ Boa documentação: < https://github.com/madebypixel02/minishell >
 
 
 
-Known BUGS:
-_____________________________________________________
+Known bugs:
 
-It's not getting the path in correct way.
-_____________________________________________________
+If you copy paste commands from the internet, it will not work
+    because of the format it interprets. is_space needs more
+    work to be done.
 
+echo ola > lol.txt | cat lol.txt
+cat: lol.txt: input file is output file
 
+re-do unset function.
 
 
 

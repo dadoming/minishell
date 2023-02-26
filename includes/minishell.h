@@ -148,6 +148,10 @@ void finish_execution(shell_t *mini, t_redirection *red);
 int	heredoc(char *eof, shell_t *mini);
 void fun_exit(char **arg);
 int file_err_heredoc(char **infile, int len, shell_t *mini, t_redirection *red);
+void print_error(char *identifier);
+void ft_swap(char **a, char **b);
+void free_array(char **array);
+
 
 int is_built_in(t_cmdline *cmdline, shell_t *mini);
 int     echo(char **args);

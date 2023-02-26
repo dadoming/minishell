@@ -30,13 +30,20 @@ void fun_exit(char **arg)
 static int check_for_letter(char *str)
 {
     int i;
+    int only_one;
 
     if (!str)
         return (1);
+    only_one = 0;
     i = 0;
     while (str[i])
     {
-        if (str[i] >= '0' && str[i] <= '9')
+        if (str[i] == '-' || str[i] == '+' )
+        {
+            only_one++;
+            i++;
+        }
+        if (str[i] >= '0' && str[i] <= '9' && only_one <= 1)
             i++;
         else
             return (0);
@@ -53,7 +60,6 @@ static int too_many_args(char **arg)
         i++;
     if (i > 2)
     {
-        printf("exit\n");
         printf("minishell: exit: too many arguments\n");
         g_exit_status = 127;
         return (1);

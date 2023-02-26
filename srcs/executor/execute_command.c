@@ -9,6 +9,7 @@ static char* executable_in_folder(char *cmd)
     char *command;
     char *path;
 
+    
     path = getcwd(NULL, 0);
     command = string()->_append(&path, "/");
     command = string()->_append(&command, cmd);
@@ -55,7 +56,7 @@ void execute_command(shell_t *mini, t_cmdline *aux, t_redirection *red, int i)
     command = get_command(aux->cmd, path);
     if (command == NULL || access(command, F_OK) != 0)
         command = executable_in_folder(aux->cmd);
-    if (command != NULL)
+    if (command != NULL && aux->cmd[0] != '\0')
         execution(mini, aux, command, red, i);
     if (path)
         free_path(path);

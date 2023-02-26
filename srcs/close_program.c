@@ -1,5 +1,19 @@
 #include "../includes/minishell.h"
 
+void free_array(char **array)
+{
+    int i = 0;
+
+    if (array == NULL)
+        return ;
+    while (array[i])
+    {
+        free(array[i]);
+        i++;
+    }
+    free(array);
+}
+
 static void clear_core(shell_t *mini);
 
 /* Clears all memory created by the program, still leaves readline's

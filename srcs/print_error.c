@@ -11,6 +11,13 @@ void print_normal_error(char *error)
     }
 }
 
+void print_error(char *identifier)
+{
+    string()->_putstring_fd("minishell: export: `", 2);
+    string()->_putstring_fd(identifier, 2);
+    string()->_putstring_n_fd("': not a valid identifier", 2);
+}
+
 void print_syntax_error(char c)
 {
     if (c == '\n')
