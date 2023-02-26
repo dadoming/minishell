@@ -30,20 +30,13 @@ Boa documentação: < https://github.com/madebypixel02/minishell >
 
 
 Known BUGS:
-_____________________________________________________
-
-davz > minishell$ unset PATH
-davz > minishell$ env | grep PATH
-minishell: grep: Success
-
-davz@davz-rog:~/git_repos/minishell$ env | grep PATH
-bash: env: No such file or directory
-bash: grep: No such file or directory
-_____________________________________________________
 
 echo "$    a" should output $    a
+_____________________________________________________
 
+It's not getting the path in correct way.
 
+_____________________________________________________
 
 
 
