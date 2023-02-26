@@ -1,12 +1,5 @@
 #include "../../../includes/minishell.h"
 
-/*
-	if no HOME found and no path/args given then print error:
-		bash: cd: HOME not set
-	if HOME found and no path/args given then change to HOME
-	if path/args given then change to path/args
-*/
-
 char	*my_getenv(const char *name, char **env)
 {
 	int	len;
@@ -23,52 +16,47 @@ char	*my_getenv(const char *name, char **env)
 	return (NULL);
 }
 
-char	*my_string_join(char *s1, char *s2)
+int	set_env_var(char **my_env, const char *var_name, const char *new_value)
 {
-	char	*res;
-	int		i;
-	int		j;
-
-	j = 0;
+	int	var_index;
+	int	var_name_len;
+	int	new_value_len;
+	int i;
+	char	*new_env_var;
+	char	*p;
+	
+	var_index = -1;
+	var_name_len = string()->_length(var_name);
+	new_value_len = string()->_length(new_value);
 	i = 0;
-	res = malloc(sizeof(char) * (string()->_length(s1) +\
-	string()->_length(s2) + 1));
-	while (s1[i])
+	
+	while (my_env[i] != NULL)
 	{
-		res[i] = s1[i];
-		i++;
-	}
-	while (s2[j])
-	{
-		res[i] = s2[j];
-		i++;
-		j++;
-	}
-	res[i] = '\0';
-	return (res);
-}
-
-char	**update_env_var(char **env, char *var_name, char *var_value)
-{
-	char	*new_var;
-	int		i;
-	int 	var_len = string()->_length(var_name);
-
-	i = 0;
-	while (env[i])
-	{
-		if (string()->_compare_n(env[i], var_name, var_len) == 0 && \
-		(string()->_length_until_c(env[i], '=') + 1) == var_len)
+		if (string()->_compare_n(my_env[i], var_name, string()->_length(var_name)) == 0 && my_env[i][strlen(var_name)] == '=')
 		{
-			new_var = my_string_join(var_name, var_value);
-			free(env[i]);
-			env[i] = new_var;
-			return (env);
+			var_index = i;
+			break ;
 		}
 		i++;
 	}
-	return (env);
+	if (var_index == -1)
+		return (-1);
+	new_env_var = malloc(var_name_len + new_value_len + 2);
+	if (new_env_var == NULL)
+		return (-1);
+	p = new_env_var;
+	i = 0;
+	while (i < new_value_len)
+	{
+		*p++ = new_value[i];
+		i++;
+	}
+	*p = '\0';
+	free(my_env[var_index]);
+	my_env[var_index] = new_env_var;
+	return (0);
 }
+
 
 char	*get_curent_dir()
 {
@@ -80,19 +68,19 @@ char	*get_curent_dir()
 
 void    cd(t_list *lst, char **env)
 {
-	char	*homedir;
-	char	*dir_to_go;
-	char	*now_dir;
+	char 	*homedir;
+	char 	*dir_to_go;
+	char 	*now_dir;
 
 	homedir = my_getenv("HOME", env);
 	now_dir = my_getenv("PWD", env);
-	
+
 	if (!lst->next && !homedir)
 	{
-		 print_normal_error("cd");
-		 return;
+		print_normal_error("cd");
+		return ;
 	}
-	env = update_env_var(env, "OLDPWD=", now_dir);
+	set_env_var(env, "OLDPWD", now_dir);
 	if (!lst->next && homedir)
 		dir_to_go = homedir;
 	else if (lst->next->token[0] == '/')
@@ -105,7 +93,7 @@ void    cd(t_list *lst, char **env)
 		dir_to_go = lst->next->token;
 	char *tmp;
 	tmp = get_curent_dir();
-	env = update_env_var(env, "OLDPWD=", tmp);
+	set_env_var(env, "OLDPDW", tmp);
 	free(tmp);
 	if (chdir(dir_to_go) < 0)
 	{
@@ -113,6 +101,7 @@ void    cd(t_list *lst, char **env)
 		return;
 	}
 	tmp = get_curent_dir();
-	env = update_env_var(env, "PWD=", tmp);
+	set_env_var(env, "PWD", tmp);
 	free(tmp);
 }
+
