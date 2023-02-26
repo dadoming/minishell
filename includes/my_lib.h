@@ -11,6 +11,11 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# endif
+
+
 typedef struct s_string
 {
     // Returns an int from a passed string.
@@ -91,6 +96,8 @@ typedef struct s_string
     char*   (*_copy)(char *dst, char *src);
     // Joins s2 to s1. Allocates memory.
     char*	(*_join)(char const *s1, char const *s2);
+
+    char*   (*get_next_line)(int fd);
 }   t_string;
 
 typedef struct s_check
@@ -177,6 +184,7 @@ char*   _duplicate(const char *str);
 char*   _copy_until(char *str, int n);
 char*   _copy(char *dst, char *src);
 char*   _join(char const *s1, char const *s2);
+char	*get_next_line(int fd);
 
 char**  _split(char const *s, char c);
 

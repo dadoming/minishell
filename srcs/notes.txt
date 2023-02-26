@@ -41,23 +41,10 @@ bash: env: No such file or directory
 bash: grep: No such file or directory
 _____________________________________________________
 
-davz > minishell$ cat < lol << EOF
-minishell: lol: No such file or directory
+echo "$    a" should output $    a
 
-davz@davz-rog:~/git_repos/minishell$ cat < lol << EOF
-> lol
-> EOF
-bash: lol: No such file or directory
-_____________________________________________________
 
-If cat | ls works, redirections won't work.
 
-If cat < outfile.txt works, cat | ls won't work.
-_____________________________________________________
-
-Experimentar:
-
-/bin/ls
 
 
 

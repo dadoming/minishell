@@ -91,6 +91,7 @@ typedef struct shell_s
     t_cmdline       *cmdline;
 } shell_t;
 
+
 void	free_list(t_list **lst);
 void    clear_looped_values(shell_t *mini);
 
@@ -146,6 +147,7 @@ void execute_command(shell_t *mini, t_cmdline *aux, t_redirection *red, int i);
 void finish_execution(shell_t *mini, t_redirection *red);
 int	heredoc(char *eof, shell_t *mini);
 void fun_exit(char **arg);
+int file_err_heredoc(char **infile, int len, shell_t *mini, t_redirection *red);
 
 int is_built_in(t_cmdline *cmdline, shell_t *mini);
 int     echo(char **args);

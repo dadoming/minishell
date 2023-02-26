@@ -7,9 +7,9 @@ char	*get_command(char *command, char **path)
 	int 	i = 0;
 
 	if (path == NULL)
-	{
 		return (NULL);
-	}
+	if (access(command, F_OK) == 0)
+		return (string()->_duplicate(command));
 	while (path[i])
 	{
 		tmp = string()->_join(path[i], "/");

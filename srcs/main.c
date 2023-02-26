@@ -43,7 +43,7 @@ void clear_looped_values(shell_t *mini)
         free_tree(&mini->cmdline);
     if (mini->here_doc)
     {
-        //unlink(".heredoc_storer");
+        unlink(".heredoc_storer");
         mini->here_doc = 0;
     }
     mini->child_num = 0;

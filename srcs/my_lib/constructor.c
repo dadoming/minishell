@@ -9,7 +9,7 @@ t_string *string()
     _mem_search, _mem_compare, _mem_copy, _mem_move,
     _putstring_n_fd, _split, _mapi, _iteri, _trim, _arg_count, 
     _length_until_c, _copy_until, _array_length, _same_word, _copy,
-    _join};
+    _join, get_next_line};
     return (&s);
 }
 

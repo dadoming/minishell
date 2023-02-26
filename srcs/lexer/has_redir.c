@@ -94,7 +94,7 @@ static int check_error_input(char *str, int i, char redir_sign)
     {
         if (j == i + 2 && str[j - 1] == '|')
             string()->_putstring_n_fd(\
-            "I was not programmed to do that redirection because it was not asked!", 2);
+            "Can't do that one!", 2);
         else 
             print_syntax_error(str[j - 1]);
         return (1);

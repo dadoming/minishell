@@ -2,7 +2,7 @@
 
 static char *copy_until(char *str, int n);
 static void remove_word(char *str, int start, int end);
-static char *remove_unexistent(char *str, int quote);
+char *remove_unexistent(char *str, int quote, int end, int start);
 static int next_dollar_position(char *content, int *quote, int curr_pos);
 extern int g_exit_status;
 
@@ -27,8 +27,8 @@ int expand_environment(char **content, shell_t *mini, int *active_quote, char *v
     }
     if (string()->_compare_n(variable, "$$", 2) == 0)
     {
-        *content = replace(content, variable, "$", NO_QUOTE, 0);
-        return (next_dollar_position(*content, active_quote, curr_pos + 1));
+        *content = replace(content, variable, "", NO_QUOTE, 0);
+        return (next_dollar_position(*content, active_quote, curr_pos));
     }
     while (mini->core->env_p[i] != 0)
     {
@@ -51,7 +51,7 @@ int expand_environment(char **content, shell_t *mini, int *active_quote, char *v
         i++;
     }
     free(variable);
-    *content = remove_unexistent(*content, NO_QUOTE);
+    *content = remove_unexistent(*content, NO_QUOTE, 0, 0);
     return (next_dollar_position(*content, active_quote, curr_pos));
 }
 
@@ -64,13 +64,8 @@ static void remove_word(char *str, int start, int end)
     str[len - (end - start)] = '\0';
 }
 
-char *remove_unexistent(char *str, int quote)
+char *remove_unexistent(char *str, int quote, int end, int start)
 {
-    int     start;
-    int     end;
-
-    end = 0;
-    start = 0;
     while (str[start] != '\0')
     {
         if (str[start] == '\'' || str[start] == '\"')
