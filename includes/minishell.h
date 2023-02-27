@@ -56,6 +56,7 @@ typedef struct s_core
     char            *free_line;
     char            *prompt;
     char            *logname;
+    char            *home;
 } t_core;
 
 typedef struct s_redirection
@@ -84,6 +85,7 @@ typedef struct shell_s
 
     int             here_doc;
     pid_t           *pid;
+    int             clear_pid;
     int             child_num;
 
     t_list          *arg_list;
@@ -128,7 +130,7 @@ void no_quote_quote_found(int *outer_quote, char quote, int *location, int *i);
 char *remove_quotes(char *str, char c, int i);
 void assign_outer_quote(char c, int *outer_quote, int *quote_amount);
 
-void build_ast(t_list *lst, shell_t *mini);
+int build_ast(t_list *lst, shell_t *mini);
 void print_tree(t_cmdline *cmdline);
 
 int executor(shell_t *mini, t_cmdline *aux);
@@ -144,7 +146,7 @@ int parse_infile(shell_t *mini, t_cmdline *cmdtree, t_redirection *red);
 t_cmdline *get_redir(t_list *arg_list, t_cmdline *tree_node);
 void parse_pipes(t_cmdline *tree_node, t_redirection *red);
 void execute_command(shell_t *mini, t_cmdline *aux, t_redirection *red, int i);
-void finish_execution(shell_t *mini, t_redirection *red);
+void finish_execution(t_redirection *red);
 int	heredoc(char *eof, shell_t *mini);
 void fun_exit(char **arg);
 int file_err_heredoc(char **infile, int len, shell_t *mini, t_redirection *red);
@@ -159,10 +161,12 @@ void    pwd(void);
 char    **export(char **arg, char **env_p);
 char **unset(char **arg, char **env);
 void    env(char **env_p, int option);
-void    cd(t_list *lst, char **env);
-
-
+char **    cd(char **arg, char **env, shell_t *mini);
 void    close_program(shell_t *mini);
+
+char	*my_getenv(const char *name, char **env);
+int	set_env_var(char **my_env, const char *var_name, const char *new_value);
+char     **set_var(char **env_p, char *var_name, char *var_value);
 
 
 void print_normal_error(char *error);

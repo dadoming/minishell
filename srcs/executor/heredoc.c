@@ -9,7 +9,7 @@ int file_err_heredoc(char **infile, int len, shell_t *mini, t_redirection *red)
 	close(red->tmp_in);
 	close(red->tmp_out);
 	fake_heredoc = 0;
-	while (len > 0)
+	while (len >= 0)
 	{
 		if (infile[len][0] == '<' && infile[len][1] == '<' && infile[len][2] == '\0')
 		{

@@ -2,13 +2,13 @@
 
 static char* executable_in_folder(char *cmd);
 static void execution(shell_t *mini, t_cmdline *aux, char *command, t_redirection *red, int i);
+int echo_pwd(shell_t *mini, t_cmdline *cmdline, int i);
 extern int g_exit_status;
 
 static char* executable_in_folder(char *cmd)
 {
     char *command;
     char *path;
-
     
     path = getcwd(NULL, 0);
     command = string()->_append(&path, "/");

@@ -40,15 +40,11 @@ cat: lol.txt: input file is output file
 
 re-do unset function.
 
+colocar exit status em todas as funcoes q deem return
 
-
-
-!!!!!
-TO - DO! :
 
 > Implementar Signals para quando o Ctrl é pressionado.
 
-> missing commands: cd.
 
 
 

@@ -2,19 +2,19 @@
 
 int is_built_in(t_cmdline *cmdline, shell_t *mini)
 {
-	if (string()->_same_word(cmdline->cmd, "echo", 4))
-    {
-        echo(cmdline->arg);
+	if(string()->_same_word(cmdline->cmd, "echo", 4))
+	{
+		echo(cmdline->arg);
 		return (1);
-    }
+	}
 	else if (string()->_same_word(cmdline->cmd, "pwd", 3))
 	{
 		pwd();
 		return (1);
 	}
-	else if(string()->_same_word(mini->arg_list->token, "cd", 2))
+	else if(string()->_same_word(cmdline->cmd, "cd", 2))
 	{
-		cd(mini->arg_list, mini->core->env_p);
+		mini->core->env_p = cd(cmdline->arg, mini->core->env_p, mini);
 		return (1);
 	}
 	else if(string()->_same_word(cmdline->cmd, "export", 6))
@@ -32,7 +32,7 @@ int is_built_in(t_cmdline *cmdline, shell_t *mini)
 		env(mini->core->env_p, 2);
 		return (1);
 	}
-	if(string()->_same_word(cmdline->cmd, "exit", 4))
+	else if(string()->_same_word(cmdline->cmd, "exit", 4))
 	{
 		fun_exit(cmdline->arg);
 		return (1);

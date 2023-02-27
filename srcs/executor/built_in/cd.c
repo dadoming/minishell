@@ -1,104 +1,89 @@
 #include "../../../includes/minishell.h"
 
-char	*my_getenv(const char *name, char **env)
-{
-	int	len;
-	int	i;
+extern int g_exit_status;
 
-	i = 0;
-	len = string()->_length(name);
-	while (env[i] != NULL)
+static int too_many_arguments(char **arg);
+int get_total_path(char **path, char *arg, shell_t *mini, char **env, int *print);
+static char **set_value(char **env, char *var);
+static char **execute_cd(char **env, char *path);
+char	*my_getenv(const char *name, char **env);
+
+char **cd(char **arg, char **env, shell_t *mini)
+{
+	char	*path;
+	int print;
+
+	print = 0;
+	path = NULL;
+	if (too_many_arguments(arg) == 1)
+		return (env);
+	if (get_total_path(&path, arg[1], mini, env, &print) == 1)
 	{
-		if (string()->_compare_n(env[i], name, len) == 0 && env[i][len] == '=')
-			return (&env[i][len + 1]);
-		i++;
+		if (path != NULL)
+			free(path);	
+		g_exit_status = 1;
+		return (env);
 	}
-	return (NULL);
+	if (!path)
+	{
+		g_exit_status = 1;
+		return (env);
+	}
+	env = execute_cd(env, path);
+	if (print == 1)
+		string()->_putstring_n_fd(my_getenv("PWD", env), 1);
+	return (env);
 }
 
-int	set_env_var(char **my_env, const char *var_name, const char *new_value)
+static char **execute_cd(char **env, char *path)
 {
-	int	var_index;
-	int	var_name_len;
-	int	new_value_len;
+	env = set_value(env, "OLDPWD");
+	if (chdir(path) == -1)
+	{
+		string()->_putstring_fd("minishell: cd: ", 2);
+		string()->_putstring_fd(path, 2);
+		string()->_putstring_fd(": ", 2);
+		string()->_putstring_n_fd(strerror(errno), 2);
+		g_exit_status = 1;
+		free(path);
+		return (env);
+	}
+	free(path);
+	g_exit_status = 0;
+	env = set_value(env, "PWD");
+	return (env);
+}
+
+static int too_many_arguments(char **arg)
+{
 	int i;
-	char	*new_env_var;
-	char	*p;
-	
-	var_index = -1;
-	var_name_len = string()->_length(var_name);
-	new_value_len = string()->_length(new_value);
+
 	i = 0;
-	
-	while (my_env[i] != NULL)
+	while (arg[i])
+		i ++;
+	if (i > 2)
 	{
-		if (string()->_compare_n(my_env[i], var_name, string()->_length(var_name)) == 0 && my_env[i][strlen(var_name)] == '=')
-		{
-			var_index = i;
-			break ;
-		}
-		i++;
+		string()->_putstring_fd("minishell: cd: too many arguments\n", 2);
+		g_exit_status = 1;
+		return (1);
 	}
-	if (var_index == -1)
-		return (-1);
-	new_env_var = malloc(var_name_len + new_value_len + 2);
-	if (new_env_var == NULL)
-		return (-1);
-	p = new_env_var;
-	i = 0;
-	while (i < new_value_len)
-	{
-		*p++ = new_value[i];
-		i++;
-	}
-	*p = '\0';
-	free(my_env[var_index]);
-	my_env[var_index] = new_env_var;
 	return (0);
 }
 
-
-char	*get_curent_dir()
+static char **set_value(char **env, char *var)
 {
-	char	*tmp;
+	char *value;
+	char *tmp;
 
-	tmp = getcwd(NULL, 0);
-	return (tmp);
-}
-
-void    cd(t_list *lst, char **env)
-{
-	char 	*homedir;
-	char 	*dir_to_go;
-	char 	*now_dir;
-	char	*tmp;
-
-	homedir = my_getenv("HOME", env);
-	now_dir = my_getenv("PWD", env);
-
-	if (!lst->next && !homedir)
-	{
-		print_normal_error("cd");
-		return ;
-	}
-	set_env_var(env, "OLDPWD", now_dir);
-	if (!lst->next && homedir)
-		dir_to_go = homedir;
-	else if (lst->next->token[0] == '/')
-		dir_to_go = lst->next->token;
-	else if (string()->_compare(lst->next->token, "..") == 0)
-		dir_to_go = "..";
-	else if(string()->_compare(lst->next->token, ".") == 0)
-		dir_to_go = now_dir;
-	else
-		dir_to_go = lst->next->token;
-	if (chdir(dir_to_go) < 0)
-	{
-		print_normal_error("cd"); //Err: path;
-		return;
-	}
-	tmp = get_curent_dir();
-	set_env_var(env, "PWD", tmp);
+	tmp = NULL;
+	if (string()->_compare(var, "OLDPWD") == 0)
+		tmp = getcwd(NULL, 0);
+	if (string()->_compare(var, "PWD") == 0)
+		tmp = getcwd(NULL, 0);
+	value = string()->_duplicate("=");
+	value = string()->_append(&value, tmp);
+	env = set_var(env, var, value);
 	free(tmp);
+	free(value);
+	return (env);
 }
-

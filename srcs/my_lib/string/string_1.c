@@ -15,7 +15,6 @@ char	*_append(char **s1, char const *s2)
 	{
 		str[i] = s1[0][i];
 	}
-	//int k = 0;
 	free(*s1);
 	while (s2[j] != '\0')
 	{
@@ -72,6 +71,8 @@ int	_compare_n(const char *s1, const char *s2, unsigned int n)
 	char	*str1;
 	char	*str2;
 
+	if (!s1 && !s2 && n == 0)
+		return (0);
 	str1 = (char *)s1;
 	str2 = (char *)s2;
 	while ((*str1 || *str2) && n--)

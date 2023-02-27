@@ -3,29 +3,44 @@
 static int get_args_size(t_list *arg_list);
 static char **get_args(t_list **arg_list);
 
-void build_ast(t_list *lst, shell_t *mini)
+t_cmdline *init_node(void)
+{
+    t_cmdline *cmd_line;
+
+    cmd_line = malloc(sizeof(t_cmdline));
+    cmd_line->cmd = NULL;
+    cmd_line->infile = NULL;
+    cmd_line->outfile = NULL;
+    cmd_line->arg = NULL;
+    cmd_line->next = NULL;
+    return (cmd_line);
+}
+
+int build_ast(t_list *lst, shell_t *mini)
 {
     t_cmdline *cmd_line;
     t_list *aux;
 
     aux = lst;
-    cmd_line = malloc(sizeof(t_cmdline));
+    cmd_line = init_node();
     mini->cmdline = cmd_line;
     while (aux)
     {
-        cmd_line->cmd = string()->_duplicate(aux->token);
-        cmd_line->infile = 0;
-        cmd_line->outfile = 0;
+        if (aux->type == WORD)
+            cmd_line->cmd = string()->_duplicate(aux->token);
+        else
+            return (1);
         cmd_line = get_redir(aux, cmd_line);
         cmd_line->arg = get_args(&aux);
         if (aux)
         {
             aux = aux->next;
-            cmd_line->next = malloc(sizeof(t_cmdline));
+            cmd_line->next = init_node();
             cmd_line = cmd_line->next;
         }
     }
     cmd_line->next = NULL;
+    return (0);
 }
 
 static int get_args_size(t_list *arg_list)

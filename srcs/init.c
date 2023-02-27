@@ -10,6 +10,7 @@ int init(shell_t **mini, char **envp)
     if(!envp)
         return (FALSE);
     *mini = malloc(sizeof(shell_t));
+    (*mini)->clear_pid = 0;
     if (!mini)
         return (FALSE);
     (*mini)->core = malloc(sizeof(t_core));
@@ -39,6 +40,7 @@ static void init_core(shell_t *mini, char **envp)
     mini->child_num = 0;
     mini->core->env_p[i] = 0;
     mini->core->logname = NULL;
+    mini->core->home = string()->_duplicate(getenv("HOME"));
     mini->core->prompt = NULL;
     mini->core->free_line = NULL;
     mini->here_doc = 0;

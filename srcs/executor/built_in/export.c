@@ -2,7 +2,6 @@
 
 char            **add_to_end_of_env(char **env_p, char *var_name, char *var_value);
 void            substitute_env_var(char **env_p, char *var_name, char *var_value);
-static char     **set_var(char **env_p, char *var_name, char *var_value);
 static char **fill_new_value(char **new_env, int i, char *var_name, char *var_value);
 
 char** export(char **arg, char **env_p)
@@ -32,7 +31,7 @@ char** export(char **arg, char **env_p)
     return (env_p);
 }
 
-static char **set_var(char **env_p, char *var_name, char *var_value)
+char **set_var(char **env_p, char *var_name, char *var_value)
 {
     int i = 0;
     while (env_p[i])

@@ -59,6 +59,8 @@ char	*_duplicate(const char *str)
 	int		i;
 
 	i = 0;
+	if (!str)
+		return (NULL);
 	dup = malloc((1 + string()->_length(str)) * sizeof(char));
 	if (dup == NULL)
 		return (NULL);
