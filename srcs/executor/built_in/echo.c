@@ -1,5 +1,7 @@
 #include "../../../includes/minishell.h"
 
+extern int g_exit_status;
+
 // 0 for no option, 1 for -n, 2 for invalid option
 static int validate_option(char *option)
 {
@@ -38,5 +40,6 @@ int echo(char **args)
         perform_echo(n, args, 2);
     else
         perform_echo(n, args, 1);
+    g_exit_status = 0;
     return (0);
 }

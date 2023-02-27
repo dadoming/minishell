@@ -1,39 +1,62 @@
 #include "../../../includes/minishell.h"
 
+extern int g_exit_status;
+
 char            **add_to_end_of_env(char **env_p, char *var_name, char *var_value);
 void            substitute_env_var(char **env_p, char *var_name, char *var_value);
 static char **fill_new_value(char **new_env, int i, char *var_name, char *var_value);
+char        **export_to_env(char **env_p, char **arg, char *var_name, char *var_value);
 
 char** export(char **arg, char **env_p)
 {
     char *var_name;
     char *var_value;
 
-    var_name = NULL;
-    if (arg[1] != NULL)
-    {
-        if (check()->_is_alpha(arg[1][0]) == 0 && arg[1][0] != '_')
-        {
-            print_error(arg[1]);
-            return (env_p);
-        }
-        var_name = string()->_copy_until(arg[1], string()->_length_until_c(arg[1], '='));
-        var_value = string()->_search(arg[1], '=');
-    }
-    if (!var_name)
+    if (!arg[1])
     {
         env(env_p, 1);
         return (env_p);
     }
-    if (var_name)
-        env_p = set_var(env_p, var_name, var_value);
-    free(var_name);
+    var_name = NULL;
+    var_value = NULL;
+    env_p = export_to_env(env_p, arg, var_name, var_value);
+    g_exit_status = 0;
+    return (env_p);
+}
+
+char **export_to_env(char **env_p, char **arg, char *var_name, char *var_value)
+{
+    int i; 
+    
+    i = 1;
+    while (arg[i])
+    {
+        var_name = NULL;
+        var_value = NULL;
+        if (arg[i])
+        {
+            if (check()->_is_alpha(arg[i][0]) == 0 && arg[i][0] != '_')
+            {
+                print_error(arg[i]);
+                g_exit_status = 1;
+                return (env_p);
+            }
+            var_name = string()->_copy_until(arg[i], string()->_length_until_c(arg[i], '='));
+            var_value = string()->_search(arg[i], '=');
+        }
+        if (var_name)
+            env_p = set_var(env_p, var_name, var_value);
+        free(var_name);
+        i++;
+    }
     return (env_p);
 }
 
 char **set_var(char **env_p, char *var_name, char *var_value)
 {
-    int i = 0;
+    int i; 
+    
+    i = 0;
     while (env_p[i])
     {
         if (string()->_compare_n(env_p[i], var_name, string()->_length(var_name)) == 0 && \

@@ -1,5 +1,7 @@
 #include "../../../includes/minishell.h"
 
+extern int g_exit_status;
+
 void pwd(void)
 {
     char *buffer;
@@ -14,4 +16,5 @@ void pwd(void)
         print_normal_error("pwd");
     }
     free(buffer);
+    g_exit_status = 0;
 }

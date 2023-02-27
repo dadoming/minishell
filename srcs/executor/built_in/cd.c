@@ -31,7 +31,7 @@ char **cd(char **arg, char **env, shell_t *mini)
 	}
 	env = execute_cd(env, path);
 	if (print == 1)
-		string()->_putstring_n_fd(my_getenv("PWD", env), 1);
+		pwd();
 	return (env);
 }
 

@@ -1,5 +1,7 @@
 #include "../../includes/minishell.h"
 
+extern int g_exit_status;
+
 static int  only_one_quote(char *input);
 static char *treat_quotes(char *str);
 
@@ -54,7 +56,8 @@ int quotes(shell_t *mini)
     {
         if (only_one_quote(aux->token) == TRUE)
         {
-            string()->_putstring_n_fd("Unclosed quotes", 2);
+            string()->_putstring_n_fd("Unclosed quotes!", 2);
+            g_exit_status = 1;
             return (TRUE);
         }
         aux->token = treat_quotes(aux->token);

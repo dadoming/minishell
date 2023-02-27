@@ -1,5 +1,7 @@
 #include "../../includes/minishell.h"
 
+extern int g_exit_status;
+
 static void get_full_word(char *buffer, int *i, char separator, shell_t *mini);
 static int check_for_ending_word(char *buffer, char delimiter);
 
@@ -24,11 +26,12 @@ int lexer(char *rl_buffer, shell_t *mini)
             i++;
     }
     if (has_redir(mini, NO_QUOTE, 0, mini->arg_list) == 1)
+    {
+        g_exit_status = 1;
         return (1);
+    }
     return (0);
 }
-
-
 
 static void get_full_word(char *buffer, int *i, char separator, shell_t *mini)
 {

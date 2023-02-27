@@ -1,9 +1,40 @@
 #include "../../../includes/minishell.h"
 
-static void print_export(char **env);
-static void __print(char **env);
+extern int g_exit_status;
 
-void ft_swap(char **a, char **b)
+static void print_export(char **env);
+static char** load_env_print(char **env);
+static void __print(char **env);
+static void ft_swap(char **a, char **b);
+
+
+// option1 for export's declare -x, option2 for env command
+void env(char **env_p, int option)
+{
+    char *var_name;
+    char *var_value;
+
+    if (option == 1)
+    {
+        print_export(env_p);
+        return ;
+    }
+    int i = 0;
+    while (env_p[i] != 0)
+    {
+        var_name = string()->_copy_until(env_p[i], string()->_length_until_c(env_p[i], '='));;
+        var_value = string()->_search(env_p[i], '=');
+        if (var_value != NULL && option == 2)
+            printf("%s%s\n", var_name, var_value);
+        if (var_name)
+            free(var_name);
+        i++;
+    }
+    g_exit_status = 0;
+    return ;
+}
+
+static void ft_swap(char **a, char **b)
 {
     char *temp;
 
@@ -81,27 +112,3 @@ static void print_export(char **env)
     free_array(env_print);
 }
 
-// option1 for export's declare -x, option2 for env command
-void env(char **env_p, int option)
-{
-    char *var_name;
-    char *var_value;
-
-    if (option == 1)
-    {
-        print_export(env_p);
-        return ;
-    }
-    int i = 0;
-    while (env_p[i] != 0)
-    {
-        var_name = string()->_copy_until(env_p[i], string()->_length_until_c(env_p[i], '='));;
-        var_value = string()->_search(env_p[i], '=');
-        if (var_value != NULL && option == 2)
-            printf("%s%s\n", var_name, var_value);
-        if (var_name)
-            free(var_name);
-        i++;
-    }
-    return ;
-}
