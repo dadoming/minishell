@@ -1,7 +1,7 @@
 #include "../includes/minishell.h"
 
-// If env has value then return value else \
-NULL. Example: get_env(env, "PATH")
+/* If env has value then return value else */
+/* NULL. Example: get_env(env, "PATH")*/
 char	*get_env(char **env, char *var_name)
 {
 	int	i;
