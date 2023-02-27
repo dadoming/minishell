@@ -2,16 +2,24 @@
 
 char **unset(char **arg, char **env)
 {
+    char **new_env;
     int i;
     int j;
-    char **new_env;
     
-    if (arg[1] == NULL) // Might need to be changed in the future
+    if (arg[1] == NULL || !env)
         return (env);
     new_env = malloc((string()->_array_length(env) + 1) * sizeof(char *));
-    i = 0;
     j = 0;
-    int len = string()->_length(arg[1]);
+    i = 0;
+    new_env = find_and_unset(arg, env, new_env, i, j);
+    return (new_env);
+}
+
+char **find_and_unset(char **arg, char **env, char **new_env, int i, int j)
+{
+    int len;
+    
+    len = string()->_length(arg[1]);
     while (env[i] != 0)
     {
         if (string()->_compare_n(env[i], arg[1], len) == 0 && \
