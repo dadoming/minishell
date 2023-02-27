@@ -71,6 +71,7 @@ void    cd(t_list *lst, char **env)
 	char 	*homedir;
 	char 	*dir_to_go;
 	char 	*now_dir;
+	char	*tmp;
 
 	homedir = my_getenv("HOME", env);
 	now_dir = my_getenv("PWD", env);
@@ -91,10 +92,6 @@ void    cd(t_list *lst, char **env)
 		dir_to_go = now_dir;
 	else
 		dir_to_go = lst->next->token;
-	char *tmp;
-	tmp = get_curent_dir();
-	set_env_var(env, "OLDPDW", tmp);
-	free(tmp);
 	if (chdir(dir_to_go) < 0)
 	{
 		print_normal_error("cd"); //Err: path;
