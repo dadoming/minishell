@@ -33,6 +33,8 @@ int	_atoi(const char *str)
 	res = 0;
 	neg = 1;
 	i = 0;
+	if (!str)
+		return (0);
 	while (str[i] == '\t' || str[i] == '\n' || str[i] == '\v'
 		|| str[i] == '\f' || str[i] == '\r' || str[i] == 32)
 		i++;

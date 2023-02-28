@@ -38,8 +38,6 @@ If you copy paste commands from the internet, it will not work
 echo ola > lol.txt | cat lol.txt
 cat: lol.txt: input file is output file
 
-colocar exit status em todas as funcoes q deem return
-
 
 > Implementar Signals para quando o Ctrl é pressionado.
 

@@ -5,6 +5,16 @@ extern int g_exit_status;
 char	**find_path(char **env);
 void	free_tree(t_cmdline **cmdline);
 
+static void	int_handler(int signo)
+{
+	(void) signo;
+	g_exit_status = 130;
+	string()->_putchar_fd('\n', 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
 int main(int argc, char** argv, char** envp)
 {
     shell_t *mini;
@@ -14,9 +24,10 @@ int main(int argc, char** argv, char** envp)
         return (printf("Wrong Input. Enter ./minishell\n"));
     if(init(&mini, envp) == TRUE)
     {
-        //ignore_signal_for_shell();
         while (1)
         {
+            signal(SIGQUIT, SIG_IGN);
+		    signal(SIGINT, int_handler);
             prompt(mini);
             if (evaluate(mini) == 1)
             {

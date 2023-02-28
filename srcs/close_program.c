@@ -20,7 +20,6 @@ static void clear_core(shell_t *mini);
     library allocated memory reachable but with no leaks. */
 void close_program(shell_t *mini)
 {
-
     clear_looped_values(mini);
     clear_core(mini);
     rl_erase_empty_line = 1;
