@@ -1,17 +1,46 @@
 #include "../includes/minishell.h"
 
-// Handle ctrl
-void ignore_signal_for_shell(shell_t *mini)
+extern int g_exit_status;
+
+void sig_block(int signo)
 {
-	mini->signalset = TRUE;
-	
-	// ignore "Ctrl-C" -> alterar para dar display a um nvo prompt numa nova linha
-    mini->SIGINT_handler = signal(SIGINT, SIG_IGN);
-
-	// ignore "Ctrl-\"
-    signal(SIGQUIT, SIG_IGN);
-
-    //ignore "Ctrl-D"
-    mini->SIGINT_handler = signal(SIGINT, SIG_IGN);
-    //signal(SIGABRT, SIG_IGN);
+    (void)signo;
+    signal(SIGINT, SIG_IGN);
+    g_exit_status = 130;
 }
+
+void sig_block_c(int signo)
+{
+    (void)signo;
+    signal(SIGINT, SIG_IGN);
+    g_exit_status = 130;
+    string()->_putchar_fd('\n', 1);
+}
+
+void sigint_handler(int signum) 
+{
+	(void) signum;
+	g_exit_status = 130;
+	string()->_putchar_fd('\n', 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
+void sigquit_handler(int signum)
+{
+    (void) signum;
+    rl_replace_line("", 0);
+	rl_redisplay();
+}
+
+void sigterm_handler(int signum)
+{
+    (void) signum;
+    g_exit_status = 127;
+    string()->_putchar_fd('\n', 1);
+    rl_on_new_line();
+    rl_replace_line("", 0);
+    rl_redisplay();
+}
+

@@ -3,7 +3,7 @@
 extern int g_exit_status;
 
 static void get_full_word(char *buffer, int *i, char separator, shell_t *mini);
-static int check_for_ending_word(char *buffer, char delimiter);
+static int check_for_ending_word(char *buffer);
 
 /* This function is gonna produce tokens through the input passed
     in through the readline function taking quotes into account*/
@@ -40,7 +40,7 @@ static void get_full_word(char *buffer, int *i, char separator, shell_t *mini)
     if (buffer[0] == '\'' || buffer[0] == '\"')
         end = check_for_ending_delimiter(buffer, separator);
     else
-        end = check_for_ending_word(buffer, separator) - 1;
+        end = check_for_ending_word(buffer) - 1;
     while (check()->_is_space(buffer[end + 1]) == FALSE && buffer[end + 1] != '\0')
     {
         if (buffer[end + 1] == '\'')
@@ -49,7 +49,7 @@ static void get_full_word(char *buffer, int *i, char separator, shell_t *mini)
             end += check_for_ending_delimiter(&buffer[end + 1], '\"') + 1;
         else if (check()->_is_ascii(buffer[end + 1]) == TRUE)
         {
-            end += check_for_ending_word(&buffer[end + 1], ' ');
+            end += check_for_ending_word(&buffer[end + 1]);
         }
         else
             break;
@@ -71,7 +71,7 @@ int check_for_ending_delimiter(char *buffer, char delimiter)
     return (0);
 }
 
-static int check_for_ending_word(char *buffer, char delimiter)
+static int check_for_ending_word(char *buffer)
 {
     int i = 0;
     int aux = 0;
@@ -90,7 +90,7 @@ static int check_for_ending_word(char *buffer, char delimiter)
             if (aux > 0)
                 return (i);
         }
-        if (buffer[i] == delimiter)
+        if (check()->_is_space(buffer[i]) == 1)
         {
             return (i);
         }

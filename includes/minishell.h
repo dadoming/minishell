@@ -88,11 +88,14 @@ typedef struct shell_s
     int             clear_pid;
     int             child_num;
 
+    int             sigterminate;
+
     t_list          *arg_list;
     t_core          *core;
     t_cmdline       *cmdline;
 } shell_t;
 
+shell_t *m(void);
 
 void	free_list(t_list **lst);
 void    clear_looped_values(shell_t *mini);
@@ -152,6 +155,11 @@ void fun_exit(char **arg);
 int file_err_heredoc(char **infile, int len, shell_t *mini, t_redirection *red);
 void print_error(char *identifier);
 void free_array(char **array);
+void sig_block_c(int signo);
+void sigint_handler(int signum);
+void sigquit_handler(int signum);
+void sigterm_handler(int signum);
+void sig_block(int signo);
 
 
 int is_built_in(t_cmdline *cmdline, shell_t *mini);

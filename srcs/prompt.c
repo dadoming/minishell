@@ -11,7 +11,7 @@ void prompt(shell_t *mini)
 
 static void print_prompt(shell_t *mini)
 {
-    mini->core->logname = get_env(mini->core->env_p, "LOGNAME");
+    mini->core->logname = my_getenv("LOGNAME", mini->core->env_p);
     if(mini->core->logname != NULL)
     {
         mini->core->prompt = string()->_duplicate(BMAG);

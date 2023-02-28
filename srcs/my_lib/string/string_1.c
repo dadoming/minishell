@@ -75,6 +75,10 @@ int	_compare_n(const char *s1, const char *s2, unsigned int n)
 
 	if (!s1 && !s2 && n == 0)
 		return (0);
+	if (!s1 && s2)
+		return (*s2);
+	if(!s2 && s1)
+		return (*s1);
 	str1 = (char *)s1;
 	str2 = (char *)s2;
 	while ((*str1 || *str2) && n--)

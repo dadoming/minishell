@@ -36,8 +36,10 @@ int	heredoc(char *eof, shell_t *mini)
     mini->here_doc = 1;
 	while (1)
 	{
-		write(1, "> ", 2);
-		buffer = get_next_line(STDIN_FILENO);
+		//signal(SIGINT, sigint_handler);
+		//signal(SIGQUIT, sigquit_handler);
+		//signal(SIGTERM, sigterm_handler);
+		buffer = readline("> ");
 		if (string()->_compare_n(eof, buffer, string()->_length(eof)) == 0)
 			break ;
 		write(file, buffer, string()->_length(buffer));
