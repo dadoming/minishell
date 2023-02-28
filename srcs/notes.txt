@@ -34,11 +34,6 @@ Known bugs:
 echo ola > lol.txt | cat lol.txt
 cat: lol.txt: input file is output file
 
-$ touch lol
-$ lol
-bash: lol: command not found
-minishell: lol: Permission denied
-
 > Implementar Signals para quando o Ctrl é pressionado.
 
 
