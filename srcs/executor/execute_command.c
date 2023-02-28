@@ -1,35 +1,47 @@
 #include "../../includes/minishell.h"
 
-static char* executable_in_folder(char *cmd);
 static void execution(shell_t *mini, t_cmdline *aux, char *command, t_redirection *red, int i);
-int echo_pwd(shell_t *mini, t_cmdline *cmdline, int i);
+int cmd_is_directory(char *cmd);
 extern int g_exit_status;
 
-static char* executable_in_folder(char *cmd)
+static int filepath_is_accessible(shell_t *mini, t_cmdline *aux, t_redirection *red, int i)
+{
+    if (cmd_is_directory(aux->cmd) == 1)
+        return (1);
+    else if (access(aux->cmd, X_OK) == 0 && (aux->cmd[0] == '.' || aux->cmd[0] == '/'))
+    {
+        execution(mini, aux, aux->cmd, red, i);
+        return (1);
+    }
+    else if (access(aux->cmd, F_OK) == 0 && access(aux->cmd, X_OK) != 0 && (aux->cmd[0] == '.' || aux->cmd[0] == '/'))
+    {
+        string()->_putstring_fd(aux->cmd, STDERR_FILENO);
+        string()->_putstring_n_fd(": Permission denied", STDERR_FILENO);
+        return (1);
+    }
+    return (0);
+}
+
+void execute_command(shell_t *mini, t_cmdline *aux, t_redirection *red, int i)
 {
     char *command;
-    char *path;
-    
-    path = getcwd(NULL, 0);
-    command = string()->_append(&path, "/");
-    command = string()->_append(&command, cmd);
-    if (access(command, F_OK) == 0)
+    char **path;
+
+    if (filepath_is_accessible(mini, aux, red, i) == 1)
+        return ;
+    path = find_path(mini->core->env_p);
+    command = get_command(aux->cmd, path);
+    if (command != NULL && command[0] == '/')
+        execution(mini, aux, command, red, i);
+    else
     {
-        if (access(command, X_OK) == 0)
-            return (command);
-        else
-        {
-            string()->_putstring_fd("minishell: ", STDERR_FILENO);
-            string()->_putstring_fd(cmd, STDERR_FILENO);
-            string()->_putstring_n_fd(": Permission denied", STDERR_FILENO);
-            g_exit_status = 126;
-            free(command);
-            return (NULL);
-        }
+        string()->_putstring_fd(aux->cmd, STDERR_FILENO);
+        string()->_putstring_n_fd(": command not found", STDERR_FILENO);
     }
-    free(command);
-    command = string()->_duplicate(cmd);
-    return (command);
+    if (path)
+        free_path(path);
+    if (command)
+        free(command);
 }
 
 int cmd_is_directory(char *cmd)
@@ -45,24 +57,6 @@ int cmd_is_directory(char *cmd)
     return (0);
 }
 
-void execute_command(shell_t *mini, t_cmdline *aux, t_redirection *red, int i)
-{
-    char **path;
-    char *command;
-
-    if (cmd_is_directory(aux->cmd) == 1)
-        return ;
-    path = find_path(mini->core->env_p);
-    command = get_command(aux->cmd, path);
-    if (command == NULL || access(command, F_OK) != 0)
-        command = executable_in_folder(aux->cmd);
-    if (command != NULL && aux->cmd[0] != '\0')
-        execution(mini, aux, command, red, i);
-    if (path)
-        free_path(path);
-    if (command)
-        free(command);
-}
 
 static void execution(shell_t *mini, t_cmdline *aux, char *command, t_redirection *red, int i)
 {
@@ -70,15 +64,9 @@ static void execution(shell_t *mini, t_cmdline *aux, char *command, t_redirectio
     mini->pid[i] = fork();
     if (mini->pid[i] == 0)
     {
-        if (command == NULL)
-        {
-            string()->_putstring_fd(aux->cmd, 2);
-            string()->_putstring_n_fd(": command not found", 2);
-            g_exit_status = 127;
-            exit(127);
-        }
         execve(command, aux->arg, mini->core->env_p);
         print_normal_error(command);
+        g_exit_status = 127;
         exit(127);
     }
     else 
