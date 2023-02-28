@@ -34,7 +34,7 @@ int is_built_in(t_cmdline *cmdline, shell_t *mini)
 	}
 	else if(string()->_same_word(cmdline->cmd, "exit", 4))
 	{
-		fun_exit(cmdline->arg);
+		fun_exit(mini, cmdline->arg);
 		return (1);
 	}
 	return (0);

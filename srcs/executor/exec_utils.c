@@ -31,7 +31,6 @@ char **find_path(char **env)
 
 	i = 0;
 	path = NULL;
-
 	while (env[i])
 	{
 		if (string()->_compare_n(env[i], "PATH=", 5) == 0)
@@ -42,18 +41,4 @@ char **find_path(char **env)
 		i++;
 	}
 	return (path);
-}
-
-void free_path(char **path)
-{
-	if (path != NULL)
-	{
-		int i = 0;
-		while (path[i] != NULL)
-		{
-			free(path[i]);
-			i++;
-		}
-		free(path);
-	}
 }

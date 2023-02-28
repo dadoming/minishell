@@ -2,7 +2,7 @@
 
 extern int g_exit_status;
 
-void finish_execution(t_redirection *red)
+void reset_fds(t_redirection *red)
 {
     dup2(red->tmp_in, STDIN_FILENO);
     dup2(red->tmp_out, STDOUT_FILENO);

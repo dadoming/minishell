@@ -36,10 +36,10 @@ int executor(shell_t *mini, t_cmdline *aux)
 			aux = aux->next;
 			continue;
 		}
-		execute_command(mini, aux, &red, i);
+		execute_command(mini, aux, i);
 		aux = aux->next;
 		i++;
 	}
-	finish_execution(&red);
+	reset_fds(&red);
 	return (0);
 }

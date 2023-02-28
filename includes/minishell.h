@@ -65,7 +65,6 @@ typedef struct s_redirection
     int             tmp_out;
     int             fd_in;
     int             fd_out;
-
     int             pipe_fd[2];
 } t_redirection;
 
@@ -80,28 +79,21 @@ typedef struct s_cmdline
 
 typedef struct shell_s
 {
-    void            (*SIGINT_handler)(int);
-    int             signalset;
-
     int             here_doc;
     pid_t           *pid;
     int             clear_pid;
     int             child_num;
-
-    int             sigterminate;
-
     t_list          *arg_list;
     t_core          *core;
     t_cmdline       *cmdline;
 } shell_t;
 
-shell_t *m(void);
 
 void	free_list(t_list **lst);
-void    clear_looped_values(shell_t *mini);
+void clear_looped_values(shell_t **mini);
 
 void    prompt(shell_t *mini);
-int     init(shell_t **mini, char **envp);
+int init(shell_t **mini, char **envp);
 
 int     evaluate(shell_t *mini);
 
@@ -135,23 +127,25 @@ void assign_outer_quote(char c, int *outer_quote, int *quote_amount);
 
 int build_ast(t_list *lst, shell_t *mini);
 void print_tree(t_cmdline *cmdline);
+void	free_tree(shell_t **mini);
+void wait_for_childs(shell_t *mini);
 
 int executor(shell_t *mini, t_cmdline *aux);
 int execute_process(shell_t *mini, t_cmdline *cmdline, int child_num);
 char    **find_path(char **env);
 void    free_path(char **path);
 char	*get_command(char *command, char **path);
-void	close_pipes(shell_t *mini);
 
+char	**find_path(char **env);
 // TODAY
 void parse_outfile(t_cmdline *tree_node, t_redirection *red);
 int parse_infile(shell_t *mini, t_cmdline *cmdtree, t_redirection *red);
 t_cmdline *get_redir(t_list *arg_list, t_cmdline *tree_node);
 void parse_pipes(t_cmdline *tree_node, t_redirection *red);
-void execute_command(shell_t *mini, t_cmdline *aux, t_redirection *red, int i);
-void finish_execution(t_redirection *red);
+void execute_command(shell_t *mini, t_cmdline *aux, int i);
+void reset_fds(t_redirection *red);
 int	heredoc(char *eof, shell_t *mini);
-void fun_exit(char **arg);
+void fun_exit(shell_t *mini, char **arg);
 int file_err_heredoc(char **infile, int len, shell_t *mini, t_redirection *red);
 void print_error(char *identifier);
 void free_array(char **array);
@@ -160,6 +154,7 @@ void sigint_handler(int signum);
 void sigquit_handler(int signum);
 void sigterm_handler(int signum);
 void sig_block(int signo);
+int check_for_heredoc(t_cmdline *cmdtree, shell_t *mini, int last_position, t_redirection *red, int fd);
 
 
 int is_built_in(t_cmdline *cmdline, shell_t *mini);
@@ -169,20 +164,14 @@ char    **export(char **arg, char **env_p);
 char **unset(char **arg, char **env);
 void    env(char **env_p, int option);
 char **    cd(char **arg, char **env, shell_t *mini);
-void    close_program(shell_t *mini);
-
+void close_program(shell_t **mini);
 char	*my_getenv(const char *name, char **env);
-int	set_env_var(char **my_env, const char *var_name, const char *new_value);
 char     **set_var(char **env_p, char *var_name, char *var_value);
 
 
 void print_normal_error(char *error);
 void print_syntax_error(char c);
 
-
-void    ignore_signal_for_shell();
-
-void    print_quote_value(int single_q, int double_q, int word_amount);
 void    helper_print(t_list *lst);
 void    print_node(void *s);
 

@@ -7,18 +7,17 @@ static void set_shlvl(shell_t *mini);
 /* Initializes minishell terminal values */
 int init(shell_t **mini, char **envp)
 {
-    g_exit_status = errno;
+    g_exit_status = 0;
     if(!envp)
         return (FALSE);
     *mini = malloc(sizeof(shell_t));
-    (*mini)->clear_pid = 0;
-    if (!mini)
+    if (!*mini)
         return (FALSE);
     (*mini)->core = malloc(sizeof(t_core));
     if(!(*mini)->core)
         return (FALSE);
     init_core(*mini, envp);
-    (*mini)->signalset = FALSE;
+    (*mini)->clear_pid = 0;
     (*mini)->cmdline = NULL;
     return (TRUE);
 }
@@ -31,6 +30,8 @@ static void init_core(shell_t *mini, char **envp)
     while (envp[i])
         i++;
     mini->core->env_p = malloc(sizeof(char*) * (i + 1));
+    if (mini->core->env_p == NULL)
+        return ;
     i = 0;
     while(envp[i])
     {
@@ -57,9 +58,13 @@ static void set_shlvl(shell_t *mini)
     char *value;
 
     shlvl = string()->_duplicate("SHLVL");
+    if (shlvl == NULL)
+        return ;
     shlvl_int = string()->_atoi(my_getenv("SHLVL", mini->core->env_p));
     shlvl_int++;
     shlvl_new = string()->_itoa(shlvl_int);
+    if (shlvl_new == NULL)
+        return ;
     value = string()->_duplicate("=");
     value = string()->_append(&value, shlvl_new);
     mini->core->env_p = set_var(mini->core->env_p, shlvl, value);

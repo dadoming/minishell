@@ -71,7 +71,7 @@ static char **get_args(t_list **arg_list)
 
     i = 0;
     size = get_args_size(*arg_list);
-    arg = malloc(sizeof(char*) * (size + 1));
+    arg = malloc(sizeof(char*) * (size + 1));// ? + 1
     arg[size] = NULL;
     while (*arg_list)
     {

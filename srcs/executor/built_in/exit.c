@@ -4,7 +4,7 @@ static int check_for_letter(char *str);
 static int too_many_args(char **arg);
 extern int g_exit_status;
 
-void fun_exit(char **arg)
+void fun_exit(shell_t *mini, char **arg)
 {
     int status;
 
@@ -24,7 +24,10 @@ void fun_exit(char **arg)
 		exit(2);
 	}
 	else
-		exit(status);
+	{
+        close_program(&mini);
+        exit(status);
+    }
 }
 
 static int check_for_letter(char *str)

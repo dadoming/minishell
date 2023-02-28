@@ -1,13 +1,57 @@
 #include "../../includes/minishell.h"
 
+extern int g_exit_status;
+static int helper_norm1(t_redirection *red);
+
+int check_for_heredoc(t_cmdline *cmdtree, shell_t *mini, int last_position, t_redirection *red, int fd)
+{
+	int i;
+
+	i = _array_length(cmdtree->infile) - 1;
+	while (i >= 0)
+	{
+		if (cmdtree->infile[i][0] == '<' && cmdtree->infile[i][1] == '<' && \
+			 cmdtree->infile[i][2] == '\0')
+		{
+			if (i >= last_position)
+			{
+				if (fd > 0)
+					close(fd);
+				heredoc(cmdtree->infile[i + 1], mini);
+				fd = helper_norm1(red);
+				break;
+			}
+			else
+			{
+				heredoc(cmdtree->infile[i + 1], mini);
+				break;
+			}
+		}
+		i--;
+	}
+	return (fd);
+}
+
+static int helper_norm1(t_redirection *red)
+{
+	int fd;
+
+	fd = open(".heredoc_storer", O_RDONLY | O_ASYNC);
+	g_exit_status = 1;
+	if (fd == -1)
+	{
+		reset_fds(red);
+		print_normal_error("heredoc"); // Só ha um error de here_doc e é quando se lhe dá um signal
+		return (-1);
+	}
+	return (fd);
+}
+
 int file_err_heredoc(char **infile, int len, shell_t *mini, t_redirection *red)
 {
 	int fake_heredoc;
 
-	dup2(red->tmp_in, 0);
-	dup2(red->tmp_out, 1);
-	close(red->tmp_in);
-	close(red->tmp_out);
+	reset_fds(red);
 	fake_heredoc = 0;
 	while (len >= 0)
 	{
