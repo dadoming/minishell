@@ -33,6 +33,11 @@ void execute_command(shell_t *mini, t_cmdline *aux, t_redirection *red, int i)
     command = get_command(aux->cmd, path);
     if (command != NULL && command[0] == '/')
         execution(mini, aux, command, red, i);
+    else if (string()->_search(aux->cmd, '/') != 0 && command == NULL)
+    {
+        string()->_putstring_fd(aux->cmd, STDERR_FILENO);
+        string()->_putstring_n_fd(": No such file or directory", STDERR_FILENO);
+    }
     else
     {
         string()->_putstring_fd(aux->cmd, STDERR_FILENO);
