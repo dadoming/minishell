@@ -26,4 +26,3 @@ t_listfunc *list()
     _add_back, _iterator, _del_node, _clear_list, _del_last_node};
     return (&l);
 }
-
