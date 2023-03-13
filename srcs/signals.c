@@ -19,12 +19,14 @@ void sig_block_c(int signo)
 
 void sigint_handler(int signum) 
 {
-	(void) signum;
-	g_exit_status = 130;
-	string()->_putchar_fd('\n', 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	if (signum == SIGINT)
+	{
+		g_exit_status = 130;
+		string()->_putchar_fd('\n', 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
 void sigquit_handler(int signum)
