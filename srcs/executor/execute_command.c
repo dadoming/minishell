@@ -18,11 +18,13 @@ void execute_command(shell_t *mini, t_cmdline *aux, int i)
         execution(mini, aux, command, i);
     else if (string()->_search(aux->cmd, '/') != 0 && command == NULL)
     {
+        string()->_putstring_fd("minishell: ", STDERR_FILENO);
         string()->_putstring_fd(aux->cmd, STDERR_FILENO);
         string()->_putstring_n_fd(": No such file or directory", STDERR_FILENO);
     }
     else
     {
+        string()->_putstring_fd("minishell: ", STDERR_FILENO);
         string()->_putstring_fd(aux->cmd, STDERR_FILENO);
         string()->_putstring_n_fd(": command not found", STDERR_FILENO);
     }
