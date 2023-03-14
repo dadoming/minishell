@@ -53,17 +53,17 @@ void	free_tree(shell_t **mini)
     while ((*mini)->cmdline)
     {
         temp = (*mini)->cmdline-> next;
-        if ((*mini)->cmdline->cmd != NULL)
+        if ((*mini)->cmdline->cmd)
             free((*mini)->cmdline->cmd);
         (*mini)->cmdline->cmd = NULL;
         if ((*mini)->cmdline->arg)
             free_array((*mini)->cmdline->arg);
         (*mini)->cmdline->arg = NULL;
-        if ((*mini)->cmdline->infile != NULL)
-            free_array((*mini)->cmdline->arg);
+        if ((*mini)->cmdline->infile)
+            free_array((*mini)->cmdline->infile);
         (*mini)->cmdline->infile = NULL;
-        if ((*mini)->cmdline->outfile != NULL)
-            free_array((*mini)->cmdline->arg);
+        if ((*mini)->cmdline->outfile)
+            free_array((*mini)->cmdline->outfile);
         (*mini)->cmdline->outfile = NULL;
         if ((*mini)->cmdline)
             free((*mini)->cmdline);
