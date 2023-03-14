@@ -8,7 +8,7 @@ void prompt(shell_t *mini)
     print_prompt(mini);
     mini->core->free_line = readline(mini->core->prompt);
     if (!mini->core->free_line)
-        exit(0);
+        fun_exit(mini, NULL);
 }
 
 static void print_prompt(shell_t *mini)
