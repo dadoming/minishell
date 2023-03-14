@@ -84,7 +84,7 @@ int	heredoc(char *eof, shell_t *mini)
 		//signal(SIGQUIT, sigquit_handler);
 		//signal(SIGTERM, sigterm_handler);
 		buffer = readline("> ");
-		if (string()->_compare_n(eof, buffer, string()->_length(eof)) == 0)
+		if ((string()->_compare_n(eof, buffer, string()->_length(eof)) == 0) || !buffer)
 			break ;
 		write(file, buffer, string()->_length(buffer));
 		free(buffer);
