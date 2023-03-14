@@ -12,11 +12,11 @@ void fun_exit(shell_t *mini, char **arg)
 	printf("exit\n");
     if (too_many_args(arg))
         return ;
-    if (arg[1])
+    if (arg != NULL && arg[1])
 		status = string()->_atoi(arg[1]);
 	else
 		status = 0;
-	if (!check_for_letter(arg[1]))
+	if (arg != NULL && !check_for_letter(arg[1]))
 	{
 		string()->_putstring_fd("minishell: exit: ", 2);
         string()->_putstring_fd(arg[1], 2);
@@ -59,8 +59,11 @@ static int too_many_args(char **arg)
     int i;
 
     i = 0;
-    while (arg[i] != 0)
-        i++;
+	if (arg != NULL)
+	{
+		while (arg[i] != 0)
+        	i++;
+	}
     if (i > 2)
     {
         printf("minishell: exit: too many arguments\n");
