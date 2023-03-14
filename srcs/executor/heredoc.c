@@ -13,12 +13,14 @@ int check_for_heredoc(t_cmdline *cmdtree, shell_t *mini, int last_position, t_re
 		if (cmdtree->infile[i][0] == '<' && cmdtree->infile[i][1] == '<' && \
 			 cmdtree->infile[i][2] == '\0')
 		{
+			printf("i: %d last: %d\n", i, last_position);
 			if (i >= last_position)
 			{
 				if (fd > 0)
 					close(fd);
 				heredoc(cmdtree->infile[i + 1], mini);
 				fd = helper_norm1(red);
+				printf("11111\n");
 				break;
 			}
 			else

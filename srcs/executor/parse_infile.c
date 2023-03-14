@@ -57,9 +57,19 @@ static int treat_infile(t_cmdline *cmdtree, t_redirection *red, shell_t *mini, i
 
 void helper_norm2(t_cmdline *cmdtree, int i, int heredoc_value, int fd)
 {
-	if (heredoc_value == 1 || fd == -1)
+	if (fd == -1 && heredoc_value != 1)
+	{
 		print_normal_error(cmdtree->infile[i + 1]);
+	}
+	else if (heredoc_value == 1)
+	{
+		string()->_putstring_fd("minishell: ", 2);
+        string()->_putstring_fd(cmdtree->infile[i + 1], 2);
+        string()->_putstring_fd(": ", 2);
+        string()->_putstring_n_fd("No such file or directory", 2);
+	}
 }
+
 
 
 
