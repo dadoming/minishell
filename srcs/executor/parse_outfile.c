@@ -1,18 +1,24 @@
 #include "../../includes/minishell.h"
 
 static int treat_outfile(t_cmdline *tree_node);
-static int outfile_exists(t_cmdline *tree_node);
 
 void parse_outfile(t_cmdline *tree_node, t_redirection *red)
 {
-    if (outfile_exists(tree_node) == 1)
-        red->fd_out = treat_outfile(tree_node);
-    else
-        red->fd_out = dup(red->tmp_out);
-    if (red->fd_out == -1)
+    if (tree_node->outfile != NULL)
     {
-        print_normal_error("outfile");
-        // exit_status?
+        red->fd_out = treat_outfile(tree_node);
+        if (red->pipe_fd[1] != -1)
+        {
+            dup2(red->fd_out, red->pipe_fd[1]);
+            close(red->fd_out);
+            red->fd_out = red->pipe_fd[1];
+        }
+        else
+        {
+            dup2(red->fd_out, STDOUT_FILENO);
+            close(red->fd_out);
+            red->fd_out = red->tmp_out;
+        }
     }
 }
 
@@ -46,10 +52,4 @@ static int treat_outfile(t_cmdline *tree_node)
     return (fd);
 }
 
-static int outfile_exists(t_cmdline *tree_node)
-{
-    if (tree_node->outfile != NULL)
-        return (1);
-    return (0);
-}
 

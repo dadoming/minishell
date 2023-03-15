@@ -1,7 +1,7 @@
 #include "../includes/minishell.h"
 
 // Just to not give a valgrind error -.-
-void init_pid(shell_t *mini)
+void init_(shell_t *mini, t_redirection *red)
 {
 	int i = 0;
 
@@ -12,6 +12,10 @@ void init_pid(shell_t *mini)
 		mini->pid[i] = 0;
 		i++;
 	}
+    red->tmp_in = dup(STDIN_FILENO);
+	red->tmp_out = dup(STDOUT_FILENO);
+	red->fd_in = dup(red->tmp_in);
+    red->fd_out = dup(red->tmp_out);
 }
 
 int executor(shell_t *mini, t_cmdline *aux)
@@ -19,10 +23,7 @@ int executor(shell_t *mini, t_cmdline *aux)
 	t_redirection red;
 	int i = 0;
 
-	red.tmp_in = dup(STDIN_FILENO);
-	red.tmp_out = dup(STDOUT_FILENO);
-	red.fd_in = dup(red.tmp_in);
-	init_pid(mini);
+	init_(mini, &red);
 	while (aux != NULL)
 	{
 		parse_outfile(aux, &red);
@@ -39,7 +40,8 @@ int executor(shell_t *mini, t_cmdline *aux)
 		execute_command(mini, aux, i);
 		aux = aux->next;
 		i++;
-	}
+        //reset_fds(&red);
+    }
 	reset_fds(&red);
 	return (0);
 }

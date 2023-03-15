@@ -2,8 +2,6 @@
 
 extern int g_exit_status;
 
-char	**find_path(char **env);
-
 int main(int argc, char** argv, char** envp)
 {
     shell_t *mini;
@@ -16,7 +14,7 @@ int main(int argc, char** argv, char** envp)
         while (1)
         {
             signal(SIGQUIT, SIG_IGN);
-		signal(SIGINT, sigint_handler);
+		    signal(SIGINT,  sigint_handler);
             signal(SIGTERM, sigterm_handler);
             prompt(mini);
             if (evaluate(mini) == 1)
@@ -31,7 +29,6 @@ int main(int argc, char** argv, char** envp)
     }
     close_program(&mini);
     system("leaks minishell");
-    printf("Saiu\n");
     return (0);
 }
 
