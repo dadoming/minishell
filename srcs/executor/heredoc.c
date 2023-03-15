@@ -13,13 +13,12 @@ int check_for_heredoc(t_cmdline *cmdtree, shell_t *mini, int last_position, t_re
 		if (cmdtree->infile[i][0] == '<' && cmdtree->infile[i][1] == '<' && \
 			 cmdtree->infile[i][2] == '\0')
 		{
-			if (i >= last_position)
+			if (i >= last_position - 1)
 			{
 				if (fd > 0)
 					close(fd);
 				heredoc(cmdtree->infile[i + 1], mini);
 				fd = helper_norm1(red);
-				printf("11111\n");
 				break;
 			}
 			else
@@ -42,7 +41,7 @@ static int helper_norm1(t_redirection *red)
 	if (fd == -1)
 	{
 		reset_fds(red);
-		print_normal_error("heredoc"); // Só ha um error de here_doc e é quando se lhe dá um signal
+		print_normal_error("heredoc");
 		return (-1);
 	}
 	return (fd);
@@ -67,6 +66,14 @@ int file_err_heredoc(char **infile, int len, shell_t *mini, t_redirection *red)
 	return (fake_heredoc);
 }
 
+void print_eof_error(char *eof)
+{
+	write(2, "minishell: ", 11);
+	write(2, "warning: here-document delimited by end-of-file (wanted `", 58);
+	write(2, eof, string()->_length(eof));
+	write(2, "')\n", 3);
+}
+
 int	heredoc(char *eof, shell_t *mini)
 {
 	int		file;
@@ -81,10 +88,11 @@ int	heredoc(char *eof, shell_t *mini)
     mini->here_doc = 1;
 	while (1)
 	{
-		//signal(SIGINT, sigint_handler);
-		//signal(SIGQUIT, sigquit_handler);
-		//signal(SIGTERM, sigterm_handler);
 		buffer = readline("> ");
+		if (buffer)
+			buffer = string()->_append(&buffer, "\n");
+		if (!buffer)
+			print_eof_error(eof);
 		if ((string()->_compare_n(eof, buffer, string()->_length(eof)) == 0) || !buffer)
 			break ;
 		write(file, buffer, string()->_length(buffer));

@@ -7,18 +7,9 @@ void parse_outfile(t_cmdline *tree_node, t_redirection *red)
     if (tree_node->outfile != NULL)
     {
         red->fd_out = treat_outfile(tree_node);
-        if (red->pipe_fd[1] != -1)
-        {
-            dup2(red->fd_out, red->pipe_fd[1]);
-            close(red->fd_out);
-            red->fd_out = red->pipe_fd[1];
-        }
-        else
-        {
-            dup2(red->fd_out, STDOUT_FILENO);
-            close(red->fd_out);
-            red->fd_out = red->tmp_out;
-        }
+        dup2(red->fd_out, STDOUT_FILENO);
+        close(red->fd_out);
+        red->fd_out = red->tmp_out;
     }
 }
 

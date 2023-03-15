@@ -4,12 +4,14 @@ static int calculate_size(char **if_this_has, char *this, char *str_to_replace, 
 static void copy_env_value(char **if_this_has, char *str_to_replace, char *ret, int *i, int size);
 static void copy_value(char *ret, char **if_this_has, int *i);
 
-char *replace(char **if_this_has, char *this, char *str_to_replace, int active_quote, int i)
+char *replace(char **if_this_has, char *this, char *str_to_replace, int active_quote)
 {
     char    *ret;
     char    *free_mem;
     int     size;
+    int     i;
     
+    i = 0;
     free_mem = *if_this_has;
     size = string()->_length(this);
     ret = malloc (sizeof(char) * (calculate_size(if_this_has, this, str_to_replace, size, NO_QUOTE) + 1));

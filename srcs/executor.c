@@ -26,12 +26,12 @@ int executor(shell_t *mini, t_cmdline *aux)
 	init_(mini, &red);
 	while (aux != NULL)
 	{
-		parse_outfile(aux, &red);
 		if (parse_infile(mini, aux, &red) == -1)
 			return (0);
+		parse_pipes(aux, &red);
+		parse_outfile(aux, &red);
 		if (red.fd_out == -1)
 			break;
-		parse_pipes(aux, &red);
 		if (is_built_in(aux, mini) == 1)
 		{
 			aux = aux->next;
@@ -40,7 +40,6 @@ int executor(shell_t *mini, t_cmdline *aux)
 		execute_command(mini, aux, i);
 		aux = aux->next;
 		i++;
-        //reset_fds(&red);
     }
 	reset_fds(&red);
 	return (0);

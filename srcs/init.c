@@ -38,14 +38,15 @@ static void init_core(shell_t *mini, char **envp)
         mini->core->env_p[i] = string()->_duplicate(envp[i]);
         i++;
     }
-    mini->arg_list = NULL;
-    mini->child_num = 0;
     mini->core->env_p[i] = 0;
     mini->core->logname = NULL;
     mini->core->home = string()->_duplicate(getenv("HOME"));
     mini->core->prompt = NULL;
     mini->core->free_line = NULL;
+    mini->arg_list = NULL;
+    mini->child_num = 0;
     mini->here_doc = 0;
+    mini->curr_pos = 0;
     mini->pid = NULL;
     set_shlvl(mini);
 }

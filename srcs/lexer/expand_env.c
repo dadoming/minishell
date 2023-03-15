@@ -1,58 +1,19 @@
 #include "../../includes/minishell.h"
 
-static char *copy_until(char *str, int n);
 static void remove_word(char *str, int start, int end);
 char *remove_unexistent(char *str, int quote, int end, int start);
-static int next_dollar_position(char *content, int *quote, int curr_pos);
 extern int g_exit_status;
 
-int expand_environment(char **content, shell_t *mini, int *active_quote, char *variable, int curr_pos)
+
+
+int expand_environment(char **content, shell_t *mini, int *active_quote, char *variable)
 {
-    int i;
-    int env_len;
-    char *env_variable;
-    char *env_value = NULL;
-    int var_len = string()->_length(variable);
-
-
-    env_variable = NULL;
-    env_len = 0;
-    i = 0;
     if (string()->_compare(variable, "$?") == 0)
-    {
-        env_value = string()->_itoa(g_exit_status);
-        *content = replace(content, variable, env_value, NO_QUOTE, 0);
-        free(env_value);
-        return (next_dollar_position(*content, active_quote, curr_pos));
-    }
-    if (string()->_compare_n(variable, "$$", 2) == 0)
-    {
-        *content = replace(content, variable, "", NO_QUOTE, 0);
-        return (next_dollar_position(*content, active_quote, curr_pos));
-    }
-    while (mini->core->env_p[i] != 0)
-    {
-        env_len = string()->_length_until_c(mini->core->env_p[i], '=');
-        env_variable = copy_until(mini->core->env_p[i], env_len);
-        if (string()->_compare_n(env_variable, variable, var_len) == 0 \
-            && var_len == env_len + 1)
-        {
-            env_value = get_env(mini->core->env_p, env_variable + 1);
-            if (mini->core->env_p[i][env_len] == '=')
-                *content = replace(content, env_variable, env_value + 1, NO_QUOTE, 0);
-            else if (mini->core->env_p[i][env_len] == '\0')
-                *content = replace(content, env_variable, env_value, NO_QUOTE, 0);
-            free(variable);
-            free(env_value);
-            free(env_variable);
-            return (next_dollar_position(*content, active_quote, curr_pos));
-        }
-        free(env_variable);
-        i++;
-    }
-    free(variable);
-    *content = remove_unexistent(*content, NO_QUOTE, 0, 0);
-    return (next_dollar_position(*content, active_quote, curr_pos));
+        return (expand_status(content, variable, active_quote, mini->curr_pos));
+    else if (string()->_compare_n(variable, "$$", 2) == 0)
+        return (expand_double_dollar(content, active_quote, variable, mini->curr_pos));
+    else
+        return (normal_expand(mini, content, active_quote, variable));  
 }
 
 static void remove_word(char *str, int start, int end) 
@@ -91,28 +52,7 @@ char *remove_unexistent(char *str, int quote, int end, int start)
     return (str);
 }
 
-static char* copy_until(char *str, int n)
-{
-    char    *dst;
-    int     i;
-    
-    if (!str)
-        return (NULL);
-    i = 0;
-    dst = malloc(sizeof(char) * (n + 1 + 1));
-    if(!dst)
-        return (NULL);
-    dst[0] = '$';
-    while (n-- > 0)
-    {
-        dst[i + 1] = str[i];
-        i++;
-    }
-    dst[i + 1] = '\0';
-    return (dst);
-}
-
-static int next_dollar_position(char *content, int *quote, int curr_pos)
+int next_dollar_position(char *content, int *quote, int curr_pos)
 {
     while (content[curr_pos] != '\0')
     {

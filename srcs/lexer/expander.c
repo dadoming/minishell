@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-static void expand_dollars(char **content, shell_t *mini, int type);
+static void expand_dollars(char **content, shell_t *mini, int type, int active_quote);
 t_list *remove_node(t_list **arg_list, t_list *node);
 static char     *get_variable_name(char *str, int start);
 
@@ -11,7 +11,7 @@ int expander(shell_t *mini)
     aux = mini->arg_list;
     while (aux != NULL)
     {
-        expand_dollars(&aux->token, mini, aux->type);
+        expand_dollars(&aux->token, mini, aux->type, NO_QUOTE);
         if (string()->_length(aux->token) == 0)
         {
             aux = remove_node(&mini->arg_list, aux);
@@ -57,32 +57,37 @@ t_list *remove_node(t_list **arg_list, t_list *node)
     return (aux);
 }
 
-static void expand_dollars(char **content, shell_t *mini, int type)
+int no_or_double_quote(int quote)
+{
+    if (quote == NO_QUOTE || quote == DOUBLE_QUOTE)
+        return (1);
+    return (0);
+}
+
+static void expand_dollars(char **content, shell_t *mini, int type, int active_quote)
 {
     int i;
-    int active_quote;
     char *str;
 
     str = *content;
-    active_quote = NO_QUOTE;
     i = 0;
     if ((type == DELIMITOR) || (!str))
         return ;
-    while (str[i] != '\0')
+    while (str[mini->curr_pos] != '\0')
     {
         check_quote(&active_quote, str[i]);
-        if (str[i] == '$')
+        if (str[mini->curr_pos] == '$')
         {
             if ((active_quote == DOUBLE_QUOTE || active_quote == NO_QUOTE) && \
-                (check()->_is_space(str[i + 1]) == 0 && str[i + 1] != '\0'))
+                (check()->_is_space(str[mini->curr_pos + 1]) == 0 && str[mini->curr_pos + 1] != '\0'))
             {
-                i = expand_environment(content, mini, &active_quote, \
-                    get_variable_name(*content, i), i);
+                mini->curr_pos = expand_environment(content, mini, &active_quote, \
+                    get_variable_name(*content, mini->curr_pos));
                 str = *content;
                 continue;
             }
         }
-        i++;
+        mini->curr_pos++;
     }
 }
 
