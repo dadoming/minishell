@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   string_1.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/16 00:43:50 by dadoming          #+#    #+#             */
+/*   Updated: 2023/03/16 00:44:34 by dadoming         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../includes/my_lib.h"
 
 char	*_append(char **s1, char const *s2)
@@ -8,7 +20,7 @@ char	*_append(char **s1, char const *s2)
 
 	i = -1;
 	j = 0;
-	str = malloc(sizeof(char) * (string()->_length(*s1) + string()->_length(s2) + 1));
+	str = malloc(sizeof(char) * (_length(*s1) + _length(s2) + 1));
 	if (!str)
 		return (NULL);
 	while (s1[0][++i] != '\0')
@@ -54,7 +66,7 @@ int	_atoi(const char *str)
 
 void	_bzero(void *str, unsigned int n)
 {
-	string()->_mem_set(str, '\0', n);
+	_mem_set(str, '\0', n);
 }
 
 void	*_calloc(unsigned int count, unsigned int size)
@@ -64,7 +76,7 @@ void	*_calloc(unsigned int count, unsigned int size)
 	c = malloc(count * size);
 	if (!c)
 		return (NULL);
-	string()->_mem_set(c, 0, (count * size));
+	_mem_set(c, 0, (count * size));
 	return (c);
 }
 
@@ -77,7 +89,7 @@ int	_compare_n(const char *s1, const char *s2, unsigned int n)
 		return (0);
 	if (!s1 && s2)
 		return (*s2);
-	if(!s2 && s1)
+	if (!s2 && s1)
 		return (*s1);
 	str1 = (char *)s1;
 	str2 = (char *)s2;

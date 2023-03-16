@@ -1,19 +1,30 @@
-#include "../../../includes/my_lib.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   string_7.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/16 00:47:06 by dadoming          #+#    #+#             */
+/*   Updated: 2023/03/16 00:47:42 by dadoming         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "../../../includes/my_lib.h"
 
 void	_putstring_n_fd(char *s, int fd)
 {
 	if (!s || fd < 0)
 		return ;
-	string()->_putstring_fd(s, fd);
-	string()->_putchar_fd('\n', fd);
+	_putstring_fd(s, fd);
+	_putchar_fd('\n', fd);
 }
 
 char	*_rear_search(const char *str, char c)
 {
 	unsigned int	i;
 
-	i = string()->_length(str);
+	i = _length(str);
 	while ((str[i] != (unsigned char)c) && (i > 0))
 		i--;
 	if (str[i] == (unsigned char)c)
@@ -21,7 +32,7 @@ char	*_rear_search(const char *str, char c)
 	return (NULL);
 }
 
-char*	_search(const char *str, char c)
+char	*_search(const char *str, char c)
 {
 	int	i;
 
@@ -45,7 +56,7 @@ char	*_strnstr(const char *str, const char *to_find, unsigned int len)
 
 	i = 0;
 	j = 0;
-	n = string()->_length(to_find);
+	n = _length(to_find);
 	if (*to_find == '\0')
 		return ((char *)str);
 	while (str[i] != '\0')
@@ -69,13 +80,13 @@ char	*_substr(const char *s, unsigned int start, unsigned int len)
 
 	if (s == NULL)
 		return (NULL);
-	if (len > (unsigned int)string()->_length(s))
-		len = string()->_length(s);
+	if (len > (unsigned int)_length(s))
+		len = _length(s);
 	new = (char *)malloc(sizeof(char) * (len + 1));
 	if (new == NULL)
 		return (NULL);
 	i = 0;
-	if ((unsigned int)string()->_length(s) > start)
+	if ((unsigned int)_length(s) > start)
 	{
 		while (i < len && s[start + i] != '\0')
 		{

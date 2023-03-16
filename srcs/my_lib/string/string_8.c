@@ -1,5 +1,16 @@
-#include "../../../includes/my_lib.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   string_8.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/16 00:48:03 by dadoming          #+#    #+#             */
+/*   Updated: 2023/03/16 00:48:04 by dadoming         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "../../../includes/my_lib.h"
 
 static int	words_count(char *s, char c)
 {
@@ -54,7 +65,7 @@ static char	**free_arr(char **arr, char *s)
 
 static char	**worker(char **arr, char *s1, char c, int j)
 {
-	int	i;
+	int		i;
 	char	*str;
 
 	str = s1;

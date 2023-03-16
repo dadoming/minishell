@@ -1,21 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   string_5.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/16 00:45:10 by dadoming          #+#    #+#             */
+/*   Updated: 2023/03/16 00:45:56 by dadoming         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../includes/my_lib.h"
 
-
-int _length(const char *str)
+int	_length(const char *str)
 {
-    unsigned int i;
-	
+	unsigned int	i;
+
 	if (str == NULL)
 		return (0);
 	i = 0;
-    while (str[i] != '\0')
-    {
-        i++;
+	while (str[i] != '\0')
+	{
+		i++;
 	}
-    return (i);
+	return (i);
 }
 
-char*	_mapi(char const *s, char (*f)(unsigned int, char))
+char	*_mapi(char const *s, char (*f)(unsigned int, char))
 {
 	int		i;
 	int		length;

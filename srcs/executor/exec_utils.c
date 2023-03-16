@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/15 23:11:44 by dadoming          #+#    #+#             */
+/*   Updated: 2023/03/15 23:12:17 by dadoming         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 char	*get_command(char *command, char **path)
 {
 	char	*tmp;
 	char	*cmd;
-	int 	i;
-	
+	int		i;
+
 	i = 0;
 	if (path == NULL)
 		return (NULL);
@@ -24,10 +36,10 @@ char	*get_command(char *command, char **path)
 	return (NULL);
 }
 
-char **find_path(char **env)
+char	**find_path(char **env)
 {
-	char **path;
-	int i;
+	char	**path;
+	int		i;
 
 	i = 0;
 	path = NULL;
@@ -36,7 +48,7 @@ char **find_path(char **env)
 		if (string()->_compare_n(env[i], "PATH=", 5) == 0)
 		{
 			path = string()->_split(env[i] + 5, ':');
-			break;
+			break ;
 		}
 		i++;
 	}
