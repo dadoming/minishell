@@ -106,6 +106,9 @@ typedef struct s_shell
 	t_cmdline			*cmdline;
 }	t_shell;
 
+void	remove_word(char *str, int start, int end);
+char *remove_non_existent(t_shell *mini, char *content, int quote);
+
 void		fix_expanded_values(t_shell *mini, int quote);
 void		remove_quote_if_quote_found(int *outer_quote, \
 	char *str, int *location, int *i);

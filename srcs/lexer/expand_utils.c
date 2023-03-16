@@ -12,18 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-/*
-dadoming > minishell$ '$LOGNAME'
-minishell: $LOGNAME: command not found
-dadoming > minishell$ '$LOGNAME'"$LOGNAME"
-minishell: dadomingdadoming: command not found
-dadoming > minishell$ 
-dadoming > minishell$ "$LOGNAME"bla'"$LOGNAME"$LOGNAME'
-minishell: dadomingbla"dadoming"dadoming: command not found
-dadoming > minishell$ "$LOGNAME"$LOGNAME'"$LOGNAME"$LOGNAME'
-minishell: dadomingdadoming"dadoming"dadoming: command not found
-*/
-
 extern int	g_exit_status;
 
 static char	*copy_until(char *str, int n)
@@ -87,7 +75,6 @@ int	normal_expand(t_shell *mini, char **content, \
 		norm.i++;
 	}
 	free(variable);
-	*content = remove_unexistent(*content, NO_QUOTE, 0, 0);
 	return (next_dollar_position(*content, active_quote, mini->curr_pos));
 }
 

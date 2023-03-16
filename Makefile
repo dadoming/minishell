@@ -16,7 +16,7 @@ SRCS = srcs/signals.c srcs/evaluate.c srcs/env_utils.c srcs/prompt.c srcs/helper
 		srcs/executor/built_in/unset.c srcs/executor/built_in/env.c srcs/executor/built_in/export.c srcs/lexer/build_ast_reds.c \
 		srcs/lexer/build_ast.c srcs/lexer/utils.c srcs/lexer/expand_replace.c srcs/lexer/lexer.c srcs/lexer/redir_sep.c srcs/lexer/expander.c \
 		srcs/lexer/define_type.c srcs/lexer/check_quote.c srcs/lexer/expand_env.c srcs/lexer/has_redir.c srcs/lexer/quotes.c srcs/lexer/expand_utils.c \
-		srcs/lexer/expand_replace_utils.c srcs/lexer/quotes_utils.c
+		srcs/lexer/expand_replace_utils.c srcs/lexer/quotes_utils.c srcs/lexer/remove_non_existent.c
 
 CC = gcc
 

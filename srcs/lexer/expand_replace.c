@@ -39,14 +39,13 @@ static char	*replace_norm(char **if_this_has, \
 	size = string()->_length(this);
 	while (**if_this_has != '\0')
 	{
-		if ((**if_this_has == '\'' || **if_this_has == '\"') \
-			&& (check_quote(&active_quote, **if_this_has) == SINGLE_QUOTE))
+		if (**if_this_has == '\'' || **if_this_has == '\"')
 		{
-			ret[i] = **if_this_has;
-			norm_iter(if_this_has, &i);
-			continue ;
+            check_quote(&active_quote, **if_this_has);
+			ret[i++] = *(*if_this_has)++;
+            continue ;
 		}
-		if (string()->_compare_n(*if_this_has, this, size) == 0)
+		if (string()->_compare_n(*if_this_has, this, size) == 0 && active_quote != SINGLE_QUOTE)
 		{
 			ret = copy_env_value(str_to_replace, ret, &i);
 			*if_this_has += size;
