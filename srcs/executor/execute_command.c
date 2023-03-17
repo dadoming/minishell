@@ -6,7 +6,7 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 23:12:33 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/17 14:35:56 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 19:18:59 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,14 @@ void	execute_command(t_shell *mini, t_cmdline *aux, int i)
 		execution(mini, aux, command, i);
 	else if (_search(aux->cmd, '/') != 0 && command == NULL)
 	{
-		_putstring_fd("minishell: ", STDERR_FILENO);
-		_putstring_fd(aux->cmd, STDERR_FILENO);
-		_putstring_n_fd(": No such file or directory", STDERR_FILENO);
+		print_directory(aux->cmd, 2);
 	}
 	else
 	{
 		_putstring_fd("minishell: ", STDERR_FILENO);
 		_putstring_fd(aux->cmd, STDERR_FILENO);
 		_putstring_n_fd(": command not found", STDERR_FILENO);
+		g_exit_status = 127;
 	}
 	if (path)
 		free_array(path);
@@ -70,10 +69,7 @@ int	cmd_is_directory(char *cmd)
 {
 	if (check()->_is_directory(cmd) == 1)
 	{
-		_putstring_fd("minishell: ", STDERR_FILENO);
-		_putstring_fd(cmd, STDERR_FILENO);
-		_putstring_n_fd(": is a directory", STDERR_FILENO);
-		g_exit_status = 126;
+		print_directory(cmd, 1);
 		return (1);
 	}
 	return (0);
@@ -86,11 +82,8 @@ static void	execution(t_shell *mini, t_cmdline *aux, char *command, int i)
 	{
 		execve(command, aux->arg, mini->core->env_p);
 		print_normal_error(command);
+		printf("exit status = %d\n", g_exit_status);
 		g_exit_status = 127;
 		exit(127);
-	}
-	else
-	{
-		signal(SIGINT, sig_block_c);
 	}
 }

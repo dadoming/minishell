@@ -6,7 +6,7 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:44:02 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/17 14:46:49 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 19:00:07 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,5 @@ int	evaluate(t_shell *mini)
 		}
 		return (0);
 	}
-	g_exit_status = 0;
 	return (1);
 }

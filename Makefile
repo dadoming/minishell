@@ -6,7 +6,7 @@
 #    By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/17 13:01:51 by dadoming          #+#    #+#              #
-#    Updated: 2023/03/17 18:53:26 by dadoming         ###   ########.fr        #
+#    Updated: 2023/03/17 18:55:34 by dadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ ${MY_LIB}:
 	@cd srcs/my_lib && make clean
 
 clean:
+	${RM} ${OBJS}
 
 fclean:
 	${RM} ${NAME}

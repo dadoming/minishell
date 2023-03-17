@@ -6,7 +6,7 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:54:56 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/17 14:42:17 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 19:16:18 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef struct s_shell
 	t_cmdline			*cmdline;
 }	t_shell;
 
+void		print_directory(char *path, int option);
 void		remove_word(char *str, int start, int end);
 void		fix_expanded_values(t_shell *mini, int quote);
 void		remove_quote_if_quote_found(int *outer_quote, \
@@ -134,7 +135,8 @@ void		print_tree(t_cmdline *cmdline);
 void		free_tree(t_shell **mini);
 void		wait_for_child(t_redirection *red, t_shell **mini);
 void		parse_outfile(t_cmdline *tree_node, t_redirection *red);
-void		parse_pipes(t_cmdline *tree_node, t_redirection *red, t_shell *mini, int i);
+void		parse_pipes(t_cmdline *tree_node, t_redirection *red, \
+	t_shell *mini, int i);
 void		execute_command(t_shell *mini, t_cmdline *aux, int i);
 void		fun_exit(t_shell *mini, char **arg);
 void		print_error(char *identifier);

@@ -6,13 +6,11 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 23:52:36 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/17 12:55:02 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 19:08:48 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-extern int	g_exit_status;
 
 int	expand_environment(char **content, \
 	t_shell *mini, int *active_quote, char *variable)

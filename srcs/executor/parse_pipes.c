@@ -6,13 +6,14 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 23:40:37 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/17 17:00:58 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 18:54:52 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	parse_pipes(t_cmdline *tree_node, t_redirection *red, t_shell *mini, int i)
+void	parse_pipes(t_cmdline *tree_node, t_redirection *red, \
+	t_shell *mini, int i)
 {
 	if (tree_node->next != NULL && tree_node->outfile == 0)
 	{

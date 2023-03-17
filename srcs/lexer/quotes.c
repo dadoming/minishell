@@ -6,13 +6,11 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 00:36:30 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/16 00:55:36 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 19:00:36 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-extern int	g_exit_status;
 
 void	separate_token(t_list *aux, int i, char *token2)
 {

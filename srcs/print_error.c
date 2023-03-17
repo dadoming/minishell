@@ -6,11 +6,31 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:36:26 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/15 22:36:45 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 19:17:43 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+extern int	g_exit_status;
+
+void	print_directory(char *path, int option)
+{
+	if (option == 1)
+	{
+		_putstring_fd("minishell: ", STDERR_FILENO);
+		_putstring_fd(path, STDERR_FILENO);
+		_putstring_n_fd(": is a directory", STDERR_FILENO);
+		g_exit_status = 126;
+	}
+	if (option == 2)
+	{
+		_putstring_fd("minishell: ", STDERR_FILENO);
+		_putstring_fd(path, STDERR_FILENO);
+		_putstring_n_fd(": No such file or directory", STDERR_FILENO);
+		g_exit_status = 127;
+	}
+}
 
 void	print_normal_error(char *error)
 {
