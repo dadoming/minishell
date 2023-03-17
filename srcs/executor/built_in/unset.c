@@ -6,7 +6,7 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 23:09:21 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/15 23:11:09 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 21:28:13 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static char	**find_and_unset(char **arg, char **env, char **new_env)
 		}
 		i++;
 	}
+	printf("new: %d\nold: %d\n", j, i);
 	new_env[j] = 0;
 	return (new_env);
 }
