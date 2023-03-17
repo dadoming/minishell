@@ -6,7 +6,7 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:42:00 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/17 17:01:07 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 19:56:00 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	executor(t_shell *mini, t_cmdline *aux)
 		parse_outfile(aux, &red);
 		if (red.fd_out == -1)
 			break ;
-		if (is_built_in(aux, mini) == 1)
+		if (is_built_in(aux, mini, i) == 1)
 		{
 			aux = aux->next;
 			i++;

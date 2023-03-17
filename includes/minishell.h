@@ -6,7 +6,7 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:54:56 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/17 19:16:18 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 20:22:49 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,8 @@ void		parse_outfile(t_cmdline *tree_node, t_redirection *red);
 void		parse_pipes(t_cmdline *tree_node, t_redirection *red, \
 	t_shell *mini, int i);
 void		execute_command(t_shell *mini, t_cmdline *aux, int i);
-void		fun_exit(t_shell *mini, char **arg);
+void		fun_exit(t_shell *mini, char **arg, \
+	t_cmdline *cmdline, int i);
 void		print_error(char *identifier);
 void		free_array(char **array);
 void		sig_block_c(int signo);
@@ -185,7 +186,7 @@ int			file_err_heredoc(char **infile, int len, \
 	t_shell *mini, t_redirection *red);
 int			check_for_heredoc(t_shell *mini, int last_position, \
 	t_redirection *red, int fd);
-int			is_built_in(t_cmdline *cmdline, t_shell *mini);
+int			is_built_in(t_cmdline *cmdline, t_shell *mini, int i);
 int			echo(char **args);
 char		*replace(char **if_this_has, char *this, char *str_to_replace);
 char		*get_env(char **env, char *var_name);
