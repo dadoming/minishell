@@ -6,7 +6,7 @@
 #    By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/17 13:01:51 by dadoming          #+#    #+#              #
-#    Updated: 2023/03/17 17:02:40 by dadoming         ###   ########.fr        #
+#    Updated: 2023/03/17 18:53:26 by dadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ INCLUDES = includes/minishell.h \
 
 SRCS = srcs/signals.c srcs/evaluate.c srcs/env_utils.c srcs/prompt.c srcs/helper_print.c srcs/init.c srcs/print_error.c srcs/clear_looped_values.c \
 		srcs/main.c srcs/close_program.c srcs/executor.c srcs/executor/execute_command.c srcs/executor/heredoc.c srcs/executor/parse_pipes.c \
-		srcs/executor/reset_fds.c srcs/executor/exec_utils.c srcs/executor/parse_infile.c srcs/executor/parse_outfile.c srcs/executor/is_built_in.c \
+		srcs/executor/wait_child.c srcs/executor/exec_utils.c srcs/executor/parse_infile.c srcs/executor/parse_outfile.c srcs/executor/is_built_in.c \
 		srcs/executor/built_in/echo.c srcs/executor/built_in/pwd.c srcs/executor/built_in/cd.c srcs/executor/built_in/cd_utils.c srcs/executor/built_in/exit.c \
 		srcs/executor/built_in/unset.c srcs/executor/built_in/env.c srcs/executor/built_in/export.c srcs/lexer/build_ast_reds.c srcs/lexer/build_ast.c \
 		srcs/lexer/utils.c srcs/lexer/expand_replace.c srcs/lexer/lexer.c srcs/lexer/redir_sep.c srcs/lexer/expander.c srcs/lexer/define_type.c \
