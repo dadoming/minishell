@@ -6,11 +6,11 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 00:50:39 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/16 00:52:26 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 13:26:11 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/my_lib.h"
+#include "my_lib.h"
 
 t_string	*string(void)
 {

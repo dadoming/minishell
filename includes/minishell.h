@@ -6,7 +6,7 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:54:56 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/16 01:44:04 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 14:42:17 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "my_lib.h"
+# include "../srcs/my_lib/my_lib.h"
 # include "colors.h"
 
 typedef struct s_list	t_list;
@@ -106,9 +106,7 @@ typedef struct s_shell
 	t_cmdline			*cmdline;
 }	t_shell;
 
-void	remove_word(char *str, int start, int end);
-char *remove_non_existent(t_shell *mini, char *content, int quote);
-
+void		remove_word(char *str, int start, int end);
 void		fix_expanded_values(t_shell *mini, int quote);
 void		remove_quote_if_quote_found(int *outer_quote, \
 	char *str, int *location, int *i);
@@ -118,6 +116,8 @@ char		**add_to_end_of_env(char **env_p, \
 	char *var_name, char *var_value);
 void		substitute_env_var(char **env_p, \
 	char *var_name, char *var_value);
+char		*remove_non_existent(t_shell *mini, \
+	char *content, int quote, int i);
 char		*remove_unexistent(char *str, int quote, int end, int start);
 void		free_list(t_list **lst);
 void		clear_looped_values(t_shell **mini);
@@ -132,12 +132,10 @@ void		no_quote_quote_found(int *outer_quote, \
 void		assign_outer_quote(char c, int *outer_quote, int *quote_amount);
 void		print_tree(t_cmdline *cmdline);
 void		free_tree(t_shell **mini);
-void		wait_for_childs(t_shell *mini);
-void		free_path(char **path);
+void		wait_for_child(t_redirection *red, t_shell **mini);
 void		parse_outfile(t_cmdline *tree_node, t_redirection *red);
-void		parse_pipes(t_cmdline *tree_node, t_redirection *red);
+void		parse_pipes(t_cmdline *tree_node, t_redirection *red, t_shell *mini, int i);
 void		execute_command(t_shell *mini, t_cmdline *aux, int i);
-void		reset_fds(t_redirection *red);
 void		fun_exit(t_shell *mini, char **arg);
 void		print_error(char *identifier);
 void		free_array(char **array);

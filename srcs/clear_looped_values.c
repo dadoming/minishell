@@ -6,7 +6,7 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:46:18 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/15 22:46:53 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 14:33:22 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,7 @@ void	clear_looped_values(t_shell **mini)
 		unlink(".heredoc_storer");
 		(*mini)->here_doc = 0;
 	}
-	wait_for_childs((*mini));
 	(*mini)->curr_pos = 0;
-}
-
-void	wait_for_childs(t_shell *mini)
-{
-	int		status;
-	int		i;
-
-	i = 0;
-	status = 0;
-	if (mini->clear_pid == 0)
-		return ;
-	while (i < mini->child_num + 1)
-	{
-		waitpid(mini->pid[i], &status, 0);
-		i++;
-	}
-	mini->child_num = 0;
-	free(mini->pid);
-	if (WIFEXITED(status))
-		g_exit_status = WEXITSTATUS(status);
-	mini->clear_pid = 0;
 }
 
 void	free_tree(t_shell **mini)

@@ -6,14 +6,12 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 23:52:36 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/16 03:04:11 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 12:55:02 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-
-char		*remove_unexistent(char *str, int quote, int end, int start);
 extern int	g_exit_status;
 
 int	expand_environment(char **content, \
@@ -24,7 +22,7 @@ int	expand_environment(char **content, \
 	else if (_compare_n(variable, "$$", 2) == 0)
 		return (expand_double_dollar(content, active_quote, \
 		variable, mini->curr_pos));
-    *content = remove_non_existent(mini, *content, NO_QUOTE);
+	*content = remove_non_existent(mini, *content, NO_QUOTE, -1);
 	return (normal_expand(mini, content, active_quote, variable));
 }
 

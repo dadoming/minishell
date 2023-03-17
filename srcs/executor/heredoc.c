@@ -6,7 +6,7 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 23:14:27 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/15 23:18:31 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 14:40:59 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ static int	helper_norm1(t_redirection *red)
 	g_exit_status = 1;
 	if (fd == -1)
 	{
-		reset_fds(red);
+		dup2(red->tmp_in, STDIN_FILENO);
+		dup2(red->tmp_out, STDOUT_FILENO);
+		close(red->tmp_in);
+		close(red->tmp_out);
 		print_normal_error("heredoc");
 		return (-1);
 	}
@@ -64,7 +67,10 @@ int	file_err_heredoc(char **infile, int len, t_shell *mini, t_redirection *red)
 {
 	int	fake_heredoc;
 
-	reset_fds(red);
+	dup2(red->tmp_in, STDIN_FILENO);
+	dup2(red->tmp_out, STDOUT_FILENO);
+	close(red->tmp_in);
+	close(red->tmp_out);
 	fake_heredoc = 0;
 	while (len >= 0)
 	{

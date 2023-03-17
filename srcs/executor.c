@@ -6,11 +6,13 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:42:00 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/15 22:43:24 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 17:01:07 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+extern int	g_exit_status;
 
 // Just to not give a valgrind error -.-
 void	init_(t_shell *mini, t_redirection *red)
@@ -38,23 +40,24 @@ int	executor(t_shell *mini, t_cmdline *aux)
 
 	i = 0;
 	init_(mini, &red);
-	while (aux != NULL)
+	while (aux != NULL && i <= mini->child_num)
 	{
 		if (parse_infile(mini, aux, &red) == -1)
 			return (0);
-		parse_pipes(aux, &red);
+		parse_pipes(aux, &red, mini, i);
 		parse_outfile(aux, &red);
 		if (red.fd_out == -1)
 			break ;
 		if (is_built_in(aux, mini) == 1)
 		{
 			aux = aux->next;
+			i++;
 			continue ;
 		}
 		execute_command(mini, aux, i);
 		aux = aux->next;
 		i++;
 	}
-	reset_fds(&red);
+	wait_for_child(&red, &mini);
 	return (0);
 }

@@ -6,11 +6,11 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 00:46:10 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/16 00:47:02 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 13:12:42 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/my_lib.h"
+#include "../my_lib.h"
 
 void	*_mem_search(const void *str, int c, unsigned int n)
 {

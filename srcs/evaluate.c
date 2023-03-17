@@ -6,7 +6,7 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:44:02 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/16 02:50:30 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 14:46:49 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	evaluate(t_shell *mini)
 		{
 			if (build_ast(mini->arg_list, mini) == 1)
 			{
-				g_exit_status = 1;
+				g_exit_status = 2;
 				_putstring_n_fd("The first word needs to be a command", 2);
 				return (1);
 			}

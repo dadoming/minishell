@@ -6,7 +6,7 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 23:52:54 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/16 02:44:23 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 12:54:18 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,20 @@ static char	*replace_norm(char **if_this_has, \
 {
 	int		size;
 	int		i;
-	int		active_quote;
+	int		q;
 
-	active_quote = NO_QUOTE;
+	q = NO_QUOTE;
 	i = 0;
 	size = string()->_length(this);
 	while (**if_this_has != '\0')
 	{
 		if (**if_this_has == '\'' || **if_this_has == '\"')
 		{
-            check_quote(&active_quote, **if_this_has);
+			check_quote(&q, **if_this_has);
 			ret[i++] = *(*if_this_has)++;
-            continue ;
+			continue ;
 		}
-		if (string()->_compare_n(*if_this_has, this, size) == 0 && active_quote != SINGLE_QUOTE)
+		if (_compare_n(*if_this_has, this, size) == 0 && q != SINGLE_QUOTE)
 		{
 			ret = copy_env_value(str_to_replace, ret, &i);
 			*if_this_has += size;

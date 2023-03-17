@@ -6,11 +6,11 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 00:45:02 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/16 00:45:03 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 13:12:38 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/my_lib.h"
+#include "../my_lib.h"
 
 static int	ft_length(int n)
 {

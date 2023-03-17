@@ -6,11 +6,11 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 00:43:50 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/16 00:44:34 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 13:12:27 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/my_lib.h"
+#include "../my_lib.h"
 
 char	*_append(char **s1, char const *s2)
 {

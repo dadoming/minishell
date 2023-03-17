@@ -6,11 +6,11 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 00:41:53 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/16 00:42:36 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 13:12:14 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/my_lib.h"
+#include "../my_lib.h"
 
 t_list	*_new_node(void *token)
 {

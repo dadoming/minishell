@@ -6,7 +6,7 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:37:02 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/15 22:38:16 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 14:47:51 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,5 @@ int	main(int argc, char **argv, char **envp)
 		}
 	}
 	close_program(&mini);
-	return (0);
+	return (g_exit_status);
 }

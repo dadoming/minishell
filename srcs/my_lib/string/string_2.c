@@ -6,11 +6,11 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 00:44:45 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/16 00:44:46 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 13:12:33 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/my_lib.h"
+#include "../my_lib.h"
 
 int	_compare(const char *s1, const char *s2)
 {
