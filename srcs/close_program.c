@@ -6,7 +6,7 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:45:20 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/17 20:49:07 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 21:42:54 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	free_array(char **array)
 void	close_program(t_shell **mini)
 {
 	clear_looped_values(mini);
-	free((*mini)->pid);
 	clear_core(mini);
 	rl_erase_empty_line = 1;
 	rl_clear_history();

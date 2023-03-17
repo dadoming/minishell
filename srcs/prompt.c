@@ -6,7 +6,7 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:29:50 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/15 22:29:51 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 21:38:11 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	prompt(t_shell *mini)
 	print_prompt(mini);
 	mini->core->free_line = readline(mini->core->prompt);
 	if (!mini->core->free_line)
-		fun_exit(mini, NULL);
+		fun_exit(mini, NULL, NULL, 0);
 }
 
 static void	print_prompt(t_shell *mini)
