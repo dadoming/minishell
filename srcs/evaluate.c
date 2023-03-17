@@ -6,7 +6,7 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:44:02 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/17 19:00:07 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 20:41:11 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	evaluate(t_shell *mini)
 		if (expander(mini) == 1)
 			return (1);
 		if (quotes(mini) == TRUE)
+			return (1);
+		if (_length(mini->arg_list->token) == 0)
 			return (1);
 		if (list()->_size(mini->arg_list) > 0)
 		{

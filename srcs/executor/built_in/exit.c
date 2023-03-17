@@ -6,7 +6,7 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 23:01:29 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/17 20:24:05 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 20:48:44 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ extern int	g_exit_status;
 
 int	check_cmd_line(t_cmdline *cmdline, int i, char **arg)
 {
-	if (cmdline->next && i == 0)
+	if (cmdline->next != NULL && i == 0)
 	{
 		too_many_args(arg);
 		return (1);
@@ -47,13 +47,12 @@ void	fun_exit(t_shell *mini, char **arg, t_cmdline *cmdline, int i)
 		_putstring_fd("minishell: exit: ", 2);
 		_putstring_fd(arg[1], 2);
 		_putstring_n_fd(": numeric argument required", 2);
-		free(mini->pid);
+		close_program(&mini);
 		exit(2);
 	}
 	else
 	{
 		close_program(&mini);
-		free(mini->pid);
 		exit(status);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 23:40:57 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/17 19:19:17 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 20:49:02 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	wait_for_child(t_redirection *red, t_shell **mini)
 		i++;
 	}
 	(*mini)->child_num = 0;
-	free((*mini)->pid);
 	(*mini)->clear_pid = 0;
 	dup2(red->tmp_in, STDIN_FILENO);
 	dup2(red->tmp_out, STDOUT_FILENO);

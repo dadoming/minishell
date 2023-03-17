@@ -6,7 +6,7 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 23:12:33 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/17 19:18:59 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 20:40:57 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ static void	execution(t_shell *mini, t_cmdline *aux, char *command, int i)
 	{
 		execve(command, aux->arg, mini->core->env_p);
 		print_normal_error(command);
-		printf("exit status = %d\n", g_exit_status);
 		g_exit_status = 127;
 		exit(127);
 	}
