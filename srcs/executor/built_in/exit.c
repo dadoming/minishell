@@ -6,7 +6,7 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 23:01:29 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/17 20:48:44 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 21:10:20 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,14 @@ static int	check_for_letter(char *str);
 static int	too_many_args(char **arg);
 extern int	g_exit_status;
 
-int	check_cmd_line(t_cmdline *cmdline, int i, char **arg)
-{
-	if (cmdline->next != NULL && i == 0)
-	{
-		too_many_args(arg);
-		return (1);
-	}
-	if (too_many_args(arg))
-	{
-		printf("exit\n");
-		return (1);
-	}
-}
-
 void	fun_exit(t_shell *mini, char **arg, t_cmdline *cmdline, int i)
 {
 	int	status;
 
 	status = 0;
-	if (check_cmd_line(cmdline, i, arg) == 1)
-		return ;
 	printf("exit\n");
+	if (too_many_args(arg))
+		return ;
 	if (arg != NULL && arg[1])
 		status = string()->_atoi(arg[1]);
 	else
