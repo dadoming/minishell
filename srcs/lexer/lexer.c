@@ -6,7 +6,7 @@
 /*   By: dadoming <dadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 00:34:12 by dadoming          #+#    #+#             */
-/*   Updated: 2023/03/16 01:38:14 by dadoming         ###   ########.fr       */
+/*   Updated: 2023/03/17 19:31:55 by dadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ extern int	g_exit_status;
 
 static void	get_full_word(char *buffer, int *i, char separator, t_shell *mini);
 static int	check_for_ending_word(char *buffer);
-static int	first_char_is_pipe(t_list *arg_list);
+static int	first_char_is_pipe(char	*arg_list);
 
 /* This function is gonna produce tokens through the input passed
 	in through the readline function taking quotes into account*/
@@ -39,7 +39,7 @@ int	lexer(char *rl_buffer, t_shell *mini)
 		else
 			i++;
 	}
-	if (first_char_is_pipe(mini->arg_list) == 1)
+	if (first_char_is_pipe(rl_buffer) == 1)
 		return (1);
 	if (has_redir(NO_QUOTE, 0, mini->arg_list) == 1)
 	{
@@ -49,9 +49,9 @@ int	lexer(char *rl_buffer, t_shell *mini)
 	return (0);
 }
 
-static int	first_char_is_pipe(t_list *arg_list)
+static int	first_char_is_pipe(char	*buffer)
 {
-	if (arg_list->token[0] == '|')
+	if (buffer[0] == '|')
 	{
 		g_exit_status = 1;
 		print_syntax_error('|');
